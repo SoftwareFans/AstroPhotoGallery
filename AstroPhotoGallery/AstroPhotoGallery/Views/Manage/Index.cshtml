@@ -9,6 +9,13 @@
 <div>
     <h4>Change your account settings</h4>
     <hr />
+    <div class="form-group">
+        @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" id="Avatar" name="upload" />
+        </div>
+    </div>
+
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
