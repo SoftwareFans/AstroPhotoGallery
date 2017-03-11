@@ -65,6 +65,16 @@ namespace AstroPhotoGallery.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(50)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Second Name")]
+        public string SecondName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
