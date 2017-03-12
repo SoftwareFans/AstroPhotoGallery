@@ -71,8 +71,8 @@ namespace AstroPhotoGallery.Models
 
         [Required]
         [StringLength(50)]
-        [Display(Name = "Second Name")]
-        public string SecondName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
@@ -119,4 +119,6 @@ namespace AstroPhotoGallery.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    
 }

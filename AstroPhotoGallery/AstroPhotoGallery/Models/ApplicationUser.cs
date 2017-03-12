@@ -17,7 +17,7 @@ namespace AstroPhotoGallery.Models
         public string FirstName { get; set; }
 
         [Required]
-        public string SecondName { get; set; }
+        public string LastName { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
