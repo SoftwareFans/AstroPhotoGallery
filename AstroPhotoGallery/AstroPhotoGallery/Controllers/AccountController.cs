@@ -433,6 +433,10 @@ namespace AstroPhotoGallery.Controllers
                 var user = bd.Users.First(x => x.Id ==userId);
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
+                model.Gender = user.Gender;
+                model.City = user.City;
+                model.Country = user.Country;
+                model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
                 bd.SaveChanges();
             }
