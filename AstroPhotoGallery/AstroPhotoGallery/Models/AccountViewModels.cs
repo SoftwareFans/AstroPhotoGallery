@@ -132,4 +132,10 @@ namespace AstroPhotoGallery.Models
         public string Country { get; set; }
         public DateTime Birthday{ get; set; }      
     }
+
+    public class EditViewModel :ProfileViewModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
 }

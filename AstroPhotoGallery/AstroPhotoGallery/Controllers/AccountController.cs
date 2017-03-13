@@ -444,6 +444,12 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
+        //Get: /Account/Edit
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
