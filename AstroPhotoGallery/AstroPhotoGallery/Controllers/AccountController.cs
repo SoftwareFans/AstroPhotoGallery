@@ -423,6 +423,23 @@ namespace AstroPhotoGallery.Controllers
             base.Dispose(disposing);
         }
 
+        // GET: /Account/Show
+        public async Task<ActionResult> Show()
+        {
+            var userId = User.Identity.GetUserId();
+            var model = new ProfileViewModel();
+            using (var bd = new GalleryDbContext())
+            {
+                var user = bd.Users.First(x => x.Id ==userId);
+                model.FullName = user.FirstName + " " + user.LastName;
+                model.Email = user.Email;
+                model.PhoneNumber = user.PhoneNumber;
+                bd.SaveChanges();
+            }
+
+            return View(model);
+        }
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
