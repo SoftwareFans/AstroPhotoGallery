@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
+using System.Net;
+using System.Data.Entity;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -444,10 +446,62 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
-        //Get: /Account/Edit
+       //Get /Account/Edit
         public ActionResult Edit()
         {
-            return View();
+            var id = User.Identity.GetUserId();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var bd =new GalleryDbContext())
+            {
+                var user = bd.Users.First(x => x.Id == id);
+                if (user==null)
+                {
+                    return HttpNotFound();
+                }
+
+                var model = new EditViewModel();
+                model.Id = user.Id;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                model.Gender = user.Gender;
+                model.PhoneNumber = user.PhoneNumber;
+                model.Email = user.Email;
+                model.Birthday = user.Birthday;
+                model.City = user.City;
+                model.Country = user.Country;
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = User.Identity.GetUserId();
+                using(var db = new GalleryDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(x => x.Id == id);
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.Gender = model.Gender;
+                    user.Email = model.Email;
+                    user.Country = model.Country;
+                    user.City = model.City;
+                    user.Birthday = model.Birthday;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Show", "Account");
+            }
+
+            return View(model);
         }
 
         #region Helpers

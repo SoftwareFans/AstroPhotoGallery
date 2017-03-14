@@ -130,11 +130,13 @@ namespace AstroPhotoGallery.Models
         public string Gender { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
         public DateTime Birthday{ get; set; }      
     }
 
     public class EditViewModel :ProfileViewModel
     {
+        public string Id{ get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
