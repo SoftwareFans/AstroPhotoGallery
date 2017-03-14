@@ -124,20 +124,44 @@ namespace AstroPhotoGallery.Models
 
     public class ProfileViewModel
     {
+        [Required]       
+        [Display(Name = "Full Name")]
         public string FullName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+      
+        [Display(Name = "Gender")]
         public string Gender { get; set; }
+      
+        [Display(Name = "City")]
         public string City { get; set; }
+        
+        [Display(Name = "Country")]
         public string Country { get; set; }
+
         [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
         public DateTime Birthday{ get; set; }      
     }
 
     public class EditViewModel :ProfileViewModel
     {
+        [Required] 
         public string Id{ get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
 }
