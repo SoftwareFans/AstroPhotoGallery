@@ -23,6 +23,7 @@ namespace AstroPhotoGallery.Models
         public string City { get; set; }
         public string Country { get; set; }
         public DateTime Birthday { get; set; }
+        public string ImagePath { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

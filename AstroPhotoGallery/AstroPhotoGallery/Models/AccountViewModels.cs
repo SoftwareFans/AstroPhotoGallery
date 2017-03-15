@@ -149,7 +149,7 @@ namespace AstroPhotoGallery.Models
         public DateTime Birthday{ get; set; }      
     }
 
-    public class EditViewModel :ProfileViewModel
+    public class EditViewModel 
     {
         [Required] 
         public string Id{ get; set; }
@@ -163,5 +163,23 @@ namespace AstroPhotoGallery.Models
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
+        public DateTime Birthday { get; set; }
+
+        [Display(Name = "Upload profile picture")]
+        public string ImagePath { get; set; }
     }
 }

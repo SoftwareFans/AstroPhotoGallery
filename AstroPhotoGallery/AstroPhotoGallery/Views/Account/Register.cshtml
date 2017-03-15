@@ -42,13 +42,7 @@
         <div class="col-lg-4">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ConfirmPassword) })
         </div>
-    </div>
-    @*<div class="form-group">
-        @Html.Label("Avatar", new { @class = "col-lg-4 control-label" })
-        <div class="col-lg-4">
-            <input type="file" id="Avatar" name="upload" />
-        </div>
-    </div>*@
+    </div>   
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
             <button class="btn btn-default" onclick="location.href='@Url.Action("Index","Home")';return false;">Cancel</button>
