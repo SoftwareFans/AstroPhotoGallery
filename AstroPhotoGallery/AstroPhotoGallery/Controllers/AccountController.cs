@@ -433,7 +433,7 @@ namespace AstroPhotoGallery.Controllers
             var model = new ProfileViewModel();
             using (var bd = new GalleryDbContext())
             {
-                var user = bd.Users.First(x => x.Id ==userId);
+                var user = bd.Users.First(x => x.Id == userId);
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.Gender = user.Gender;
@@ -441,14 +441,22 @@ namespace AstroPhotoGallery.Controllers
                 model.Country = user.Country;
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
-                model.ImagePath = user.ImagePath;
+                if (user.ImagePath.Equals(null))
+                {
+                    model.ImagePath = "~/Content/images/blank-profile-picture.png";
+                }
+                else
+                {
+                    model.ImagePath = user.ImagePath;
+                }
+
                 bd.SaveChanges();
             }
 
             return View(model);
         }
 
-       //Get /Account/Edit
+        //Get /Account/Edit
         public ActionResult Edit()
         {
             var id = User.Identity.GetUserId();
@@ -457,10 +465,10 @@ namespace AstroPhotoGallery.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using (var bd =new GalleryDbContext())
+            using (var bd = new GalleryDbContext())
             {
                 var user = bd.Users.First(x => x.Id == id);
-                if (user==null)
+                if (user == null)
                 {
                     return HttpNotFound();
                 }
