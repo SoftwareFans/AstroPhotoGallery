@@ -1,0 +1,54 @@
+﻿@model AstroPhotoGallery.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Profile</h2>
+<div class="panel panel-default">
+    <div class="panel-heading resume-heading">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-xs-12 col-sm-4">
+                    <figure>
+                        <img src= "@Url.Content(Model.ImagePath)" alt="Profile picture" class="image-circle"/>
+                        
+                    </figure>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                    <ul class="list-group">
+                        <li class="list-group-item well well-sm">@Model.FullName</li>
+                        <li class="list-group-item ">
+                            <button class="btn btn-primary btn-sm pull-right" onclick="location.href='@Url.Action("Edit","Account")';return false;">Edit your profile</button>
+                        </li>
+                        <li class="list-group-item col-md-2 col-sm-3">
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Gender:</span> @Model.Gender
+                            </div>
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Country:</span> @Model.Country
+                            </div>
+                        </li>
+                        <li class="list-group-item col-md-2 col-sm-3">
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">City:</span> @Model.City
+                            </div>
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Birthday:</span> @Model.Birthday.ToString("d/M/yyyy")
+                            </div>
+                        </li>
+                        <li class="list-group-item col-md-2 col-sm-3">
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Email:</span> @Model.Email
+                            </div>
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Phone:</span> @Model.PhoneNumber
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

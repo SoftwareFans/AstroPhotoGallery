@@ -90,7 +90,7 @@ namespace AstroPhotoGallery.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-      
+
     }
 
     public class ResetPasswordViewModel
@@ -124,7 +124,7 @@ namespace AstroPhotoGallery.Models
 
     public class ProfileViewModel
     {
-        [Required]       
+        [Required]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
@@ -135,26 +135,34 @@ namespace AstroPhotoGallery.Models
 
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-      
+
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-      
+
         [Display(Name = "City")]
         public string City { get; set; }
-        
+
         [Display(Name = "Country")]
         public string Country { get; set; }
 
         [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
-        public DateTime Birthday{ get; set; }
+        public DateTime Birthday { get; set; }
 
-        public string ImagePath { get; set; }
+        public string ImagePath
+        {
+            get
+            {
+                return "~/Content/images/blank-profile-picture.png";
+            }
+
+            set {; }
+        }
     }
 
-    public class EditViewModel 
+    public class EditViewModel
     {
-        [Required] 
-        public string Id{ get; set; }
+        [Required]
+        public string Id { get; set; }
 
         [Required]
         [StringLength(50)]

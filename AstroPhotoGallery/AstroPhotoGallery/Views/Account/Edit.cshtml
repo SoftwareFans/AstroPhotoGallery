@@ -1,0 +1,67 @@
+﻿@model AstroPhotoGallery.Models.EditViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+    <div class="well">
+        @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.Id)
+            @Html.AntiForgeryToken()
+            <h3>Edit your profile.</h3>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-4 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.FirstName) })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-lg-4 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.LastName) })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Image", new { @class = "col-lg-4 control-label" })
+                <div class="col-lg-4">
+                    <input type="file" id="ImagePath" name="ImagePath" />
+                </div>
+            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.City, new { @class = "col-lg-4 control-label" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.City) })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Country, new { @class = "col-lg-4 control-label" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Country) })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Birthday, new { @class = "col-lg-4 control-label" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Birthday) })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-lg-4 control-label" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.PhoneNumber) })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button class="btn btn-default" onclick="location.href='@Url.Action("Account","Show")';return false;">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Save changes" />
+                    </div>
+                </div>
+        }
+    </div>
+</div>
