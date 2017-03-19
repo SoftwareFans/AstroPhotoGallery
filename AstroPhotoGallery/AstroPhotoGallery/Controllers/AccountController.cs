@@ -441,6 +441,7 @@ namespace AstroPhotoGallery.Controllers
                 model.Country = user.Country;
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
+                model.ImagePath = user.ImagePath;
                 bd.SaveChanges();
             }
 
@@ -473,6 +474,7 @@ namespace AstroPhotoGallery.Controllers
                 model.Birthday = user.Birthday;
                 model.City = user.City;
                 model.Country = user.Country;
+                model.ImagePath = user.ImagePath;
                 return View(model);
             }
         }

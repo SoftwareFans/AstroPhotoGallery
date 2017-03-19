@@ -146,7 +146,9 @@ namespace AstroPhotoGallery.Models
         public string Country { get; set; }
 
         [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
-        public DateTime Birthday{ get; set; }      
+        public DateTime Birthday{ get; set; }
+
+        public string ImagePath { get; set; }
     }
 
     public class EditViewModel 
