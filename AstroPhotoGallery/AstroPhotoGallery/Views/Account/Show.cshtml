@@ -33,9 +33,10 @@
                             </div>
                             <div style="margin:22px">
                                 <span style="opacity: 0.8">Birthday:</span>
-
+                                @if (!Model.Birthday.ToString("d/M/yyyy").Equals("1/1/1900"))
+                                {
                                     @Model.Birthday.ToString("d/M/yyyy")
-                                
+                                }
                             </div>
                         </li>
                         <li class="list-group-item col-md-2 col-sm-3">

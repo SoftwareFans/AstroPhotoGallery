@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace AstroPhotoGallery.Models
         public string City { get; set; }
         public string Country { get; set; }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Birthday { get; set; }
 
         public string ImagePath { get; set; }
