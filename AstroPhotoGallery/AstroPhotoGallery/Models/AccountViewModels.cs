@@ -179,6 +179,7 @@ namespace AstroPhotoGallery.Models
         public string Country { get; set; }
 
         [DisplayFormat(DataFormatString = "{d/M/yyyy}")]
+        [Display(Name = "Birthday: format should be d/M/yyyy")]
         public DateTime Birthday { get; set; }
 
         [Display(Name = "Upload profile picture")]

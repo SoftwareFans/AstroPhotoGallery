@@ -439,6 +439,7 @@ namespace AstroPhotoGallery.Controllers
                 model.Gender = user.Gender;
                 model.City = user.City;
                 model.Country = user.Country;
+
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
                 if (string.IsNullOrEmpty(user.ImagePath))
@@ -502,7 +503,7 @@ namespace AstroPhotoGallery.Controllers
                         var hasNewImage = false;
                         if (path.Contains("."))
                         {
-                            // ако юзъра не качи снимка дава грешка
+
                             poImgFile.SaveAs(path);
                             hasNewImage = true;
                         }
