@@ -3,6 +3,7 @@
     ViewBag.Title = "List";
 }
 
+@Styles.Render("~/Content/galleryListStyles.css")
 <div class="container">
     <div class="row">
         @foreach (var picture in Model)
@@ -15,8 +16,9 @@
                 </header>
 
                 <div class="gallery">
-                    <a target="_blank" href="@picture.ImagePath">
-                        <img src="@picture.ImagePath" alt="Astro" width="300" height="200">
+                    <a target="_blank" href="@Url.Content(picture.ImagePath)">
+                        
+                        <img src="@Url.Content(picture.ImagePath)" alt="Astro" width="300" height="200">
                     </a>
                     <div class="desc">@picture.PicDescription</div>
                 </div>
