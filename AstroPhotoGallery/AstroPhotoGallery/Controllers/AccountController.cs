@@ -499,7 +499,13 @@ namespace AstroPhotoGallery.Controllers
                     {
                         var pic = Path.GetFileName(poImgFile.FileName);
                         var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
-                        poImgFile.SaveAs(path);
+                        var hasNewImage = false;
+                        if (path.Contains("."))
+                        {
+                            // ако юзъра не качи снимка дава грешка
+                            poImgFile.SaveAs(path);
+                            hasNewImage = true;
+                        }
 
                         var id = User.Identity.GetUserId();
                         using (var db = new GalleryDbContext())
@@ -512,7 +518,11 @@ namespace AstroPhotoGallery.Controllers
                             user.Country = model.Country;
                             user.City = model.City;
                             user.Birthday = model.Birthday;
-                            user.ImagePath = "~/Content/images/" + pic;
+                            if (hasNewImage)
+                            {
+                                user.ImagePath = "~/Content/images/" + pic;
+                            }
+
                             db.Entry(user).State = EntityState.Modified;
                             db.SaveChanges();
                         }
