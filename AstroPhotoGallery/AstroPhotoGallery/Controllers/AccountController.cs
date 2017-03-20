@@ -1,16 +1,18 @@
-﻿namespace AstroPhotoGallery.Controllers
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using AstroPhotoGallery.Models;
+using System.Net;
+using System.Data.Entity;
+using System.IO;
+
+namespace AstroPhotoGallery.Controllers
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security;
-    using Models;
-    using System.Net;
-    using System.Data.Entity;
-    using System.IO;
+
 
     [Authorize]
     public class AccountController : Controller
@@ -51,7 +53,7 @@
                 _userManager = value;
             }
         }
-      
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -60,7 +62,7 @@
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-       
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -88,7 +90,7 @@
                     return View(model);
             }
         }
-      
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -422,6 +424,7 @@
             base.Dispose(disposing);
         }
 
+        //
         // GET: /Account/Show
         public ActionResult Show()
         {
@@ -438,14 +441,10 @@
 
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
-                if (string.IsNullOrEmpty(user.ImagePath))
-                {
-                    model.ImagePath = "~/Content/images/blank-profile-picture.png";
-                }
-                else
-                {
-                    model.ImagePath = user.ImagePath;
-                }
+
+                model.ImagePath = string.IsNullOrEmpty(user.ImagePath)
+                    ? "~/Content/images/blank-profile-picture.png"
+                    : user.ImagePath;
 
                 bd.SaveChanges();
             }
@@ -453,10 +452,12 @@
             return View(model);
         }
 
-        //Get /Account/Edit
+        //
+        //GET: /Account/Edit
         public ActionResult Edit()
         {
             var id = User.Identity.GetUserId();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -480,10 +481,13 @@
                 model.City = user.City;
                 model.Country = user.Country;
                 model.ImagePath = user.ImagePath;
+
                 return View(model);
             }
         }
 
+        //
+        //POST: /Account/Edit
         [HttpPost]
         public ActionResult Edit([Bind(Exclude = "ImagePath")]EditViewModel model)
         {
