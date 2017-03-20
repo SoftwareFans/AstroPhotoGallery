@@ -9,11 +9,13 @@ namespace AstroPhotoGallery.Models
 {
 
     public class GalleryDbContext : IdentityDbContext<ApplicationUser>
-    {      
+    {
         public GalleryDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public virtual IDbSet<Picture> Pictures { get; set; }
 
         public static GalleryDbContext Create()
         {
