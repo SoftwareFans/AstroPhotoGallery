@@ -1,20 +1,17 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using AstroPhotoGallery.Models;
-using System.Net;
-using System.Data.Entity;
-using System.IO;
-
-namespace AstroPhotoGallery.Controllers
+﻿namespace AstroPhotoGallery.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Models;
+    using System.Net;
+    using System.Data.Entity;
+    using System.IO;
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -54,7 +51,7 @@ namespace AstroPhotoGallery.Controllers
                 _userManager = value;
             }
         }
-
+      
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -63,7 +60,7 @@ namespace AstroPhotoGallery.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+       
         //
         // POST: /Account/Login
         [HttpPost]
@@ -76,8 +73,6 @@ namespace AstroPhotoGallery.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -93,7 +88,7 @@ namespace AstroPhotoGallery.Controllers
                     return View(model);
             }
         }
-
+      
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -168,6 +163,7 @@ namespace AstroPhotoGallery.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
@@ -427,7 +423,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         // GET: /Account/Show
-        public async Task<ActionResult> Show()
+        public ActionResult Show()
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
@@ -491,50 +487,51 @@ namespace AstroPhotoGallery.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Exclude = "ImagePath")]EditViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (Request.Files.Count > 0)
-                {
-                    HttpPostedFileBase poImgFile = Request.Files["ImagePath"];
-                    if (poImgFile != null)
-                    {
-                        var pic = Path.GetFileName(poImgFile.FileName);
-                        var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
-                        var hasNewImage = false;
-                        if (path.Contains("."))
-                        {
-
-                            poImgFile.SaveAs(path);
-                            hasNewImage = true;
-                        }
-
-                        var id = User.Identity.GetUserId();
-                        using (var db = new GalleryDbContext())
-                        {
-                            var user = db.Users.FirstOrDefault(x => x.Id == id);
-                            user.FirstName = model.FirstName;
-                            user.LastName = model.LastName;
-                            user.PhoneNumber = model.PhoneNumber;
-                            user.Gender = model.Gender;
-                            user.Country = model.Country;
-                            user.City = model.City;
-                            user.Birthday = model.Birthday;
-                            if (hasNewImage)
-                            {
-                                user.ImagePath = "~/Content/images/" + pic;
-                            }
-
-                            db.Entry(user).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-                }
-
-                return RedirectToAction("Show", "Account");
+                return View(model);
             }
 
-            return View(model);
+            if (Request.Files.Count > 0)
+            {
+                var poImgFile = Request.Files["ImagePath"];
+
+                var pic = Path.GetFileName(poImgFile.FileName);
+                var hasNewImage = false;
+
+                if (!string.IsNullOrEmpty(pic))
+                {
+                    var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+                    poImgFile.SaveAs(path);
+                    hasNewImage = true;
+                }
+
+                var id = User.Identity.GetUserId();
+                using (var db = new GalleryDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(x => x.Id == id);
+
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.Gender = model.Gender;
+                    user.Country = model.Country;
+                    user.City = model.City;
+                    user.Birthday = model.Birthday;
+
+                    if (hasNewImage)
+                    {
+                        user.ImagePath = "~/Content/images/" + pic;
+                    }
+
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Show", "Account");
         }
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins
