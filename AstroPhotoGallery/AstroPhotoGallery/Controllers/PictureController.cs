@@ -16,7 +16,7 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("List");
         }
 
-        //GET:Article/List
+        //GET:Picture/List
         public ActionResult List()
         {
             using (var bd = new GalleryDbContext())
@@ -26,9 +26,9 @@ namespace AstroPhotoGallery.Controllers
                 var pictures = bd.Pictures
                     .Include(x => x.PicUploader)
                     .ToList();
-            }
 
-            return View();
+                return View(pictures);
+            }
         }
     }
 }

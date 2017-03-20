@@ -270,11 +270,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Show.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Picture\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
-    <Folder Include="Views\Picture\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

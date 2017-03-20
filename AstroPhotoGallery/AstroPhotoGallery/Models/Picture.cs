@@ -19,8 +19,10 @@ namespace AstroPhotoGallery.Models
         [Required]
         public string PicDescription { get; set; }
 
-        [ForeignKey("Uploader")]
+        [ForeignKey("PicUploader")]
         public string PicUploaderId { get; set; }
+
+        public string ImagePath { get; set; }     
 
         public virtual ApplicationUser PicUploader { get; set; }
     }
