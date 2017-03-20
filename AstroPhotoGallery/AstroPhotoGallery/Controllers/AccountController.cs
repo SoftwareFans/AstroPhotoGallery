@@ -441,7 +441,7 @@ namespace AstroPhotoGallery.Controllers
                 model.Country = user.Country;
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
-                if (user.ImagePath.Equals(null))
+                if (string.IsNullOrEmpty(user.ImagePath))
                 {
                     model.ImagePath = "~/Content/images/blank-profile-picture.png";
                 }
