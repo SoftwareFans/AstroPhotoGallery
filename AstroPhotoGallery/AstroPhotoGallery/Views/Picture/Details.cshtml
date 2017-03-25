@@ -1,0 +1,29 @@
+﻿@model AstroPhotoGallery.Models.Picture
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.PicTitle
+            </h2>
+        </header>
+        <p>
+            @Model.PicDescription
+        </p>
+        <small class="author">
+            --author @Model.PicUploader.Email
+        </small>
+        <footer class="pull-right">
+            @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+            @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+        </footer>
+    </article>
+</div>
+<hr />
+
+
