@@ -132,5 +132,38 @@ namespace AstroPhotoGallery.Controllers
                 return View(picture);
             }
         }
+
+        //POST: Picture/Delete
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db =new GalleryDbContext())
+                {
+                    //Get picture from database
+                    var picture = db.Pictures
+                        .Where(p => p.Id == id)
+                        .Include(p => p.PicUploader)
+                        .First();
+
+                    //Check if picture exists
+                    if (picture == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    //Delete article from database 
+                    db.Pictures.Remove(picture);
+                    db.SaveChanges();
+
+                    //Redirect to index page
+                    return RedirectToAction("Index");
+                }
+        }
     }
 }
