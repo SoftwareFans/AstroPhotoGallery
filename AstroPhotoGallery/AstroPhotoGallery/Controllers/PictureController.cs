@@ -143,27 +143,89 @@ namespace AstroPhotoGallery.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using (var db =new GalleryDbContext())
+            using (var db = new GalleryDbContext())
+            {
+                //Get picture from database
+                var picture = db.Pictures
+                    .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
+                    .First();
+
+                //Check if picture exists
+                if (picture == null)
                 {
-                    //Get picture from database
-                    var picture = db.Pictures
-                        .Where(p => p.Id == id)
-                        .Include(p => p.PicUploader)
-                        .First();
+                    return HttpNotFound();
+                }
 
-                    //Check if picture exists
-                    if (picture == null)
-                    {
-                        return HttpNotFound();
-                    }
+                //Delete article from database 
+                db.Pictures.Remove(picture);
+                db.SaveChanges();
 
-                    //Delete article from database 
-                    db.Pictures.Remove(picture);
+                //Redirect to index page
+                return RedirectToAction("Index");
+            }
+        }
+
+        //GET: Picture/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                //Get picture from database
+                var picture = db.Pictures
+                    .Where(p => p.Id == id)
+                    .First();
+
+                //Chech if picture exists
+                if (picture == null)
+                {
+                    return HttpNotFound();
+                }
+
+                //Create view model
+                var model = new PictureViewModel();
+                model.Id = picture.Id;
+                model.PicTitle = picture.PicTitle;
+                model.PicDescription = picture.PicDescription;
+                model.ImagePath = picture.ImagePath;
+
+                //Pass the view model to view
+                return View(model);
+            }
+        }
+
+        //POST: Picture/Edit
+        [HttpPost]
+        public ActionResult Edit(PictureViewModel model)
+        {
+            //Check if model state is valid
+            if (ModelState.IsValid)
+            {
+                using (var db = new GalleryDbContext())
+                {
+                    //Get picture form database
+                    var picture = db.Pictures.FirstOrDefault(p => p.Id == model.Id);
+
+                    //Set picture props
+                    picture.PicTitle = model.PicTitle;
+                    picture.PicDescription = model.PicDescription;
+
+                    //Save pic state in database
+                    db.Entry(picture).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    //Redirect to index page
+                    //Redirect to the index page
                     return RedirectToAction("Index");
                 }
+            }
+
+            //If model state is invalid,return the same view
+            return View(model);
         }
     }
 }

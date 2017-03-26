@@ -212,6 +212,7 @@
     <Compile Include="Models\GalleryDbContext.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PictureViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -274,6 +275,7 @@
     <Content Include="Views\Picture\Details.cshtml" />
     <Content Include="Views\Picture\Upload.cshtml" />
     <Content Include="Views\Picture\Delete.cshtml" />
+    <Content Include="Views\Picture\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
