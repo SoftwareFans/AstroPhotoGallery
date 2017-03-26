@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -42,7 +43,7 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                  //Get picture from batabase
+                //Get picture from batabase
 
                 var picture = db.Pictures.Where(x => x.Id == id).Include(u => u.PicUploader).First();
 
@@ -63,11 +64,19 @@ namespace AstroPhotoGallery.Controllers
 
         //POST: Picture/Upload
         [HttpPost]
-        public ActionResult Upload(Picture picture)
+        public ActionResult Upload([Bind(Exclude = "ImagePath")]Picture picture)
         {
             if (ModelState.IsValid)
             {
-                //Insert pic in database
+                
+                //if (Request.Files.Count > 0)
+                //{
+                //    var poImgFile = Request.Files["ImagePath"].FileName;
+                //    var pic = Path.GetFileName(poImgFile.FileName);
+                //    path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+                //    poImgFile.SaveAs(path);
+                //}
+
                 using (var db = new GalleryDbContext())
                 {
                     //Get uploader id
@@ -78,12 +87,19 @@ namespace AstroPhotoGallery.Controllers
 
                     //Set picture uploader
                     picture.PicUploaderId = uploaderId;
+                    //Pic validation
 
+                    if (Request.Files.Count > 0)
+                    {
+                       var path = $"~/Content/images/{Request.Files["ImagePath"].FileName}";
+                        picture.ImagePath = path;
+                    }
+                    
                     //Save pic in database
                     db.Pictures.Add(picture);
                     db.SaveChanges();
 
-                    RedirectToAction("Index");
+                    return RedirectToAction("Index");
                 }
             }
 
