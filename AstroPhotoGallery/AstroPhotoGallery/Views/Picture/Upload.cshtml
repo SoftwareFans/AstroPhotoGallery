@@ -6,6 +6,7 @@
     <div class="container">
         <div class="well">
             <h2>Upload picture</h2>
+            <hr/>
             @using (Html.BeginForm("Upload", "Picture", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()

@@ -17,9 +17,14 @@
         <small class="author">
             --author @Model.PicUploader.Email
         </small>
+        <body>
+            <div class="gallery">
+                <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="300" height="200">
+            </div>
+        </body>
         <footer class="pull-right">
-            @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-            @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
         </footer>
     </article>

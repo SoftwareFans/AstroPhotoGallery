@@ -68,7 +68,7 @@ namespace AstroPhotoGallery.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 //if (Request.Files.Count > 0)
                 //{
                 //    var poImgFile = Request.Files["ImagePath"].FileName;
@@ -91,10 +91,10 @@ namespace AstroPhotoGallery.Controllers
 
                     if (Request.Files.Count > 0)
                     {
-                       var path = $"~/Content/images/{Request.Files["ImagePath"].FileName}";
+                        var path = $"~/Content/images/{Request.Files["ImagePath"].FileName}";
                         picture.ImagePath = path;
                     }
-                    
+
                     //Save pic in database
                     db.Pictures.Add(picture);
                     db.SaveChanges();
@@ -104,6 +104,33 @@ namespace AstroPhotoGallery.Controllers
             }
 
             return View(picture);
+        }
+
+        //GET: Picture/Delete
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                //Get picture from database
+                var picture = db.Pictures
+                    .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
+                    .First();
+
+                //Check if picture exists
+                if (picture == null)
+                {
+                    return HttpNotFound();
+                }
+                //Pass picture to  view
+
+                return View(picture);
+            }
         }
     }
 }
