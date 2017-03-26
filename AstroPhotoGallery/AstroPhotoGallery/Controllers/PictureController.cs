@@ -12,6 +12,13 @@ namespace AstroPhotoGallery.Controllers
 {
     public class PictureController : Controller
     {
+
+        private bool IsUserAuthorizedToEdit(Picture picture)
+        {
+            //chech for admin
+            bool isUploader = picture.IsUploader(this.User.Identity.Name);
+            return isUploader;
+        }
         // GET: Picture
         public ActionResult Index()
         {
@@ -57,6 +64,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //GET: Picture/Upload
+        [Authorize]
         public ActionResult Upload()
         {
             return View();
@@ -64,6 +72,7 @@ namespace AstroPhotoGallery.Controllers
 
         //POST: Picture/Upload
         [HttpPost]
+        [Authorize]
         public ActionResult Upload([Bind(Exclude = "ImagePath")]Picture picture)
         {
             if (ModelState.IsValid)
@@ -122,6 +131,10 @@ namespace AstroPhotoGallery.Controllers
                     .Include(p => p.PicUploader)
                     .First();
 
+                if (!IsUserAuthorizedToEdit(picture))
+                {
+                    return  new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
                 //Check if picture exists
                 if (picture == null)
                 {
@@ -181,6 +194,11 @@ namespace AstroPhotoGallery.Controllers
                     .Where(p => p.Id == id)
                     .First();
 
+                if (!IsUserAuthorizedToEdit(picture))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+
                 //Chech if picture exists
                 if (picture == null)
                 {
@@ -227,5 +245,7 @@ namespace AstroPhotoGallery.Controllers
             //If model state is invalid,return the same view
             return View(model);
         }
+
+
     }
 }

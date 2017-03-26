@@ -28,5 +28,10 @@ namespace AstroPhotoGallery.Models
         public string ImagePath { get; set; }
 
         public virtual ApplicationUser PicUploader { get; set; }
+
+        public bool IsUploader(string name)
+        {
+            return this.PicUploader.UserName.EndsWith(name);
+        }
     }
 }
