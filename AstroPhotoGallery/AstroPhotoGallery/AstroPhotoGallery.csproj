@@ -272,6 +272,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Picture\List.cshtml" />
     <Content Include="Views\Picture\Details.cshtml" />
+    <Content Include="Views\Picture\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

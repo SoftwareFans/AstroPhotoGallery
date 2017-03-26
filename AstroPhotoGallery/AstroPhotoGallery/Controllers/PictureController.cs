@@ -54,5 +54,40 @@ namespace AstroPhotoGallery.Controllers
                 return View(picture);
             }
         }
+
+        //GET: Picture/Upload
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        //POST: Picture/Upload
+        [HttpPost]
+        public ActionResult Upload(Picture picture)
+        {
+            if (ModelState.IsValid)
+            {
+                //Insert pic in database
+                using (var db = new GalleryDbContext())
+                {
+                    //Get uploader id
+                    var uploaderId = db.Users
+                        .Where(u => u.UserName == this.User.Identity.Name)
+                        .First()
+                        .Id;
+
+                    //Set picture uploader
+                    picture.PicUploaderId = uploaderId;
+
+                    //Save pic in database
+                    db.Pictures.Add(picture);
+                    db.SaveChanges();
+
+                    RedirectToAction("Index");
+                }
+            }
+
+            return View(picture);
+        }
     }
 }
