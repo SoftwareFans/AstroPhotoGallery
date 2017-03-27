@@ -77,15 +77,6 @@ namespace AstroPhotoGallery.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                //if (Request.Files.Count > 0)
-                //{
-                //    var poImgFile = Request.Files["ImagePath"].FileName;
-                //    var pic = Path.GetFileName(poImgFile.FileName);
-                //    path = Path.Combine(Server.MapPath("~/Content/images"), pic);
-                //    poImgFile.SaveAs(path);
-                //}
-
                 using (var db = new GalleryDbContext())
                 {
                     //Get uploader id
@@ -100,8 +91,14 @@ namespace AstroPhotoGallery.Controllers
 
                     if (Request.Files.Count > 0)
                     {
-                        var path = $"~/Content/images/{Request.Files["ImagePath"].FileName}";
-                        picture.ImagePath = path;
+
+                        var poImgFile = Request.Files["ImagePath"];
+                        var pic = Path.GetFileName(poImgFile.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+
+                        poImgFile.SaveAs(path);
+                        picture.ImagePath = "~/Content/images/" + pic; 
+                       
                     }
 
                     //Save pic in database
@@ -133,7 +130,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (!IsUserAuthorizedToEdit(picture))
                 {
-                    return  new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
                 }
                 //Check if picture exists
                 if (picture == null)
