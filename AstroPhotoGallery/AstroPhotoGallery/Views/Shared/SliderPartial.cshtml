@@ -1,0 +1,17 @@
+﻿
+<div>
+    <ul id="slider">
+        @foreach(var image in Model)
+        {
+            <li><img src="@Url.Content(image.ImagePath)"/></li>
+        }
+
+    </ul>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#slider').bxSlider();
+        $('.bx-wrapper').width('70%');
+    });
+</script>
+
