@@ -52,14 +52,17 @@
                 <div class="pull-right">
                     @if (Model.IsUploader(User.Identity.Name))
                     {
-                        @Html.ActionLink("Edit", "Edit", "Picture", new {@id = Model.Id}, new {@class = "btn btn-success btn-sm"})
+                        <span>
+                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-sm" })
+                        </span>
 
-                        @Html.ActionLink("Delete", "Delete", "Picture", new {@id = Model.Id}, new {@class = "btn btn-warning btn-sm"})
-
+                        <span>
+                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-warning btn-sm" })
+                        </span>
                     }
-                        @Html.ActionLink("Back", "Index", "Picture", null, new {@class = "btn btn-default btn-sm"})
-                    
-
+                    <span>
+                        @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-sm" })
+                    </span>
                 </div>
             </div>
         </div>
