@@ -3,120 +3,97 @@
 @{
     ViewBag.Title = "Details";
 }
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<link href="~/Content/picsDetails.css" rel="stylesheet" />
 
-<div class="col-md-12">
-    <div class="thumbnail">
-        <img class="img-details" src="@Url.Content(Model.ImagePath)" alt="">
-        <div class="caption-full">
-            <h4 class="pull-right">
-                <small class="author">
-                    --author @Model.PicUploader.Email
-                </small>
-            </h4>
-            <h4 style="opacity:initial">
-                <p>@Model.PicTitle</p>
-            </h4>
-            <div>
-                @Model.PicDescription
+<div>
+    <h2>
+        <div class="pull-right">
+        </div>
+
+        @Model.PicTitle
+    </h2>
+
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading resume-heading">
+
+        <div class="row">
+            <div class="col-md-8" style="color: #839496">
+                <div>
+                    @Model.PicDescription
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <!-- Thumbnail image -->
+                <a href="#" data-toggle="modal" data-target=".dialog1">
+                    <img src="@Url.Content(Model.ImagePath)" width="100%" class="img-responsive img-rounded center-block" alt="" />
+                </a>
             </div>
 
-        </div>
-        <div class="ratings">
-            <p class="pull-right">3 reviews</p>
-            <p>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                4.0 stars
-            </p>
-        </div>
-    </div>
-    <div class="pull-right">
-        @if (Model.IsUploader(User.Identity.Name))
-            {
-            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-        }
-
-        @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-xs" })
-    </div>
-
-    <div class="well">
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                Anonymous
-                <span class="pull-right">10 days ago</span>
-                <p>This product was great in terms of quality. I would definitely buy another!</p>
+            <!-- Modal content for City Image -->
+            <div class="modal fade dialog1" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title" id="myLargeModalLabel-1">@Model.PicTitle</h4>
+                        </div>
+                        <div class="modal-body active">
+                            <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="100%" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <hr>
         <div class="row">
-            <div class="col-md-12">
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                Anonymous
-                <span class="pull-right">12 days ago</span>
-                <p>I've alredy ordered another one!</p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                Anonymous
-                <span class="pull-right">15 days ago</span>
-                <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
+            <div class="col-md-8">
+                <span class="author" style="opacity: 0.8">--author @Model.PicUploader.Email </span>
+                <div class="pull-right">
+                    @if (Model.IsUploader(User.Identity.Name))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Picture", new {@id = Model.Id}, new {@class = "btn btn-success btn-sm"})
+
+                        @Html.ActionLink("Delete", "Delete", "Picture", new {@id = Model.Id}, new {@class = "btn btn-danger btn-sm"})
+
+                    }
+                        @Html.ActionLink("Back", "Index", "Picture", null, new {@class = "btn btn-default btn-sm"})
+                    
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @*<div class="container">
-    <article>
-        <header>
-            <h2>
-                @Model.PicTitle
-            </h2>
-        </header>
-        <p>
-            @Model.PicDescription
-        </p>
-        <small class="author">
-            --author @Model.PicUploader.Email
-        </small>
-        <body>
-            <div class="gallery">
-                <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="300" height="200">
-            </div>
-        </body>
-        <footer class="pull-right">
-            @if (Model.IsUploader(User.Identity.Name))
-            {
-                @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-                @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-            }
+        <article>
+            <header>
+                <h2>
+                    @Model.PicTitle
+                </h2>
+            </header>
+            <p>
+                @Model.PicDescription
+            </p>
 
-            @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-xs" })
-        </footer>
-    </article>
-</div>
-<hr />*@
+            <body>
+                <div class="gallery">
+                    <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="300" height="200">
+                </div>
+            </body>
+            <footer class="pull-right">
+                @if (Model.IsUploader(User.Identity.Name))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+                    @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                }
+
+                @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-xs" })
+            </footer>
+        </article>
+    </div>
+    <hr />*@
 
 

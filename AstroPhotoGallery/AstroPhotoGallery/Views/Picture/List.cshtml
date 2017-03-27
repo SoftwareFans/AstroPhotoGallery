@@ -4,32 +4,55 @@
 }
 
 @Styles.Render("~/Content/galleryListStyles.css")
+@Styles.Render("~/fonts/font-awesome/css/font-awesome.min.css")
+
+
 <div class="container">
     <div class="row">
-        @foreach (var picture in Model)
-        {
-            <div class="col-sm-6">
-                <header>
-                    <h2>
-                        @Html.ActionLink(@picture.PicTitle,"Details", "Picture", new { @id = picture.Id }, null)
-                    </h2>
-                </header>
-
-                <div class="gallery">
-                    <a target="_blank" href="@Url.Content(picture.ImagePath)">                 
-                        <img src="@Url.Content(picture.ImagePath)" alt="Astro" width="300" height="200">
-                    </a>
-                    <div class="desc">@picture.PicDescription</div>
+        <div class="text-center">
+            <h1>Sample Image Gallery</h1>
+        </div>
+        <div class="row">
+            @foreach (var picture in Model)
+            {
+                <div class="col-md-4">
+                    <div class="well">
+                        <a target="_blank" href="@Url.Content(picture.ImagePath)">
+                            <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(picture.ImagePath)" />
+                        </a>
+                    </div>
                 </div>
-
-                <footer class="pull-right">
-                    <small class="author">
-                        --author @picture.PicUploader.Email
-                    </small>
-                </footer>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
-<hr />
+
+@*<div class="container">
+        <div class="row">
+            @foreach (var picture in Model)
+            {
+                <div class="col-sm-6">
+                    <header>
+                        <h2>
+                            @Html.ActionLink(@picture.PicTitle,"Details", "Picture", new { @id = picture.Id }, null)
+                        </h2>
+                    </header>
+
+                    <div class="gallery">
+                        <a target="_blank" href="@Url.Content(picture.ImagePath)">
+                            <img src="@Url.Content(picture.ImagePath)" alt="Astro" width="300" height="200">
+                        </a>
+                        <div class="desc">@picture.PicDescription</div>
+                    </div>
+
+                    <footer class="pull-right">
+                        <small class="author">
+                            --author @picture.PicUploader.Email
+                        </small>
+                    </footer>
+                </div>
+            }
+        </div>
+    </div>
+    <hr />*@
 
