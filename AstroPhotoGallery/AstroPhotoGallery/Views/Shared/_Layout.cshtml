@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,14 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+    @Styles.Render("~/Content/mainpage.css")
 
-    <link href="~/Content/jquery.bxslider.css" rel="stylesheet" />
 
 </head>
 <body>
+
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,6 +30,7 @@
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <footer class="pull-right">
@@ -36,6 +40,18 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/custom.js")
+
     @RenderSection("scripts", required: false)
+
+    <!-- Call functions on document ready -->
+    <script>
+        $(document).ready(function () {
+            // Call Functions Like
+            appMaster.aFunction();
+            // Call anotherFunction
+            appMaster.anotherFunction();
+        });
+    </script>
 </body>
 </html>
