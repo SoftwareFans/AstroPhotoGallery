@@ -12,11 +12,11 @@ namespace AstroPhotoGallery.Controllers
     {
         public ActionResult Index()
         {
-            using (var bd = new GalleryDbContext())
+            using (var db = new GalleryDbContext())
             {
                 //Get pictures from database
 
-                var pictures = bd.Pictures
+                var pictures = db.Pictures
                     .Include(x => x.PicUploader)
                     .ToList();
 
