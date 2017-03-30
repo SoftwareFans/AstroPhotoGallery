@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +10,7 @@ using AstroPhotoGallery.Models;
 using System.Net;
 using System.Data.Entity;
 using System.IO;
+using System.Web.UI;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -431,6 +433,25 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
+        public ActionResult RemoveBirthday(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new GalleryDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == id);
+
+                    user.Birthday = string.Empty;
+
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return RedirectToAction("Edit");
+                }
+            }
+            return View();
+        }
+
         //GET: /Account/Edit
         public ActionResult Edit()
         {
@@ -441,9 +462,9 @@ namespace AstroPhotoGallery.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using (var bd = new GalleryDbContext())
+            using (var db = new GalleryDbContext())
             {
-                var user = bd.Users.First(x => x.Id == id);
+                var user = db.Users.First(x => x.Id == id);
                 if (user == null)
                 {
                     return HttpNotFound();

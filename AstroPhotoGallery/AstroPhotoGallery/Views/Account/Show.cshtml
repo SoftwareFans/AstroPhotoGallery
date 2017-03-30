@@ -4,6 +4,7 @@
 }
 
 @Styles.Render("~/Content/profileStyles.css")
+
 <h2>Profile</h2>
 <div class="panel panel-default">
     <div class="panel-heading resume-heading">
@@ -22,30 +23,26 @@
                         </li>
                         <li class="list-group-item col-md-2 col-sm-3">
                             <div style="margin:22px">
-                                <span style="opacity: 0.8">Gender:</span> @Model.Gender
+                                <span style="opacity: 0.8">Gender: </span> @Model.Gender
                             </div>
                             <div style="margin:22px">
-                                <span style="opacity: 0.8">Country:</span> @Model.Country
-                            </div>
-                        </li>
-                        <li class="list-group-item col-md-2 col-sm-3">
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">City:</span> @Model.City
-                            </div>
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Birthday:</span>
-                                @if (!Model.Birthday.ToString("d/M/yyyy").Equals("1/1/1900"))
-                                {
-                                    @Model.Birthday.ToString("d/M/yyyy")
-                                }
+                                <span style="opacity: 0.8">Country: </span> @Model.Country
                             </div>
                         </li>
                         <li class="list-group-item col-md-2 col-sm-3">
                             <div style="margin:22px">
-                                <span style="opacity: 0.8">Email:</span> @Model.Email
+                                <span style="opacity: 0.8">City: </span> @Model.City
                             </div>
                             <div style="margin:22px">
-                                <span style="opacity: 0.8">Phone:</span> @Model.PhoneNumber
+                                <span style="opacity: 0.8">Birthday: </span>@Model.Birthday
+                            </div>
+                        </li>
+                        <li class="list-group-item col-md-2 col-sm-3">
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Email: </span> @Model.Email
+                            </div>
+                            <div style="margin:22px">
+                                <span style="opacity: 0.8">Phone: </span> @Model.PhoneNumber
                             </div>
                         </li>
                     </ul>
@@ -54,3 +51,4 @@
         </div>
     </div>
 </div>
+
