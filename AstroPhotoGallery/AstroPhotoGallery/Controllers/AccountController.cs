@@ -433,25 +433,6 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
-        public ActionResult RemoveBirthday(string id)
-        {
-            if (ModelState.IsValid)
-            {
-                using (var db = new GalleryDbContext())
-                {
-                    var user = db.Users.FirstOrDefault(u => u.Id == id);
-
-                    user.Birthday = string.Empty;
-
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    return RedirectToAction("Edit");
-                }
-            }
-            return View();
-        }
-
         //GET: /Account/Edit
         public ActionResult Edit()
         {
@@ -474,11 +455,20 @@ namespace AstroPhotoGallery.Controllers
                 model.Id = user.Id;
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
-                model.Gender = user.Gender;
                 model.PhoneNumber = user.PhoneNumber;
-                model.Birthday = user.Birthday;
+                model.Gender = user.Gender;
                 model.City = user.City;
                 model.Country = user.Country;
+
+                if (user.Birthday == null)
+                {
+                    model.Birthday = string.Empty;
+                }
+                else
+                {
+                    model.Birthday = user.Birthday;
+                }
+
                 model.ImagePath = user.ImagePath;
 
                 return View(model);
@@ -517,9 +507,26 @@ namespace AstroPhotoGallery.Controllers
                     user.LastName = model.LastName;
                     user.PhoneNumber = model.PhoneNumber;
                     user.Gender = model.Gender;
-                    user.Country = model.Country;
                     user.City = model.City;
-                    user.Birthday = model.Birthday;
+                    user.Country = model.Country;
+
+                    if (String.IsNullOrEmpty(model.Birthday))
+                    {
+                        user.Birthday = string.Empty;
+                    }
+                    else
+                    {
+                        user.Birthday = user.Birthday;
+                    }
+
+                    if (model.RemoveBirthday == true)
+                    {
+                        user.Birthday = string.Empty;
+                    }
+                    else
+                    {
+                        user.Birthday = model.Birthday;
+                    }
 
                     if (hasNewImage)
                     {
@@ -533,7 +540,6 @@ namespace AstroPhotoGallery.Controllers
 
             return RedirectToAction("Show", "Account");
         }
-
 
         #region Helpers
         // Used for XSRF protection when adding external logins

@@ -166,20 +166,23 @@ namespace AstroPhotoGallery.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
-
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-
-        [Display(Name = "City")]
-        public string City { get; set; }
 
         [Display(Name = "Country")]
         public string Country { get; set; }
 
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
         [Display(Name = "Birthday")]
-        public string Birthday { get; set; }
+        public string Birthday { get; set; } = string.Empty;
+
+        [Display(Name = "Remove birthday from my profile")]
+        public bool RemoveBirthday { get; set; }
 
         [Display(Name = "Upload profile picture")]
         public string ImagePath { get; set; }

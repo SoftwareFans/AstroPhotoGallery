@@ -14,13 +14,20 @@ namespace AstroPhotoGallery.Models
     {
         [Required]
         public string FirstName { get; set; }
+
         [Required]
         public string LastName { get; set; }
+
         public string Gender { get; set; }
-        public string City { get; set; }
+
         public string Country { get; set; }
 
-        public string Birthday { get; set; }
+        public string City { get; set; }
+
+        // property PhoneNumber is part of IdentityUser by default: 
+        // IdentityUser<TKey, TLogin, TRole, TClaim> - public virtual string PhoneNumber { get; set; }
+
+        public string Birthday { get; set; } = string.Empty; // default value when creating a user in order not to be null
 
         public string ImagePath { get; set; }
 

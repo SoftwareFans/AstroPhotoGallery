@@ -2,9 +2,7 @@
 @{
     ViewBag.Title = "Show";
 }
-
 @Styles.Render("~/Content/profileStyles.css")
-
 <h2>Profile</h2>
 <div class="panel panel-default">
     <div class="panel-heading resume-heading">
@@ -16,39 +14,67 @@
                     </figure>
                 </div>
                 <div class="col-xs-12 col-sm-8">
+                    
                     <ul class="list-group">
                         <li class="list-group-item well well-sm">@Model.FullName</li>
+
                         <li class="list-group-item ">
-                            <button class="btn btn-primary btn-sm pull-right" onclick="location.href='@Url.Action("Edit","Account")';return false;">Edit your profile</button>
+                            <button class="btn btn-primary btn-sm pull-right" onclick="location.href = '@Url.Action("Edit", "Account")';return false;">Edit your profile</button>
                         </li>
-                        <li class="list-group-item col-md-2 col-sm-3">
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Gender: </span> @Model.Gender
-                            </div>
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Country: </span> @Model.Country
-                            </div>
-                        </li>
-                        <li class="list-group-item col-md-2 col-sm-3">
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">City: </span> @Model.City
-                            </div>
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Birthday: </span>@Model.Birthday
-                            </div>
-                        </li>
-                        <li class="list-group-item col-md-2 col-sm-3">
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Email: </span> @Model.Email
-                            </div>
-                            <div style="margin:22px">
-                                <span style="opacity: 0.8">Phone: </span> @Model.PhoneNumber
-                            </div>
-                        </li>
+
                     </ul>
+
+                    <table>
+                        
+                        <tr>
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">Gender:</span>
+                                    <span style="font-weight: bold">@Model.Gender</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">Country:</span>
+                                    <span style="font-weight: bold">@Model.Country</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">City:</span>
+                                    <span style="font-weight: bold">@Model.City</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">Birthday:</span>
+                                    <span style="font-weight: bold">@Model.Birthday</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">Email:</span>
+                                    <span style="font-weight: bold">@Model.Email</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div style="margin: 22px">
+                                    <span style="opacity: 0.8">Phone:</span>
+                                    <span style="font-weight: bold">@Model.PhoneNumber</span>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
