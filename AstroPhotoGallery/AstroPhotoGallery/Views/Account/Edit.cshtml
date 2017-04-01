@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = "Edit";
 }
-<link rel="stylesheet" type="text/css" href="~/Content/jquery-ui.css" />
-<script src="~/Content/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/jquery-ui.css" />  @*Used for the date picker*@
+<link rel="stylesheet" type="text/css" href="~/Content/browseButtonStyles.css" /> @*Used for the browse custom button*@
+<script src="~/Content/jquery-ui.js"></script> @*Used for the date picker*@
+<script src="~/Content/browseButton.js"></script> @*Used for the browse custom button*@
 
 <div class="container">
     <div class="well">
@@ -52,8 +54,9 @@
 
             <div class="form-group">
                 @Html.Label("Profile picture", new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-4">
-                    <input type="file" id="ImagePath" name="ImagePath" />
+                <div class="fileinput fileinput-new col-sm-4" data-provides="fileinput">
+                    <span class="btn btn-default btn-file"><span>Choose picture</span><input type="file" id="ImagePath" name="ImagePath" /></span>
+                    <span class="fileinput-filename"></span><span class="fileinput-new">No picture chosen</span>
                 </div>
             </div>
 
