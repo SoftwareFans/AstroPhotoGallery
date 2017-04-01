@@ -218,12 +218,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\browseButton.js" />
+    <Content Include="Scripts\browseButton.js" />
     <Content Include="Content\browseButtonStyles.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\galleryListStyles.css" />
     <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Content\mainpage.css" />
     <Content Include="Content\profileStyles.css" />
     <Content Include="Content\Site.css" />
