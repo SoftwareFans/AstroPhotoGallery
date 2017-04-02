@@ -17,6 +17,8 @@ namespace AstroPhotoGallery.Models
 
         public virtual IDbSet<Picture> Pictures { get; set; }
 
+        public virtual IDbSet<Category> Categories { get; set; }
+
         public static GalleryDbContext Create()
         {
             return new GalleryDbContext();
