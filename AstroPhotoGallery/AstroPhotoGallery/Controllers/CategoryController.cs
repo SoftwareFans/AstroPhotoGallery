@@ -39,8 +39,7 @@ namespace AstroPhotoGallery.Controllers
         public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
-            {
-                //If modelstate is valid add category to categories in database and redirect to view with all categories
+            {             
                 using (var db = new GalleryDbContext())
                 {
                     db.Categories.Add(category);
@@ -49,8 +48,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("Index");
                 }
             }
-
-            //If modelstate is not valid render the same view with category
+          
             return View(category);
         }
 
@@ -63,8 +61,7 @@ namespace AstroPhotoGallery.Controllers
             }
 
             using (var db = new GalleryDbContext())
-            {
-                //Get category form database if id is not null
+            {               
                 var category = db.Categories.FirstOrDefault(c => c.Id == id);
 
                 if (category == null)
@@ -72,7 +69,6 @@ namespace AstroPhotoGallery.Controllers
                     return HttpNotFound();
                 }
 
-                //Return category, if is not null
                 return View(category);
             }
         }
@@ -84,8 +80,7 @@ namespace AstroPhotoGallery.Controllers
             if (ModelState.IsValid)
             {
                 using (var db = new GalleryDbContext())
-                {
-                    //Edit category if model state is valid and redirect to index
+                {                 
                     db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -94,6 +89,49 @@ namespace AstroPhotoGallery.Controllers
             }
 
             return View(category);
+        }
+
+        //GET: Category/Delete
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db = new GalleryDbContext())
+            {              
+                var category = db.Categories.FirstOrDefault(c => c.Id == id);
+
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(category);
+            }
+        }
+
+        //POST: Category/Delete
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            using (var db = new GalleryDbContext())
+            {
+                var category = db.Categories.FirstOrDefault(c => c.Id == id);
+                var categoryPictures = category.Pictures.ToList();
+
+                foreach (var pic in categoryPictures)
+                {
+                    db.Pictures.Remove(pic);
+                }
+
+                db.Categories.Remove(category);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
         }
     }
 }
