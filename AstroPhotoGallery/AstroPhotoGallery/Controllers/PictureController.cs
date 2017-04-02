@@ -203,7 +203,7 @@ namespace AstroPhotoGallery.Controllers
                 }
 
                 //Create view model
-                var model = new PictureViewModel();
+                var model = new Picture();
                 model.Id = picture.Id;
                 model.PicTitle = picture.PicTitle;
                 model.PicDescription = picture.PicDescription;
@@ -216,7 +216,7 @@ namespace AstroPhotoGallery.Controllers
 
         //POST: Picture/Edit
         [HttpPost]
-        public ActionResult Edit(PictureViewModel model)
+        public ActionResult Edit(Picture model)
         {
             //Check if model state is valid
             if (ModelState.IsValid)

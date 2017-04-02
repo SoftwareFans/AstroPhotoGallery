@@ -214,7 +214,6 @@
     <Compile Include="Models\GalleryDbContext.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PictureViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
