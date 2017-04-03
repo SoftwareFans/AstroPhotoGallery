@@ -39,7 +39,7 @@ namespace AstroPhotoGallery.Controllers
         public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
-            {             
+            {
                 using (var db = new GalleryDbContext())
                 {
                     db.Categories.Add(category);
@@ -48,7 +48,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("Index");
                 }
             }
-          
+
             return View(category);
         }
 
@@ -61,7 +61,7 @@ namespace AstroPhotoGallery.Controllers
             }
 
             using (var db = new GalleryDbContext())
-            {               
+            {
                 var category = db.Categories.FirstOrDefault(c => c.Id == id);
 
                 if (category == null)
@@ -80,7 +80,7 @@ namespace AstroPhotoGallery.Controllers
             if (ModelState.IsValid)
             {
                 using (var db = new GalleryDbContext())
-                {                 
+                {
                     db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -100,7 +100,7 @@ namespace AstroPhotoGallery.Controllers
             }
 
             using (var db = new GalleryDbContext())
-            {              
+            {
                 var category = db.Categories.FirstOrDefault(c => c.Id == id);
 
                 if (category == null)
@@ -132,6 +132,6 @@ namespace AstroPhotoGallery.Controllers
 
                 return RedirectToAction("Index");
             }
-        }
+        }       
     }
 }

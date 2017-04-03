@@ -1,4 +1,4 @@
-﻿
+﻿@*@model List<AstroPhotoGallery.Models.Category>*@
 @{
     ViewBag.Title = "Index";
 }
@@ -45,7 +45,29 @@
 </div>
 <div class="container">
     <div class="section">
-        <div class="row">
+        <div class="row">           
+            <div class="col-md-3 hidden-xs">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Categories</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"> @Html.ActionLink("View All Categories", "ListCategories", "Home")</li>
+                        
+                        @*@foreach (var category in Model)
+                        {
+                            <li class="list-group-item">
+                                <p>
+                                    <h2>
+                                        @Html.ActionLink(string.Format($"{category.Name}"),
+                        "ListPictures", "Home", new { @categoryId = category.Id }, null)
+                                    </h2>
+                                </p>
+                            </li>
+                        }*@
+                    </ul>
+                </div>                
+            </div>	
             <div class="col-md-3">
                 <a href="#" class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
@@ -69,15 +91,7 @@
                 <h3>Header Three</h3>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                 <a href="#" class="btn btn-primary btn-sm">Read More</a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/300x200" alt="">
-                </a>
-                <h3>Header Four</h3>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                <a href="#" class="btn btn-primary btn-sm">Read More</a>
-            </div>
+            </div>           
         </div>
     </div>
     

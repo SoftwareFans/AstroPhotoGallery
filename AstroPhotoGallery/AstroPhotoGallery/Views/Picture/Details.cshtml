@@ -70,33 +70,45 @@
 </div>
 
 
-@*<div class="container">
-        <article>
-            <header>
-                <h2>
-                    @Model.PicTitle
-                </h2>
-            </header>
-            <p>
-                @Model.PicDescription
-            </p>
 
-            <body>
-                <div class="gallery">
-                    <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="300" height="200">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>User Comment Example</h3>
+        </div><!-- /col-sm-12 -->
+    </div><!-- /row -->
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+        <div class="col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
                 </div>
-            </body>
-            <footer class="pull-right">
-                @if (Model.IsUploader(User.Identity.Name))
-                {
-                    @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-                    @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-                }
-
-                @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-xs" })
-            </footer>
-        </article>
-    </div>
-    <hr />*@
-
-
+                <div class="panel-body">
+                    Panel content
+                </div><!-- /panel-body -->
+            </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+        <div class="col-sm-1">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+        <div class="col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div><!-- /panel-body -->
+            </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+    </div><!-- /row -->
+</div><!-- /container -->
