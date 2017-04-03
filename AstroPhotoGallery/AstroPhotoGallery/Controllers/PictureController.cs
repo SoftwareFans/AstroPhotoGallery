@@ -67,7 +67,13 @@ namespace AstroPhotoGallery.Controllers
         [Authorize]
         public ActionResult Upload()
         {
-            return View();
+            using (var db = new GalleryDbContext())
+            {
+                var model = new Picture();
+                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+
+                return View(model);
+            }
         }
 
         //POST: Picture/Upload
@@ -126,7 +132,7 @@ namespace AstroPhotoGallery.Controllers
                 var picture = db.Pictures
                     .Where(p => p.Id == id)
                     .Include(p => p.PicUploader)
-                    .First();
+                    .First();              
 
                 if (!IsUserAuthorizedToEdit(picture))
                 {
@@ -208,6 +214,8 @@ namespace AstroPhotoGallery.Controllers
                 model.PicTitle = picture.PicTitle;
                 model.PicDescription = picture.PicDescription;
                 model.ImagePath = picture.ImagePath;
+                model.CategoryId = picture.CategoryId;
+                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
 
                 //Pass the view model to view
                 return View(model);
@@ -229,6 +237,7 @@ namespace AstroPhotoGallery.Controllers
                     //Set picture props
                     picture.PicTitle = model.PicTitle;
                     picture.PicDescription = model.PicDescription;
+                    picture.CategoryId = model.CategoryId;
 
                     //Save pic state in database
                     db.Entry(picture).State = EntityState.Modified;

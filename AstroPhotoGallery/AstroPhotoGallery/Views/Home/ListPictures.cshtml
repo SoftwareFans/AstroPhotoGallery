@@ -1,0 +1,31 @@
+﻿@model List<AstroPhotoGallery.Models.Picture>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var picture in Model)
+        {
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2>
+                            @Html.ActionLink(@picture.PicTitle, "Details", "Picture", new { @id = picture.Id }, null)
+                        </h2>
+                    </header>
+                    <p>
+                        @picture.PicDescription
+                    </p>
+                    <footer class="pull-right">
+                        <small class="author">
+                            --author @picture.PicUploader.Email
+                        </small>
+                    </footer>
+                </article>
+            </div>
+        }
+    </div>
+</div>
+<hr />
