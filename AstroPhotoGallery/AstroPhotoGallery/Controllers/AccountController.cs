@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,7 +11,10 @@ using AstroPhotoGallery.Models;
 using System.Net;
 using System.Data.Entity;
 using System.IO;
+using System.Text;
 using System.Web.UI;
+using System.Web.UI.WebControls;
+using Image = System.Drawing.Image;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -430,6 +434,7 @@ namespace AstroPhotoGallery.Controllers
                 bd.SaveChanges();
             }
 
+
             return View(model);
         }
 
@@ -445,7 +450,7 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                var user = db.Users.First(x => x.Id == id);
+                var user = db.Users.FirstOrDefault(x => x.Id == id);
                 if (user == null)
                 {
                     return HttpNotFound();
@@ -484,61 +489,165 @@ namespace AstroPhotoGallery.Controllers
                 return View(model);
             }
 
-            if (Request.Files.Count > 0)
+            var poImgFile = Request.Files["ImagePath"];
+
+            var pic = Path.GetFileName(poImgFile.FileName);
+            var hasNewImage = false;
+
+            if (!string.IsNullOrEmpty(pic)) // If a picture is selected
             {
-                var poImgFile = Request.Files["ImagePath"];
+                var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+                poImgFile.SaveAs(path);
 
-                var pic = Path.GetFileName(poImgFile.FileName);
-                var hasNewImage = false;
-
-                if (!string.IsNullOrEmpty(pic))
+                if (IsValidImage(path))
                 {
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
-                    poImgFile.SaveAs(path);
                     hasNewImage = true;
                 }
-
-                var id = User.Identity.GetUserId();
-                using (var db = new GalleryDbContext())
+                else
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == id);
+                    // Deleting the file from ~/Content/images:
 
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
-                    user.PhoneNumber = model.PhoneNumber;
-                    user.Gender = model.Gender;
-                    user.City = model.City;
-                    user.Country = model.Country;
+                    System.IO.File.Delete(path);
 
-                    if (String.IsNullOrEmpty(model.Birthday))
-                    {
-                        user.Birthday = string.Empty;
-                    }
-                    else
-                    {
-                        user.Birthday = user.Birthday;
-                    }
-
-                    if (model.RemoveBirthday == true)
-                    {
-                        user.Birthday = string.Empty;
-                    }
-                    else
-                    {
-                        user.Birthday = model.Birthday;
-                    }
-
-                    if (hasNewImage)
-                    {
-                        user.ImagePath = "~/Content/images/" + pic;
-                    }
-
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
+                    throw new Exception("Invalid picture format!");
                 }
             }
 
+            var id = User.Identity.GetUserId();
+            using (var db = new GalleryDbContext())
+            {
+                var user = db.Users.FirstOrDefault(x => x.Id == id);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Gender = model.Gender;
+                user.City = model.City;
+                user.Country = model.Country;
+
+                if (String.IsNullOrEmpty(model.Birthday))
+                {
+                    user.Birthday = string.Empty;
+                }
+                else
+                {
+                    user.Birthday = user.Birthday;
+                }
+
+                if (model.RemoveBirthday == true)
+                {
+                    user.Birthday = string.Empty;
+                }
+                else
+                {
+                    user.Birthday = model.Birthday;
+                }
+
+                if (hasNewImage)
+                {
+                    // Deleting the previous image from ~/Content/images:
+                    if (user.ImagePath != null)
+                    {
+                        var previousPicPath = Server.MapPath(user.ImagePath);
+                        System.IO.File.Delete(previousPicPath);
+                    }
+
+                    user.ImagePath = "~/Content/images/" + pic;
+                }
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Show", "Account");
+        }
+
+        // Primary method for checking if the image is in valid format:
+        public static bool IsValidImage(string filePath)
+        {
+            return System.IO.File.Exists(filePath) &&
+                   IsValidStream(new FileStream(filePath, FileMode.Open, FileAccess.Read));
+        }
+
+        // Method for IsValidImage - checking the data passed to the stream:
+        public static bool IsValidStream(FileStream inputStream)
+        {
+            using (inputStream)
+            {
+                Dictionary<string, List<byte[]>> imageHeaders = new Dictionary<string, List<byte[]>>();
+
+                // For every image type there is a list of byte arrays with its headers possible values.
+                // Other image types can be added in case of need - TIF, GIF etc.
+
+                imageHeaders.Add("JPG", new List<byte[]>());
+                imageHeaders.Add("JPEG", new List<byte[]>());
+                imageHeaders.Add("PNG", new List<byte[]>());
+                imageHeaders.Add("BMP", new List<byte[]>());
+                imageHeaders.Add("ICO", new List<byte[]>());
+
+                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+                imageHeaders["PNG"].Add(new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+                imageHeaders["BMP"].Add(new byte[] { 0x42, 0x4D });
+                imageHeaders["ICO"].Add(new byte[] { 0x00, 0x00, 0x01, 0x00 });
+
+                if (inputStream.Length > 0) // If the file has any data at all
+                {
+                    string fileExt = inputStream.Name.Substring(inputStream.Name.LastIndexOf('.') + 1).ToUpper();
+
+                    if (!(fileExt.Equals("JPG") ||
+                        fileExt.Equals("JPEG") ||
+                        fileExt.Equals("PNG") ||
+                        fileExt.Equals("BMP") ||
+                        fileExt.Equals("ICO")
+                        ))
+                    {
+                        return false;
+                    }
+
+                    foreach (var subType in imageHeaders[fileExt])
+                    {
+                        byte[] standardHeader = subType;
+                        byte[] checkedHeader = new byte[standardHeader.Length];
+
+                        inputStream.Read(checkedHeader, 0, checkedHeader.Length);
+
+                        if (CompareArrays(standardHeader, checkedHeader))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+                else
+                {
+                    throw new Exception("Empty file chosen.");
+                }
+            }
+        }
+
+        // Method for IsValidImage - comparing two byte arrays:
+        public static bool CompareArrays(byte[] firstArr, byte[] secondArr)
+        {
+            if (firstArr.Length != secondArr.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < firstArr.Length; i++)
+            {
+                if (firstArr[i] != secondArr[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #region Helpers
