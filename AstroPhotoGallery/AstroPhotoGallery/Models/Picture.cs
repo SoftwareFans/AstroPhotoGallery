@@ -24,7 +24,7 @@ namespace AstroPhotoGallery.Models
 
         [ForeignKey("PicUploader")]
         public string PicUploaderId { get; set; }
-    
+
         public string ImagePath { get; set; }
 
         public virtual ApplicationUser PicUploader { get; set; }
@@ -33,9 +33,11 @@ namespace AstroPhotoGallery.Models
         [DisplayName("Category")]
         public int CategoryId { get; set; }
 
-        public virtual  Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
         public ICollection<Category> Categories { get; set; }
+
+        public string CategoryName { get; set; }
 
         public bool IsUploader(string name)
         {
