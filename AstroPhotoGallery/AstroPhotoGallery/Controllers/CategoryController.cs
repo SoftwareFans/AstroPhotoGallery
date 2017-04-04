@@ -28,7 +28,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        //GET: Categori/Create
+        //GET: Category/Create
         public ActionResult Create()
         {
             return View();
