@@ -184,6 +184,9 @@ namespace AstroPhotoGallery.Models
         [Display(Name = "Remove birthday from my profile")]
         public bool RemoveBirthday { get; set; }
 
+        [Display(Name = "Remove my profile picture")]
+        public bool RemovePicture { get; set; }
+
         [Display(Name = "Upload profile picture")]
         public string ImagePath { get; set; }
     }

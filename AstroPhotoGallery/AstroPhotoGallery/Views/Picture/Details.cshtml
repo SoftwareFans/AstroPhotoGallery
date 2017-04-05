@@ -7,6 +7,7 @@
 <div>
     <h2>
         <div class="pull-right">
+            @*Empty div required for the proper view.*@
         </div>
 
         @Model.PicTitle
@@ -26,7 +27,7 @@
             <div class="col-md-4 ">
                 <!-- Thumbnail image -->
                 <a href="#" data-toggle="modal" data-target=".dialog1">
-                    <img src="@Url.Content(Model.ImagePath)" width="100%" class="img-responsive img-rounded center-block" alt="" />
+                    <img src="@Url.Content(Model.ImagePath)" width="500" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
             </div>
 
@@ -38,34 +39,36 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                             <h4 class="modal-title" id="myLargeModalLabel-1">@Model.PicTitle</h4>
                         </div>
-                        <div class="modal-body active">
-                            <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="100%" />
+                        <div class="modal-body active text-center">
+                            <img src="@Url.Content(Model.ImagePath)" alt="Astro picture" width="800" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <br/>
         <div class="row">
-            <div class="col-md-8">
-                <span class="author" style="opacity: 0.8">
-                    Uploader: @Model.PicUploader.FirstName @Model.PicUploader.LastName <br />
+            <div class="col-md-12">
+                <span style="opacity: 0.8" class="pull-left">
+                    Uploader: @Model.PicUploader.FirstName @Model.PicUploader.LastName 
+                    <br />
                     Category: @Model.CategoryName
                 </span>
-                <div class="pull-right">
+                <span class="pull-right">
                     @if (Model.IsUploader(User.Identity.Name))
                     {
                         <span>
-                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-sm" })
+                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
                         </span>
 
                         <span>
-                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-warning btn-md" })
                         </span>
                     }
                     <span>
-                        @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Back", "Index", "Picture", null, new { @class = "btn btn-default btn-md" })
                     </span>
-                </div>
+                </span>
             </div>
         </div>
     </div>

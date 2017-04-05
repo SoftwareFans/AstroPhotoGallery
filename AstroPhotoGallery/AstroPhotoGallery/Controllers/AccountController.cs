@@ -494,7 +494,8 @@ namespace AstroPhotoGallery.Controllers
             var pic = Path.GetFileName(poImgFile.FileName);
             var hasNewImage = false;
 
-            if (!string.IsNullOrEmpty(pic)) // If a picture is selected
+            // If a picture is selected AND the remove picture option is not selected:
+            if (!string.IsNullOrEmpty(pic) && !model.RemovePicture) 
             {
                 var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
                 poImgFile.SaveAs(path);
@@ -506,7 +507,6 @@ namespace AstroPhotoGallery.Controllers
                 else
                 {
                     // Deleting the file from ~/Content/images:
-
                     System.IO.File.Delete(path);
 
                     throw new Exception("Invalid picture format!");
@@ -534,13 +534,23 @@ namespace AstroPhotoGallery.Controllers
                     user.Birthday = user.Birthday;
                 }
 
-                if (model.RemoveBirthday == true)
+                if (model.RemoveBirthday)
                 {
                     user.Birthday = string.Empty;
                 }
                 else
                 {
                     user.Birthday = model.Birthday;
+                }
+
+                if (model.RemovePicture)
+                {
+                    // Deleting the profile pic from ~/Content/images:
+                    var previousPicPath = Server.MapPath(user.ImagePath);
+                    System.IO.File.Delete(previousPicPath);
+
+                    hasNewImage = false;
+                    user.ImagePath = null;
                 }
 
                 if (hasNewImage)
