@@ -1,11 +1,11 @@
-﻿@*@model List<AstroPhotoGallery.Models.Category>*@
+﻿@model List<AstroPhotoGallery.Models.Category>
 @{
     ViewBag.Title = "Index";
 }
 
 <div class="container">
     <div id="mainCarousel" class="carousel slide" data-ride="carousel">
-        
+
         <ol class="carousel-indicators">
             <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#mainCarousel" data-slide-to="1"></li>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        
+
         <a class="left carousel-control" href="#mainCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <span class="sr-only">Previous</span>
@@ -45,7 +45,7 @@
 </div>
 <div class="container">
     <div class="section">
-        <div class="row">           
+        <div class="row">
             <div class="col-md-3 hidden-xs">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -53,21 +53,21 @@
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item"> @Html.ActionLink("View All Categories", "ListCategories", "Home")</li>
-                        
-                        @*@foreach (var category in Model)
+
+                        @foreach (var category in Model)
                         {
                             <li class="list-group-item">
                                 <p>
                                     <h2>
                                         @Html.ActionLink(string.Format($"{category.Name}"),
-                        "ListPictures", "Home", new { @categoryId = category.Id }, null)
+                                    "ListCategories", "Home", new { @categoryId = category.Id }, null)
                                     </h2>
                                 </p>
                             </li>
-                        }*@
+                        }
                     </ul>
-                </div>                
-            </div>	
+                </div>
+            </div>
             <div class="col-md-3">
                 <a href="#" class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
@@ -91,10 +91,10 @@
                 <h3>Header Three</h3>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                 <a href="#" class="btn btn-primary btn-sm">Read More</a>
-            </div>           
+            </div>
         </div>
     </div>
-    
+
 </div>
 <hr>
 <div class="section">

@@ -17,11 +17,13 @@ namespace AstroPhotoGallery.Controllers
             {
                 //Get pictures from database
 
-                var pictures = db.Pictures
-                    .Include(x => x.PicUploader)
-                    .ToList();
+                var categories = db.Categories
+                   .Include(c => c.Pictures)
+                   .OrderBy(c => c.Name)
+                   .Take(3)
+                   .ToList();
 
-                return View(pictures);
+                return View(categories);
             }
         }
 
