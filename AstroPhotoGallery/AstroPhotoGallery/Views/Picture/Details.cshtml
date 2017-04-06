@@ -7,12 +7,10 @@
 <div>
     <h2>
         <div class="pull-right">
-            @*Empty div required for the proper view.*@
+            @*Empty div required for proper view.*@
         </div>
-
         @Model.PicTitle
     </h2>
-
 
 </div>
 <div class="panel panel-default">
@@ -25,13 +23,11 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <!-- Thumbnail image -->
                 <a href="#" data-toggle="modal" data-target=".dialog1">
                     <img src="@Url.Content(Model.ImagePath)" width="500" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
             </div>
 
-            <!-- Modal content for City Image -->
             <div class="modal fade dialog1" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">

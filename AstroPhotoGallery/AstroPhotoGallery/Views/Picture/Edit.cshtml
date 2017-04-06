@@ -9,16 +9,16 @@
         <h2>Edit Picture</h2>
 
         @using (Html.BeginForm("Edit", "Picture", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-
+        { 
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.PicUploaderId)
 
             <div class="gallery">
                 <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="300" height="200">
             </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
 
             <div class="form-group">
                 @Html.LabelFor(m => m.PicTitle, new { @class = "control-label col-sm-4" })
@@ -43,8 +43,8 @@
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "Index", "Picture", null, new { @class = "btn btn-default" })
                     <input type="submit" value="Edit" class="btn btn-success" />
+                    @Html.ActionLink("Cancel", "Index", "Picture", null, new {@class = "btn btn-default"})
                 </div>
             </div>
         }

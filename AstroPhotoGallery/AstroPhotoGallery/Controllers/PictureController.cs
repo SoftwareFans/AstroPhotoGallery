@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Models;
+using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -45,7 +46,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
             }
 
             using (var db = new GalleryDbContext())
@@ -56,7 +58,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (picture == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("List");
                 }
 
                 return View(picture);
@@ -93,6 +96,7 @@ namespace AstroPhotoGallery.Controllers
 
                     //Set picture uploader
                     picture.PicUploaderId = uploaderId;
+                    picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
 
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
@@ -114,26 +118,30 @@ namespace AstroPhotoGallery.Controllers
                             db.Pictures.Add(picture);
                             db.SaveChanges();
 
-                            return RedirectToAction("Index");
+                            return RedirectToAction("List");
                         }
                         else
                         {
                             // Deleting the file from ~/Content/images:
                             System.IO.File.Delete(path);
 
-                            throw new Exception("Invalid picture format!");
+                            this.AddNotification("Invalid picture format.", NotificationType.ERROR);
+                            return View(picture);
                         }
                     }
                     else
                     {
-                        throw new Exception("No picture selected for upload.");
+                        this.AddNotification("No picture selected for upload", NotificationType.ERROR);
+                        return View(picture);
                     }
                 }
             }
-            else
+            using (var db = new GalleryDbContext())
             {
-                throw new Exception("Missing title or description.");
+                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
             }
+
+            return View(picture);
         }
 
         //GET: Picture/Delete
@@ -141,7 +149,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
             }
 
             using (var db = new GalleryDbContext())
@@ -152,17 +161,20 @@ namespace AstroPhotoGallery.Controllers
                     .Include(p => p.PicUploader)
                     .FirstOrDefault();
 
-                if (!IsUserAuthorizedToEdit(picture))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-                }
                 //Check if picture exists
                 if (picture == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("List");
                 }
-                //Pass picture to view
 
+                if (!IsUserAuthorizedToEdit(picture))
+                {
+                    this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
+                    return RedirectToAction("List");
+                }
+
+                //Pass picture to view
                 return View(picture);
             }
         }
@@ -174,7 +186,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
             }
 
             using (var db = new GalleryDbContext())
@@ -188,7 +201,8 @@ namespace AstroPhotoGallery.Controllers
                 //Check if picture exists
                 if (picture == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("List");
                 }
 
                 //Delete the picture from the database 
@@ -201,7 +215,7 @@ namespace AstroPhotoGallery.Controllers
                 System.IO.File.Delete(mappedPath);
 
                 //Redirect to index page
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
         }
 
@@ -210,7 +224,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
             }
 
             using (var db = new GalleryDbContext())
@@ -218,31 +233,24 @@ namespace AstroPhotoGallery.Controllers
                 //Get picture from database
                 var picture = db.Pictures
                     .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
                     .FirstOrDefault();
+
+                //Check if picture exists
+                if (picture == null)
+                {
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("List");
+                }
 
                 if (!IsUserAuthorizedToEdit(picture))
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                    this.AddNotification("You don't have the necessary authority to edit this picture.", NotificationType.ERROR);
+                    return RedirectToAction("List");
                 }
 
-                //Chech if picture exists
-                if (picture == null)
-                {
-                    return HttpNotFound();
-                }
-
-                //Create view model
-                var model = new Picture();
-                model.Id = picture.Id;
-                model.PicTitle = picture.PicTitle;
-                model.PicDescription = picture.PicDescription;
-                model.ImagePath = picture.ImagePath;
-                model.CategoryId = picture.CategoryId;
-                model.CategoryName = picture.CategoryName;
-                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
-
-                //Pass the view model to view
-                return View(model);
+                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+                return View(picture);
             }
         }
 
@@ -256,7 +264,7 @@ namespace AstroPhotoGallery.Controllers
                 using (var db = new GalleryDbContext())
                 {
                     //Get picture form database
-                    var picture = db.Pictures.FirstOrDefault(p => p.Id == model.Id);
+                    var picture = db.Pictures.Include(u => u.PicUploader).FirstOrDefault(p => p.Id == model.Id);
 
                     //Set picture props
                     picture.PicTitle = model.PicTitle;
@@ -268,14 +276,15 @@ namespace AstroPhotoGallery.Controllers
                     //Save pic state in database
                     db.Entry(picture).State = EntityState.Modified;
                     db.SaveChanges();
-
-                    //Redirect to the index page
-                    return RedirectToAction("Index");
+                    return View("Details", picture);
                 }
             }
-            else
+
+            using (var db = new GalleryDbContext())
             {
-                throw new Exception("Missing title or description.");
+                var picture = db.Pictures.FirstOrDefault(p => p.Id == model.Id);
+                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+                return View(picture);
             }
         }
 
