@@ -24,6 +24,6 @@ namespace AstroPhotoGallery.Models
         [StringLength(20)]
         public string Name { get; set; }
 
-        public virtual  ICollection<Picture> Pictures { get; set; }
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }
