@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
 
 namespace AstroPhotoGallery.Controllers
@@ -42,13 +43,20 @@ namespace AstroPhotoGallery.Controllers
             {
                 using (var db = new GalleryDbContext())
                 {
+                    if(db.Categories.Any(c=>c.Name == category.Name))
+                    {
+                        this.AddNotification("Category already exists.", NotificationType.ERROR);
+                        return RedirectToAction("Index");
+                    }
+
                     db.Categories.Add(category);
                     db.SaveChanges();
-
+                    this.AddNotification("Category created.",NotificationType.INFO);                   
                     return RedirectToAction("Index");
                 }
             }
 
+            this.AddNotification("Please enter name for the category.", NotificationType.ERROR);
             return View(category);
         }
 
@@ -57,7 +65,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
@@ -66,7 +75,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (category == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
                 }
 
                 return View(category);
@@ -81,13 +91,21 @@ namespace AstroPhotoGallery.Controllers
             {
                 using (var db = new GalleryDbContext())
                 {
+                    if (db.Categories.Any(c => c.Name == category.Name))
+                    {
+                        this.AddNotification("Category already exists.", NotificationType.ERROR);
+                        return RedirectToAction("Index");
+                    }
+
                     db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
-
+                    this.AddNotification("Category edited.", NotificationType.INFO);
                     return RedirectToAction("Index");
+                   
                 }
             }
 
+            this.AddNotification("Please enter name for the category.", NotificationType.ERROR);
             return View(category);
         }
 
@@ -96,7 +114,8 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
@@ -105,7 +124,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (category == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
                 }
 
                 return View(category);
@@ -120,6 +140,13 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var category = db.Categories.FirstOrDefault(c => c.Id == id);
+
+                if (category == null)
+                {
+                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
+                }
+
                 var categoryPictures = category.Pictures.ToList();
 
                 foreach (var pic in categoryPictures)
@@ -130,6 +157,7 @@ namespace AstroPhotoGallery.Controllers
                 db.Categories.Remove(category);
                 db.SaveChanges();
 
+                this.AddNotification("Category deleted.", NotificationType.INFO);
                 return RedirectToAction("Index");
             }
         }       

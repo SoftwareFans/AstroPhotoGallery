@@ -38,12 +38,14 @@
         </div>
     </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <footer class="pull-right">
-            <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
-        </footer>
-    </div>
+<div class="container body-content">
+    <div class="alert">@Html.Partial("_Notifications")</div>
+    
+    @RenderBody()
+    <footer class="pull-right">
+        <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
+    </footer>
+</div>
 
    
     @Scripts.Render("~/bundles/bootstrap")
