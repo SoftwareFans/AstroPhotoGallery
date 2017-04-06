@@ -8,6 +8,7 @@
         <h2>Delete Category</h2>
         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
         {
+            @Html.AntiForgeryToken()
             <div class="form-group">
                 @Html.LabelFor(m => m.Name, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4 ">
