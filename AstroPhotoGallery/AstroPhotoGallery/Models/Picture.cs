@@ -38,6 +38,8 @@ namespace AstroPhotoGallery.Models
         public ICollection<Category> Categories { get; set; }
 
         public string CategoryName { get; set; }
+       
+        public string Votes { get; set; }
 
         public bool IsUploader(string name)
         {

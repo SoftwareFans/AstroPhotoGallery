@@ -295,17 +295,26 @@ namespace AstroPhotoGallery.Controllers
         {
             //В базата не пазим имената на картинките затова на метода подавам пътя и от него взимам името
             var filename = filePath.Substring(17);
+            var fileExtension = Path.GetExtension(filename);
 
-            if (Path.GetExtension(filename) == ".jpg")
+            if (fileExtension.Equals(".jpg") ||
+                fileExtension.Equals(".png") ||
+                fileExtension.Equals(".jpeg") ||
+                fileExtension.Equals(".bmp") ||
+                fileExtension.Equals(".ico"))
             {
                 var dir = Server.MapPath("~/Content/images");
                 var path = Path.Combine(dir, filename); //validate the path for security or use other means to generate the path.
 
-                return base.File(path, "image/jpeg", filename);
-            }
+                var type = fileExtension.Substring(1);
+                var imageType = $"image/{type}";
+
+                return base.File(path, imageType, filename);
+            }           
             else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                this.AddNotification("Invalid picture format.", NotificationType.ERROR);
+                return RedirectToAction("List");
             }
         }
 
