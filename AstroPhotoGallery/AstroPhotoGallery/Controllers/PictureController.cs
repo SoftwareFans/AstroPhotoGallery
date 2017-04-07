@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
 
@@ -285,6 +288,24 @@ namespace AstroPhotoGallery.Controllers
                 var picture = db.Pictures.FirstOrDefault(p => p.Id == model.Id);
                 picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
                 return View(picture);
+            }
+        }
+
+        public ActionResult DownlandFile(string filePath)
+        {
+            //В базата не пазим имената на картинките затова на метода подавам пътя и от него взимам името
+            var filename = filePath.Substring(17);
+
+            if (Path.GetExtension(filename) == ".jpg")
+            {
+                var dir = Server.MapPath("~/Content/images");
+                var path = Path.Combine(dir, filename); //validate the path for security or use other means to generate the path.
+
+                return base.File(path, "image/jpeg", filename);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
         }
 
