@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AstroPhotoGallery.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         // GET: User
@@ -112,6 +113,69 @@ namespace AstroPhotoGallery.Controllers.Admin
             }
 
             return View(viewModel);
+        }
+
+        //GET: User/Delete
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                this.AddNotification("No user ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                //Get user from database
+                var user = db.Users
+                    .Where(u => u.Id == id)
+                    .First();
+
+                //Check if user exists
+                if (user == null)
+                {
+                    this.AddNotification("User doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("List");
+                }
+
+                return View(user);
+            }
+        }
+
+        //POST: User/Delete
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            if (id == null)
+            {
+                this.AddNotification("No user ID provided.", NotificationType.ERROR);
+                return RedirectToAction("List");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                //Get user from database
+                var user = db.Users
+                    .Where(u => u.Id == id)
+                    .FirstOrDefault();
+
+                //Get user pictures form database
+                var userPictures = db.Pictures
+                    .Where(p => p.PicUploader.Id == user.Id);
+
+                //Delete user pictures
+                foreach (var picture in userPictures)
+                {
+                    db.Pictures.Remove(picture);
+                }
+
+                //Delete user and save chanches 
+                db.Users.Remove(user);
+                db.SaveChanges();
+
+                return RedirectToAction("List");
+            }
         }
 
         private void SetUserRoles(EditUserViewModel model, ApplicationUser user, GalleryDbContext db)
