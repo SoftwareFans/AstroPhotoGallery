@@ -153,6 +153,9 @@ namespace AstroPhotoGallery.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                var addRoleresult = UserManager.AddToRole(user.Id, "User");
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
