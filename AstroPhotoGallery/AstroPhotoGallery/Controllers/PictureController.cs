@@ -15,14 +15,7 @@ using AstroPhotoGallery.Extensions;
 namespace AstroPhotoGallery.Controllers
 {
     public class PictureController : Controller
-    {
-
-        private bool IsUserAuthorizedToEdit(Picture picture)
-        {
-            // Check is the user is the uploader
-            bool isUploader = picture.IsUploader(this.User.Identity.Name);
-            return isUploader;
-        }
+    {      
         // GET: Picture
         public ActionResult Index()
         {
@@ -171,7 +164,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("List");
                 }
 
-                if (!IsUserAuthorizedToEdit(picture))
+                if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
                     return RedirectToAction("List");
@@ -246,7 +239,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("List");
                 }
 
-                if (!IsUserAuthorizedToEdit(picture))
+                if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to edit this picture.", NotificationType.ERROR);
                     return RedirectToAction("List");
@@ -404,6 +397,14 @@ namespace AstroPhotoGallery.Controllers
             }
 
             return true;
+        }
+
+        public bool IsUserAuthorizedToEditAndDelete(Picture picture)
+        {
+            bool isAdmin = this.User.IsInRole("Admin");
+            bool isAuthor = picture.IsUploader(this.User.Identity.Name);
+
+            return isAdmin || isAuthor;
         }
     }
 }

@@ -10,7 +10,7 @@ using AstroPhotoGallery.Models;
 
 namespace AstroPhotoGallery.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         // GET: Category

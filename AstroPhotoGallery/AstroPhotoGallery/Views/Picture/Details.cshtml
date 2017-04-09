@@ -55,7 +55,7 @@
                         @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
                     </span>
 
-                    @if (Model.IsUploader(User.Identity.Name))
+                    @if (Model.IsUploader(User.Identity.Name) ||User.IsInRole("Admin"))
                     {
                         <span>
                             @Html.ActionLink("Edit", "Edit", "Picture", new {@id = Model.Id}, new {@class = "btn btn-success btn-md"})

@@ -29,11 +29,11 @@ namespace AstroPhotoGallery.Models
 
         public virtual ApplicationUser PicUploader { get; set; }
 
-        [ForeignKey("Category")]
+        //[ForeignKey("Category")] // Exeption - delete category from database
         [DisplayName("Category")]
         public int CategoryId { get; set; }
 
-        public virtual Category Category { get; set; }
+        //public virtual Category Category { get; set; } //Set another id in database
 
         public ICollection<Category> Categories { get; set; }
 
@@ -43,7 +43,7 @@ namespace AstroPhotoGallery.Models
 
         public bool IsUploader(string name)
         {
-            return this.PicUploader.UserName.EndsWith(name);
-        }
+            return this.PicUploader.UserName.Equals(name);
+        }     
     }
 }
