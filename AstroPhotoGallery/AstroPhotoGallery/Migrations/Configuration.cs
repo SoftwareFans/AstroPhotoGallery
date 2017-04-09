@@ -1,13 +1,12 @@
-using AstroPhotoGallery.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-
 namespace AstroPhotoGallery.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using AstroPhotoGallery.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public sealed class Configuration : DbMigrationsConfiguration<AstroPhotoGallery.Models.GalleryDbContext>
     {
@@ -15,10 +14,9 @@ namespace AstroPhotoGallery.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "AstroPhotoGallery.Models.GalleryDbContext";
         }
 
-        protected override void Seed(AstroPhotoGallery.Models.GalleryDbContext context)
+        protected override void Seed(GalleryDbContext context)
         {
             if (!context.Roles.Any())
             {
@@ -28,15 +26,15 @@ namespace AstroPhotoGallery.Migrations
 
             if (!context.Users.Any())
             {
-                this.CreateUser(context,"admin@admin.com","Admin","Admin","123");
+                this.CreateUser(context, "admin@admin.com", "Admin","Admin", "123");
                 this.SetRoleToUser(context, "admin@admin.com", "Admin");
             }
         }
 
         private void SetRoleToUser(GalleryDbContext context, string email, string role)
         {
-           var userManager = new UserManager<ApplicationUser>(
-               new UserStore<ApplicationUser>(context));
+            var userManager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
 
             var user = context.Users.Where(u => u.Email == email).First();
 
@@ -44,13 +42,13 @@ namespace AstroPhotoGallery.Migrations
 
             if (!result.Succeeded)
             {
-                throw new Exception(string.Join(";", result.Errors));   
+                throw new Exception(string.Join(";", result.Errors));
             }
         }
 
-        private void CreateUser(GalleryDbContext context, string email, string firstName,string lastName, string password)
+        private void CreateUser(GalleryDbContext context, string email, string firstName ,string lastName, string password)
         {
-            //Create user manager
+            //Create user manager 
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
 
@@ -73,26 +71,27 @@ namespace AstroPhotoGallery.Migrations
                 Email = email
             };
 
-            //Create user
+            //Create user 
             var result = userManager.Create(admin, password);
 
             //Validate result
+
             if (!result.Succeeded)
             {
-                throw new Exception(string.Join(";",result.Errors));
+                throw new Exception(string.Join(";", result.Errors));
             }
         }
 
         private void CreateRole(GalleryDbContext context, string roleName)
         {
             var roleManager = new RoleManager<IdentityRole>(
-                new RoleStore<IdentityRole>(context));
+               new RoleStore<IdentityRole>(context));
 
             var result = roleManager.Create(new IdentityRole(roleName));
 
             if (!result.Succeeded)
             {
-                throw new Exception(string.Join(";",result.Errors));
+                throw new Exception(string.Join(";", result.Errors));
             }
         }
     }

@@ -13,6 +13,7 @@ namespace AstroPhotoGallery
         {
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<GalleryDbContext, Configuration>());
+
             ConfigureAuth(app);
         }
     }
