@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
+using PagedList;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -14,9 +15,21 @@ namespace AstroPhotoGallery.Controllers
     public class CategoryController : Controller
     {
         //GET: Category
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int ? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.Name = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
 
             using (var db = new GalleryDbContext())
             {
@@ -34,7 +47,10 @@ namespace AstroPhotoGallery.Controllers
                         categories = categories.OrderByDescending(s => s.Name).ToList();
                         break;
                 }
-                return View(categories);
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(categories.ToPagedList(pageNumber, pageSize));
             }
         }
 
