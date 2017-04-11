@@ -13,19 +13,27 @@ namespace AstroPhotoGallery.Controllers
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        // GET: Category
-        public ActionResult Index()
+        //GET: Category
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return RedirectToAction("List");
-        }
+            ViewBag.Name = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 
-        //GET: Category/List
-        public ActionResult List()
-        {
             using (var db = new GalleryDbContext())
             {
+
                 var categories = db.Categories.ToList();
 
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    categories = categories.Where(s => s.Name.Contains(searchString)).ToList();
+                }
+
+                switch (sortOrder)
+                {
+                    case "Name_desc":
+                        categories = categories.OrderByDescending(s => s.Name).ToList();
+                        break;
+                }
                 return View(categories);
             }
         }
@@ -44,7 +52,7 @@ namespace AstroPhotoGallery.Controllers
             {
                 using (var db = new GalleryDbContext())
                 {
-                    if(db.Categories.Any(c=>c.Name == category.Name))
+                    if (db.Categories.Any(c => c.Name == category.Name))
                     {
                         this.AddNotification("Category already exists.", NotificationType.ERROR);
                         return RedirectToAction("Index");
@@ -52,7 +60,7 @@ namespace AstroPhotoGallery.Controllers
 
                     db.Categories.Add(category);
                     db.SaveChanges();
-                    this.AddNotification("Category created.",NotificationType.SUCCESS);                   
+                    this.AddNotification("Category created.", NotificationType.SUCCESS);
                     return RedirectToAction("Index");
                 }
             }
@@ -156,6 +164,6 @@ namespace AstroPhotoGallery.Controllers
                 this.AddNotification("Category deleted.", NotificationType.SUCCESS);
                 return RedirectToAction("List");
             }
-        }       
+        }
     }
 }

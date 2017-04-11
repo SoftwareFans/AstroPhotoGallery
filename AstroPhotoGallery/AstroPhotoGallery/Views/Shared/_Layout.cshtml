@@ -31,6 +31,15 @@
                         @Html.ActionLink("Upload", "Upload", "Picture")
                     </li>
                 </ul>
+                @*<div class="navbar-left" style="margin-top:8px;">
+                    @using (Html.BeginForm("Category", "Search", FormMethod.Get))
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.TextBox("id", ViewBag.CurrentFilter as string)</li>
+                            <li><input type="submit" value="Search" /></li>
+                        </ul>
+                    }
+                </div>*@
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")

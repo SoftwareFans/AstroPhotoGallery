@@ -289,7 +289,7 @@
     <Content Include="Views\Picture\Upload.cshtml" />
     <Content Include="Views\Picture\Delete.cshtml" />
     <Content Include="Views\Picture\Edit.cshtml" />
-    <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
