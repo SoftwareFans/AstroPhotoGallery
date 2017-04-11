@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/font-awesome.min.css")
     @Styles.Render("~/Content/mainpage.css")
-    
+
 
 </head>
 <body>
@@ -25,21 +25,26 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("ASTRO GALLERY", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                
-                <ul class="nav navbar-nav ">                                        
+
+                <ul class="nav navbar-nav ">
                     <li>
                         @Html.ActionLink("Upload", "Upload", "Picture")
                     </li>
-                </ul>
-                @*<div class="navbar-left" style="margin-top:8px;">
-                    @using (Html.BeginForm("Category", "Search", FormMethod.Get))
-                    {
-                        <ul class="nav navbar-nav">
-                            <li>@Html.TextBox("id", ViewBag.CurrentFilter as string)</li>
-                            <li><input type="submit" value="Search" /></li>
-                        </ul>
+                    <li> @using (Html.BeginForm("ListCategories", "Home", FormMethod.Get))
+            {
+                        <p>
+                            <div class="form-group">                            
+                                <div class="col-sm-8">
+                                    @Html.TextBox("SearchString", null, new { @class = "form-control" ,placeholder="Category name" })
+                                </div>
+                            </div>
+
+                            <input type="submit" value="Search" class="btn btn-default" />
+                        </p>
                     }
-                </div>*@
+                    </li>
+                </ul>
+           
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
@@ -47,16 +52,16 @@
         </div>
     </div>
 
-<div class="container body-content">
-    <div class="container">@Html.Partial("_Notifications")</div>
-    
-    @RenderBody()
-    <footer class="pull-right">
-        <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
-    </footer>
-</div>
+    <div class="container body-content">
+        <div class="container">@Html.Partial("_Notifications")</div>
 
-   
+        @RenderBody()
+        <footer class="pull-right">
+            <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
+        </footer>
+    </div>
+
+
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/custom.js")
 
