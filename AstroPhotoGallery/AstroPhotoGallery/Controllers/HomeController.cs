@@ -21,7 +21,7 @@ namespace AstroPhotoGallery.Controllers
                 var categories = db.Categories
                    .Include(c => c.Pictures)
                    .OrderBy(c => c.Name)
-                   .Take(3)
+                   .Take(4)
                    .ToList();
 
                 return View(categories);

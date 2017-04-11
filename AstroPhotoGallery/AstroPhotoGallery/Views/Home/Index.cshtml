@@ -1,4 +1,6 @@
-﻿@model List<AstroPhotoGallery.Models.Category>
+﻿@using AstroPhotoGallery.Models
+@using PagedList
+@model List<AstroPhotoGallery.Models.Category>
 @{
     ViewBag.Title = "Index";
 }
@@ -11,22 +13,23 @@
             <li data-target="#mainCarousel" data-slide-to="1"></li>
             <li data-target="#mainCarousel" data-slide-to="2"></li>
         </ol>
+
         <!--Not responsive 350px height-->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="~/Content/images/hi-TECH (213).JPG" alt="...">
+                <img src="~/Content/images/NGC2237_New_b.jpg" alt="...">
                 <div class="carousel-caption">
                     <h3>Slide Caption</h3>
                 </div>
             </div>
             <div class="item">
-                <img src="~/Content/images/hi-TECH (214).JPG" alt="...">
+                <img src="~/Content/images/IC443_HSO_com_b.jpg" alt="...">
                 <div class="carousel-caption">
                     <h3>Slide Caption</h3>
                 </div>
             </div>
             <div class="item">
-                <img src="~/Content/images/NGC2261_Ha_RGB_b.jpg" alt="...">
+                <img src="~/Content/images/IC2177_Ha_RGB_new_b.jpg" alt="...">
                 <div class="carousel-caption">
                     <h3>Slide Caption</h3>
                 </div>
@@ -45,38 +48,32 @@
 </div>
 <div class="container">
     <div class="section">
-        <div class="row">
-            <div class="col-md-3 hidden-xs">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Categories</h3>
-                    </div>
-                    <ul class="list-group">
-                        <li class="list-group-item"> @Html.ActionLink("View All Categories", "ListCategories", "Home")</li>
-
-                        @foreach (var category in Model)
+        <div class="row">         
+            @foreach (var category in Model)
+            {
+                <div class="col-md-3">
+                    <a href="#" class="thumbnail" >
+                        @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                         {
-                            <li class="list-group-item">
-                                <p>
-                                    <h2>
-                                        @Html.ActionLink(string.Format($"{category.Name}"),
-                                    "ListPictures", "Home", new { @categoryId = category.Id }, null)
-                                    </h2>
-                                </p>
-                            </li>
+                             <!--Not responsive-->
+                            <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="height:150px;width:320px">
                         }
-                    </ul>
+                        else
+                        {
+                             <!--Not responsive -->
+                            <img src="~/Content/images/default-gallery-image.jpg" style="height:150px;width:320px"/>
+                        }
+                    </a>
+                    <h3>@category.Name</h3>   
+                    @Html.ActionLink("All pictures", "ListPictures", new { @categoryId = category.Id }, new {@class="btn btn-primary"})
+                    @*<a href="#" class="btn btn-primary btn-sm">Read More</a>*@
                 </div>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/300x200" alt="">
-                </a>
-                <h3>Header One</h3>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                <a href="#" class="btn btn-primary btn-sm">Read More</a>
-            </div>
-            <div class="col-md-3">
+
+            }
+
+           
+
+            @*<div class="col-md-3">
                 <a href="#" class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
                 </a>
@@ -91,7 +88,7 @@
                 <h3>Header Three</h3>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                 <a href="#" class="btn btn-primary btn-sm">Read More</a>
-            </div>
+            </div>*@
         </div>
     </div>
 
