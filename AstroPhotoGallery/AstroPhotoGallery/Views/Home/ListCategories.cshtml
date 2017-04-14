@@ -17,21 +17,19 @@
                 <div class="thumbnail ">
                     @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                     {
-                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)"style="height:190px;width:350px">
+                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="height:190px;width:350px">
                     }
                     else
                     {
-                        <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px"/>
+                        <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px" />
                     }
 
                     <div class="caption text-center ">
                         <h4>
-
                             @Html.ActionLink(string.Format($"{category.Name}"),
-                                "ListPictures", "Home", new {@categoryId = category.Id}, null)
+                                "ListPictures", "Home", new { @categoryId = category.Id }, null)
                         </h4>
-
-                    </div><!--end caption-->
+                    </div>
                 </div>
             </div>
         }

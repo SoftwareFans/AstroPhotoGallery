@@ -29,17 +29,9 @@
                 </div>
             </div>
 
-            //ObjectDisposedException:
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.CategoryId, new { @class = "control-label col-sm-4" })
-                <div class="dropdown col-sm-4">
-                    @Html.TextAreaFor(m => m.Category.Name)
-                </div>
-            </div>*@
-
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "List", "Picture", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Cancel", "ListCategories", "Home", null, new { @class = "btn btn-default" })
                     <input type="submit" value="Delete" class="btn btn-danger" />
                 </div>
             </div>
