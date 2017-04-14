@@ -28,6 +28,9 @@
                     <li>
                         @Html.ActionLink("Upload", "Upload", "Picture")
                     </li>
+                    <li>
+                        @Html.ActionLink("All categories", "ListCategories", "Home")
+                    </li>
                     <li> @using (Html.BeginForm("ListCategories", "Home", FormMethod.Get))
             {
                         <p>

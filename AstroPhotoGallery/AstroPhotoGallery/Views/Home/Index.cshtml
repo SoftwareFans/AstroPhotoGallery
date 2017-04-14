@@ -52,7 +52,7 @@
             @foreach (var category in Model)
             {
                 <div class="col-md-3">
-                    <a href="#" class="thumbnail" >
+                    <div class="thumbnail" >
                         @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                         {
                              <!--Not responsive-->
@@ -63,7 +63,7 @@
                              <!--Not responsive -->
                             <img src="~/Content/images/default-gallery-image.jpg" style="height:150px;width:320px"/>
                         }
-                    </a>
+                    </div>
                     <h3>@category.Name</h3>   
                     @Html.ActionLink("All pictures", "ListPictures", new { @categoryId = category.Id }, new {@class="btn btn-primary"})
                     @*<a href="#" class="btn btn-primary btn-sm">Read More</a>*@

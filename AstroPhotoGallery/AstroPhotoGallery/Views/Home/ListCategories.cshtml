@@ -17,11 +17,11 @@
                 <div class="thumbnail ">
                     @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                     {
-                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath) ">
+                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)"style="height:190px;width:350px">
                     }
                     else
                     {
-                        <img src="~/Content/images/default-gallery-image.jpg"/>
+                        <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px"/>
                     }
 
                     <div class="caption text-center ">

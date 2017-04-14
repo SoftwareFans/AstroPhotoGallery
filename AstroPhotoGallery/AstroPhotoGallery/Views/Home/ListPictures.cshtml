@@ -15,6 +15,9 @@
                             @Html.ActionLink(@picture.PicTitle, "Details", "Picture", new { @id = picture.Id }, null)
                         </h2>
                     </header>
+                    <div class="img-thumbnail">
+                        <img src="@Url.Content(picture.ImagePath)" style="height:120px;width:220px"/>
+                    </div>
                     <p>
                         @picture.PicDescription
                     </p>
@@ -28,4 +31,4 @@
         }
     </div>
 </div>
-<hr />
+
