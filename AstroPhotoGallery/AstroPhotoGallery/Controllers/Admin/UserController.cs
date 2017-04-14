@@ -17,30 +17,30 @@ namespace AstroPhotoGallery.Controllers.Admin
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchUser, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Email = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
 
-            if (searchString != null)
+            if (searchUser != null)
             {
                 page = 1;
             }
             else
             {
-                searchString = currentFilter;
+                searchUser = currentFilter;
             }
 
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilter = searchUser;
 
             using (var db = new GalleryDbContext())
             {
                 var users = db.Users
                     .ToList();
 
-                if (!String.IsNullOrEmpty(searchString))
+                if (!String.IsNullOrEmpty(searchUser))
                 {
-                    users = users.Where(s => s.Email.Contains(searchString)).ToList();
+                    users = users.Where(s => s.Email.Contains(searchUser)).ToList();
                 }
 
                 var admins = GetAdminUserNames(users, db);
