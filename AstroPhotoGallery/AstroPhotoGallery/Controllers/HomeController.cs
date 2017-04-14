@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
 
@@ -28,7 +29,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        public ActionResult ListCategories(string searchString , int ? page, string currentFilter)
+        public ActionResult ListCategories(string searchString, int? page, string currentFilter)
         {
             if (searchString != null)
             {
@@ -50,7 +51,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (categories.Count == 0)
                 {
-                    categories.Add(new Category {Name = "defimages",});
+                    categories.Add(new Category { Name = "defimages", });
                 }
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -64,15 +65,23 @@ namespace AstroPhotoGallery.Controllers
 
         }
 
-        public ActionResult ListPictures( int ? categoryId)
+        public ActionResult ListPictures(int? categoryId)
         {
             if (categoryId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("No category ID provided.", NotificationType.ERROR);
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
             {
+                var category = db.Categories.FirstOrDefault(c => c.Id == categoryId);
+                if (category == null)
+                {
+                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
+                }
+
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
                     .Include(p => p.PicUploader)
