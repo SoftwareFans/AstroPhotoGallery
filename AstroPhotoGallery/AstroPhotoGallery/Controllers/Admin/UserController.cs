@@ -9,6 +9,7 @@ using AstroPhotoGallery.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using PagedList;
 
 namespace AstroPhotoGallery.Controllers.Admin
 {
@@ -16,23 +17,46 @@ namespace AstroPhotoGallery.Controllers.Admin
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return RedirectToAction("List");
-        }
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.Email = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
 
-        //GET: User/List
-        public ActionResult List()
-        {
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             using (var db = new GalleryDbContext())
             {
                 var users = db.Users
                     .ToList();
 
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    users = users.Where(s => s.Email.Contains(searchString)).ToList();
+                }
+
                 var admins = GetAdminUserNames(users, db);
+
                 ViewBag.Admins = admins;
 
-                return View(users);
+                switch (sortOrder)
+                {
+                    case "Email_desc":
+                        users = users.OrderByDescending(s => s.Email).ToList();
+                        break;
+                }
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(users.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -59,7 +83,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 }
 
                 //Create a view model
-                var model =new EditUserViewModel();
+                var model = new EditUserViewModel();
                 model.User = user;
                 model.Roles = GetUserRoles(user, db);
 
@@ -215,9 +239,9 @@ namespace AstroPhotoGallery.Controllers.Admin
 
             foreach (var roleName in roles)
             {
-                var role = new Role {Name = roleName};
+                var role = new Role { Name = roleName };
 
-                if (userManager.IsInRole(user.Id,roleName))
+                if (userManager.IsInRole(user.Id, roleName))
                 {
                     role.IsSelected = true;
                 }
