@@ -6,23 +6,23 @@
 
 <div class="container">
     <div class="well">
-        <h2>Users</h2>
         
-        @using (Html.BeginForm())
-            {
-            <p>
-                <div class="form-group">
-                    @Html.Label("Find User by email: ", new { @class = "control-label col-sm-4" })
-                    <div class="col-sm-4">
-                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
-                    </div>
+        @using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <h2>Users</h2>
+            <hr/>
+
+            <div class="form-group">
+                @Html.Label("Find User by email:", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-3">
+                    @Html.TextBox("searchUser", null, new { @class = "form-control", placeholder = "User's email" })
                 </div>
-
-                <input type="submit" value="Search" class="btn btn-default" />
-            </p>
+                <div class="col-sm-2">
+                    <input type="submit" value="Search user" class="btn btn-default" />
+                </div>
+            </div>
         }
-
-
+        <br/>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -48,7 +48,7 @@
                 <td>@user.Email</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "User", new { @id = user.Id }, new { @class = "btn btn-success btn-md" } )
-                    @Html.ActionLink("Delete", "Delete", "User", new { @id = user.Id }, new { @class = "btn btn-warning btn-md" })
+                    @Html.ActionLink("Delete", "Delete", "User", new { @id = user.Id }, new { @class = "btn btn-danger btn-md" })
                 </td>
             }
 
