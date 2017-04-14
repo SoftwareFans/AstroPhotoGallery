@@ -67,19 +67,19 @@ namespace AstroPhotoGallery.Controllers.Admin
             if (id == null)
             {
                 this.AddNotification("No user ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
             {
                 //Get user from database
-                var user = db.Users.Where(u => u.Id == id).First();
+                var user = db.Users.Where(u => u.Id == id).FirstOrDefault();
 
                 //Check if user exists
                 if (user == null)
                 {
                     this.AddNotification("User doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("Index");
                 }
 
                 //Create a view model
@@ -110,7 +110,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     if (user == null)
                     {
                         this.AddNotification("User doesn't exist.", NotificationType.ERROR);
-                        return RedirectToAction("List");
+                        return RedirectToAction("Index");
                     }
 
                     //If password fiel is not empty, change password
@@ -132,7 +132,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    return RedirectToAction("List");
+                    return RedirectToAction("Index");
                 }
             }
 
@@ -145,7 +145,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             if (id == null)
             {
                 this.AddNotification("No user ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
@@ -153,13 +153,13 @@ namespace AstroPhotoGallery.Controllers.Admin
                 //Get user from database
                 var user = db.Users
                     .Where(u => u.Id == id)
-                    .First();
+                    .FirstOrDefault();
 
                 //Check if user exists
                 if (user == null)
                 {
                     this.AddNotification("User doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("Index");
                 }
 
                 return View(user);
@@ -174,7 +174,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             if (id == null)
             {
                 this.AddNotification("No user ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
 
             using (var db = new GalleryDbContext())
@@ -194,11 +194,11 @@ namespace AstroPhotoGallery.Controllers.Admin
                     db.Pictures.Remove(picture);
                 }
 
-                //Delete user and save chanches 
+                //Delete user and save changes 
                 db.Users.Remove(user);
                 db.SaveChanges();
 
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
         }
 
