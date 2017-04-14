@@ -14,7 +14,7 @@ namespace AstroPhotoGallery.Models
         public string Password { get; set; }
 
         [DisplayName("Confirm Password")]
-        [Compare("Password", ErrorMessage = "Password does not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Passwords does not match.")]
         public string ConfirmPassword { get; set; }
 
         public IList<Role> Roles { get; set; }
