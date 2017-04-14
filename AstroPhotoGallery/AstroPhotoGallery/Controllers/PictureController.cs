@@ -114,7 +114,7 @@ namespace AstroPhotoGallery.Controllers
                             db.Pictures.Add(picture);
                             db.SaveChanges();
 
-                            return RedirectToAction("List");
+                            return RedirectToAction("ListCategories", "Home");
                         }
                         else
                         {
@@ -141,6 +141,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //GET: Picture/Delete
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -178,6 +179,7 @@ namespace AstroPhotoGallery.Controllers
         //POST: Picture/Delete
         [HttpPost]
         [ActionName("Delete")]
+        [Authorize]
         public ActionResult DeleteConfirmed(int? id)
         {
             if (id == null)
@@ -216,6 +218,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //GET: Picture/Edit
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -251,6 +254,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //POST: Picture/Edit
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Picture model)
         {

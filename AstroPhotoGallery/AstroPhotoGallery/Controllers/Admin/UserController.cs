@@ -96,7 +96,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         [HttpPost]
         public ActionResult Edit(string id, EditUserViewModel viewModel)
         {
-            //Chack if model is valid
+            //Check if model is valid
             if (ModelState.IsValid)
             {
                 using (var db = new GalleryDbContext())
@@ -113,7 +113,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                         return RedirectToAction("Index");
                     }
 
-                    //If password fiel is not empty, change password
+                    //If password field is not empty, change password
                     if (!string.IsNullOrEmpty(viewModel.Password))
                     {
                         var hasher = new PasswordHasher();
