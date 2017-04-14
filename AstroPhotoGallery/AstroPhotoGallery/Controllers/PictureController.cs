@@ -266,7 +266,7 @@ namespace AstroPhotoGallery.Controllers
                     //Get picture form database
                     var picture = db.Pictures.Include(u => u.PicUploader).FirstOrDefault(p => p.Id == model.Id);
 
-                    //Set picture props
+                    //Set picture properties
                     picture.PicTitle = model.PicTitle;
                     picture.PicDescription = model.PicDescription;
                     picture.CategoryId = model.CategoryId;
@@ -290,7 +290,7 @@ namespace AstroPhotoGallery.Controllers
 
         public ActionResult DownlandFile(string filePath)
         {
-            //В базата не пазим имената на картинките затова на метода подавам пътя и от него взимам името
+            // The names of the pictures are not stored in DB so the name is taken from the path of the pic
             var filename = filePath.Substring(17);
             var fileExtension = Path.GetExtension(filename);
 
