@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Cancel", "Details", "Picture", new { @id = Model.Id }, new { @class = "btn btn-default" })
                     <input type="submit" value="Delete" class="btn btn-danger" />
                 </div>
             </div>
