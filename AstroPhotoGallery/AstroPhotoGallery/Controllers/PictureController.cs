@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
@@ -15,11 +16,11 @@ using AstroPhotoGallery.Extensions;
 namespace AstroPhotoGallery.Controllers
 {
     public class PictureController : Controller
-    {      
+    {
         // GET: Picture
         public ActionResult Index()
         {
-            return RedirectToAction("List");
+            return RedirectToAction("ListCategories", "Home");
         }
 
         //GET: Picture/List
@@ -43,7 +44,7 @@ namespace AstroPhotoGallery.Controllers
             if (id == null)
             {
                 this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
 
             using (var db = new GalleryDbContext())
@@ -55,7 +56,7 @@ namespace AstroPhotoGallery.Controllers
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 return View(picture);
@@ -147,7 +148,7 @@ namespace AstroPhotoGallery.Controllers
             if (id == null)
             {
                 this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
 
             using (var db = new GalleryDbContext())
@@ -162,13 +163,13 @@ namespace AstroPhotoGallery.Controllers
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 //Pass picture to view
@@ -185,7 +186,7 @@ namespace AstroPhotoGallery.Controllers
             if (id == null)
             {
                 this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
 
             using (var db = new GalleryDbContext())
@@ -200,7 +201,7 @@ namespace AstroPhotoGallery.Controllers
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 //Delete the picture from the database 
@@ -213,7 +214,7 @@ namespace AstroPhotoGallery.Controllers
                 System.IO.File.Delete(mappedPath);
 
                 //Redirect to index page
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
         }
 
@@ -224,7 +225,7 @@ namespace AstroPhotoGallery.Controllers
             if (id == null)
             {
                 this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
 
             using (var db = new GalleryDbContext())
@@ -239,13 +240,13 @@ namespace AstroPhotoGallery.Controllers
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to edit this picture.", NotificationType.ERROR);
-                    return RedirectToAction("List");
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
@@ -307,11 +308,11 @@ namespace AstroPhotoGallery.Controllers
                 var imageType = $"image/{type}";
 
                 return base.File(path, imageType, filename);
-            }           
+            }
             else
             {
                 this.AddNotification("Invalid picture format.", NotificationType.ERROR);
-                return RedirectToAction("List");
+                return RedirectToAction("ListCategories", "Home");
             }
         }
 
