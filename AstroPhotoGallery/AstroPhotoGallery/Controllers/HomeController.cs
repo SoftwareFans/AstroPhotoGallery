@@ -58,7 +58,7 @@ namespace AstroPhotoGallery.Controllers
                     categories = categories.Where(s => s.Name.Contains(searchString)).ToList();
                 }
 
-                int pageSize = 12;
+                int pageSize = 8;
                 int pageNumber = (page ?? 1);
                 return View(categories.ToPagedList(pageNumber, pageSize));
             }
