@@ -70,7 +70,7 @@ namespace AstroPhotoGallery.Controllers
                 {
                     if (db.Categories.Any(c => c.Name == category.Name))
                     {
-                        this.AddNotification("Category already exists.", NotificationType.ERROR);
+                        this.AddNotification("Category with this name already exists.", NotificationType.ERROR);
                         return RedirectToAction("Index");
                     }
 
