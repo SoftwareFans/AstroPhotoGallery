@@ -82,6 +82,8 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("Index");
                 }
 
+                TempData["CategoryName"] = category.Name;
+
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
                     .Include(p => p.PicUploader)

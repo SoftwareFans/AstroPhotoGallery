@@ -1,29 +1,30 @@
 ﻿@model List<AstroPhotoGallery.Models.Picture>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "List Pictures";
 }
 
 <div class="container">
+    <h2>@TempData["CategoryName"]</h2>
     <div class="row">
         @foreach (var picture in Model)
-        {
-            <div class="col-sm-6">
+            {
+            <div class="col-sm-6 text-center">
                 <article>
                     <header>
-                        <h2>
+                        <h3>
                             @Html.ActionLink(@picture.PicTitle, "Details", "Picture", new { @id = picture.Id }, null)
-                        </h2>
+                        </h3>
                     </header>
                     <div class="img-thumbnail">
-                        <img src="@Url.Content(picture.ImagePath)" style="height:120px;width:220px"/>
+                        <img src="@Url.Content(picture.ImagePath)" style="width: 360px" class="img-responsive img-rounded center-block" alt="Astro picture" />
                     </div>
                     <p>
                         <br />
                         @picture.PicDescription
                     </p>
-                    <footer class="pull-right">
-                        <small class="author">
+                    <footer>
+                        <small>
                             Uploader: @picture.PicUploader.Email
                         </small>
                     </footer>
@@ -32,4 +33,3 @@
         }
     </div>
 </div>
-
