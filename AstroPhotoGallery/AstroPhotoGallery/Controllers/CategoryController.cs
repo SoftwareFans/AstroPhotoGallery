@@ -123,6 +123,7 @@ namespace AstroPhotoGallery.Controllers
 
                     db.Entry(category).State = EntityState.Modified;
 
+                    // When the name of a category is being changed all the pictures in that category in DB should be changed:
                     var picsToBeChanged = db.Pictures.Where(p => p.CategoryId == category.Id).ToList();
                     foreach (var pic in picsToBeChanged)
                     {
@@ -181,7 +182,13 @@ namespace AstroPhotoGallery.Controllers
 
                 foreach (var pic in categoryPictures)
                 {
-                    db.Pictures.Remove(pic);
+                    // Delete the pic from ~/Content/images:
+                    string path = pic.ImagePath;
+                    var mappedPath = Server.MapPath(path);
+                    System.IO.File.Delete(mappedPath);
+
+                    // Delete the pic from DB
+                    db.Pictures.Remove(pic); 
                 }
 
                 db.Categories.Remove(category);
