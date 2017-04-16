@@ -7,7 +7,8 @@
 <div class="container body-content span-8 offset-2">
     <div class="well">
         <h2>@ViewBag.Title</h2>
-
+        <h3 style="color: #e74c3c; text-align: center;">Are you sure you want to delete the below user?</h3>
+        <br />
         @using (Html.BeginForm("Delete", "User", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <div class="form-group">

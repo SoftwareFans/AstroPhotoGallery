@@ -1,11 +1,11 @@
 ﻿@model AstroPhotoGallery.Models.Category
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Category";
 }
 
 <div class="container">
     <div class="well">
-        <h2>Delete Category</h2>
+        <h2>@ViewBag.Title</h2>
         <h3 style="color: #e74c3c; text-align: center">Are you sure you want to delete the below category?</h3>
         <br />
         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
