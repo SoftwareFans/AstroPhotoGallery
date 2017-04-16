@@ -50,7 +50,6 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 //Get picture from database
-
                 var picture = db.Pictures.Where(x => x.Id == id).Include(u => u.PicUploader).FirstOrDefault();
 
                 if (picture == null)
@@ -115,7 +114,7 @@ namespace AstroPhotoGallery.Controllers
                             db.Pictures.Add(picture);
                             db.SaveChanges();
 
-                            return RedirectToAction("ListCategories", "Home");
+                            return View("Details", picture);
                         }
                         else
                         {

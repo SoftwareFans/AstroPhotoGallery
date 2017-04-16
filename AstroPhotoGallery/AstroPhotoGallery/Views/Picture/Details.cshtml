@@ -55,18 +55,18 @@
                         @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
                     </span>
 
-                    @if (Model.IsUploader(User.Identity.Name) ||User.IsInRole("Admin"))
+                    @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
                     {
                         <span>
-                            @Html.ActionLink("Edit", "Edit", "Picture", new {@id = Model.Id}, new {@class = "btn btn-success btn-md"})
+                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
                         </span>
 
                         <span>
-                            @Html.ActionLink("Delete", "Delete", "Picture", new {@id = Model.Id}, new {@class = "btn btn-danger btn-md"})
+                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
                         </span>
                     }
                     <span>
-                        @Html.ActionLink("Back", "ListCategories", "Home", null, new {@class = "btn btn-default btn-md"})
+                        @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
                     </span>
                 </span>
             </div>
