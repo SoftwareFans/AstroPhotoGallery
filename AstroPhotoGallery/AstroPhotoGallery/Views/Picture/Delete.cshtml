@@ -7,6 +7,8 @@
 <div class="container">
     <div class="well">
         <h2>Delete Picture</h2>
+        <h3 style="color: #e74c3c; text-align: center">Are you sure you want to delete the below picture?</h3>
+        <br/>
         @using (Html.BeginForm("Delete", "Picture", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
@@ -14,7 +16,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4">@* Empty label for centering the pic *@</label>
                 <div class="col-sm-4">
-                    <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="280" height="200" class="img-rounded">
+                    <img src="@Url.Content(Model.ImagePath)" alt="Astro" width="280" height="200" class="img-responsive img-rounded">
                 </div>
             </div>
 
