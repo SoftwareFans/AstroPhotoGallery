@@ -18,7 +18,6 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 //Get pictures from database
-
                 var categories = db.Categories
                    .Include(c => c.Pictures)
                    .OrderBy(c => c.Name)
@@ -51,7 +50,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (categories.Count == 0)
                 {
-                    categories.Add(new Category { Name = "defimages", });
+                    this.AddNotification("No categories found.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
                 }
                 if (!String.IsNullOrEmpty(searchString))
                 {
