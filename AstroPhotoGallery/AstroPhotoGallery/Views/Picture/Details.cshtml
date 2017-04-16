@@ -17,18 +17,19 @@
     <div class="panel-heading resume-heading">
 
         <div class="row">
-            <div class="col-md-8" style="color: #839496">
-                <div>
+            <div class="col-sm-6" style="color: #839496">
+                <div style="word-wrap: break-word;">
                     @Model.PicDescription
                 </div>
             </div>
-            <div class="col-md-4 ">
+            <div class="col-sm-6">
                 <a href="#" data-toggle="modal" data-target=".dialog1">
-                    <img src="@Url.Content(Model.ImagePath)" width="500" class="img-responsive img-rounded center-block" alt="Astro picture" />
+                    <img src="@Url.Content(Model.ImagePath)" width="600" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
             </div>
 
-            <div class="modal fade dialog1" tabindex="-1">
+            @* The below can be deleted - NOT USED
+                <div class="modal fade dialog1" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
         <br />
         <div class="row">
@@ -51,22 +52,50 @@
                     Category: @Model.CategoryName
                 </span>
                 <span class="pull-right">
+                    
+                    @if (Model.IsFirstOfCategory == false)
+                    {
+                        <span>
+                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new {@categoryId = Model.CategoryId, @picId = Model.Id}, new {@class = "btn btn-primary btn-md"})
+                        </span>
+                    }
+                    else
+                    {
+                        <span>
+                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
+                        </span>
+                    }
+
+                    @if (Model.IsLastOfCategory == false)
+                    {
+                        <span>
+                            @Html.ActionLink("Next", "NextPicture", "Picture", new {@categoryId = Model.CategoryId, @picId = Model.Id}, new {@class = "btn btn-primary btn-md" })
+                        </span>
+                    }
+                    else
+                    {
+                        <span>
+                            @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
+                        </span>
+                    }
+ 
+                    <span class="divider"></span>
                     <span>
-                        @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
+                        @Html.ActionLink("Download", "DownlandFile", new {filePath = Model.ImagePath}, new {@class = "btn btn-info btn-md"})
                     </span>
 
                     @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
                     {
                         <span>
-                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
+                            @Html.ActionLink("Edit", "Edit", "Picture", new {@id = Model.Id}, new {@class = "btn btn-success btn-md"})
                         </span>
 
                         <span>
-                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
+                            @Html.ActionLink("Delete", "Delete", "Picture", new {@id = Model.Id}, new {@class = "btn btn-danger btn-md"})
                         </span>
                     }
                     <span>
-                        @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
+                        @Html.ActionLink("Back", "ListPictures", "Home", new {@categoryId = Model.CategoryId}, new {@class = "btn btn-default btn-md"})
                     </span>
                 </span>
             </div>
