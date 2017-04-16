@@ -29,11 +29,8 @@ namespace AstroPhotoGallery.Models
 
         public virtual ApplicationUser PicUploader { get; set; }
 
-        //[ForeignKey("Category")] // Exeption - delete category from database
         [DisplayName("Category")]
         public int CategoryId { get; set; }
-
-        //public virtual Category Category { get; set; } //Set another id in database
 
         public ICollection<Category> Categories { get; set; }
 
@@ -44,6 +41,11 @@ namespace AstroPhotoGallery.Models
         public bool IsUploader(string name)
         {
             return this.PicUploader.UserName.Equals(name);
-        }     
+        }
+
+        // Boolean variables required for the "NextPicture" and "PreviousPicture" implementation in Picture/Details:
+        public bool IsLastOfCategory { get; set; } 
+
+        public bool IsFirstOfCategory { get; set; }
     }
 }
