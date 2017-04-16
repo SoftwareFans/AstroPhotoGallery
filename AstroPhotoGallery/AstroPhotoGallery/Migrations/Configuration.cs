@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AstroPhotoGallery.Migrations
 {
     using System;
@@ -26,8 +28,13 @@ namespace AstroPhotoGallery.Migrations
 
             if (!context.Users.Any())
             {
-                this.CreateUser(context, "admin@admin.com", "Admin","Admin", "123");
+                this.CreateUser(context, "admin@admin.com", "Admin", "Admin", "123");
                 this.SetRoleToUser(context, "admin@admin.com", "Admin");
+            }
+
+            if (!context.Categories.Any())
+            {
+                this.CreateCategory(context, "Other");
             }
         }
 
@@ -46,7 +53,7 @@ namespace AstroPhotoGallery.Migrations
             }
         }
 
-        private void CreateUser(GalleryDbContext context, string email, string firstName ,string lastName, string password)
+        private void CreateUser(GalleryDbContext context, string email, string firstName, string lastName, string password)
         {
             //Create user manager 
             var userManager = new UserManager<ApplicationUser>(
@@ -92,6 +99,23 @@ namespace AstroPhotoGallery.Migrations
             if (!result.Succeeded)
             {
                 throw new Exception(string.Join(";", result.Errors));
+            }
+        }
+
+        private void CreateCategory(GalleryDbContext context, string name)
+        {
+
+
+            if (!context.Categories.Any())
+            {
+                var category = new Category
+                {
+                    Name = name,
+                    Pictures = new HashSet<Picture>()
+                };
+
+                context.Categories.Add(category);
+                context.SaveChanges();
             }
         }
     }

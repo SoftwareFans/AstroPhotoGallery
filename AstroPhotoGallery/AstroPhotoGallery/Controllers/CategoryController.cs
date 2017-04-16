@@ -122,7 +122,16 @@ namespace AstroPhotoGallery.Controllers
                     }
 
                     db.Entry(category).State = EntityState.Modified;
+
+                    var picsToBeChanged = db.Pictures.Where(p => p.CategoryId == category.Id).ToList();
+                    foreach (var pic in picsToBeChanged)
+                    {
+                        pic.CategoryName = category.Name;
+                        db.Entry(pic).State = EntityState.Modified;
+                    }
+
                     db.SaveChanges();
+
                     this.AddNotification("Category edited.", NotificationType.SUCCESS);
                     return RedirectToAction("Index");
                 }
