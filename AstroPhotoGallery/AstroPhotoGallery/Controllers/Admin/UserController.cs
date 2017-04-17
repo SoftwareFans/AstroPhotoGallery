@@ -78,7 +78,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 //Check if user exists
                 if (user == null)
                 {
-                    this.AddNotification("User doesn't exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index");
                 }
 
@@ -109,7 +109,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     //Check if user exists
                     if (user == null)
                     {
-                        this.AddNotification("User doesn't exist.", NotificationType.ERROR);
+                        this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                         return RedirectToAction("Index");
                     }
 
@@ -158,7 +158,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 //Check if user exists
                 if (user == null)
                 {
-                    this.AddNotification("User doesn't exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index");
                 }
 

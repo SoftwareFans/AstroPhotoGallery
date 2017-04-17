@@ -99,7 +99,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (category == null)
                 {
-                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index");
                 }
 
