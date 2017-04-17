@@ -49,7 +49,10 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 // Get picture from database
-                var picture = db.Pictures.Where(x => x.Id == id).Include(u => u.PicUploader).FirstOrDefault();
+                var picture = db.Pictures
+                    .Where(x => x.Id == id)
+                    .Include(u => u.PicUploader)
+                    .FirstOrDefault();
 
                 if (picture == null)
                 {
@@ -57,7 +60,9 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                var picsOfCategory = db.Pictures.Where(p => p.CategoryId == picture.CategoryId).ToList();
+                var picsOfCategory = db.Pictures
+                    .Where(p => p.CategoryId == picture.CategoryId)
+                    .ToList();
 
                 // If there is only 1 picture in a category the boolean variable is changed for proper work of the "NextPicture" and "PreviousPicture" actions:
                 if (picsOfCategory.Count == 1)
@@ -145,8 +150,10 @@ namespace AstroPhotoGallery.Controllers
         {
             using (var db = new GalleryDbContext())
             {
-                var model = new Picture();
-                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+                var model = new PictureViewModel();
+                model.Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
 
                 return View(model);
             }
@@ -155,7 +162,7 @@ namespace AstroPhotoGallery.Controllers
         //POST: Picture/Upload
         [HttpPost]
         [Authorize]
-        public ActionResult Upload([Bind(Exclude = "ImagePath")]Picture picture)
+        public ActionResult Upload([Bind(Exclude = "ImagePath")]PictureViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -167,9 +174,11 @@ namespace AstroPhotoGallery.Controllers
                         .First()
                         .Id;
 
-                    // Set picture uploader
+                    var picture = new Picture();
                     picture.PicUploaderId = uploaderId;
-                    picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+                    picture.PicTitle = model.PicTitle;
+                    picture.PicDescription = model.PicDescription;
+                    picture.CategoryId = model.CategoryId;
 
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
@@ -193,10 +202,16 @@ namespace AstroPhotoGallery.Controllers
                             db.SaveChanges();
 
                             // Getting the ID of the previous picture in DB and if there is such we change it not to be the last in its category
-                            var previousPicsIDs = db.Pictures.Select(p => p.Id).Where(p => p < picture.Id).ToList();
+                            var previousPicsIDs = db.Pictures
+                                .Select(p => p.Id)
+                                .Where(p => p < picture.Id)
+                                .ToList();
+
                             previousPicsIDs.Reverse();
                             var lastPicId = previousPicsIDs.FirstOrDefault();
-                            var previousPic = db.Pictures.Where(p => (p.Id == lastPicId) && (p.CategoryId == picture.CategoryId)).FirstOrDefault();
+                            var previousPic = db.Pictures
+                                .Where(p => (p.Id == lastPicId) && (p.CategoryId == picture.CategoryId))
+                                .FirstOrDefault();
 
                             if (previousPic != null)
                             {
@@ -213,22 +228,30 @@ namespace AstroPhotoGallery.Controllers
                             System.IO.File.Delete(path);
 
                             this.AddNotification("Invalid picture format.", NotificationType.ERROR);
-                            return View(picture);
+
+                            return View(model);
                         }
                     }
                     else
                     {
                         this.AddNotification("No picture selected for upload or empty file chosen.", NotificationType.ERROR);
-                        return View(picture);
+
+                        model.Categories = db.Categories
+                            .OrderBy(c => c.Name)
+                            .ToList();
+
+                        return View(model);
                     }
                 }
             }
             using (var db = new GalleryDbContext())
             {
-                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
-            }
+                model.Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
 
-            return View(picture);
+                return View(model);
+            }
         }
 
         //GET: Picture/Delete
@@ -247,6 +270,7 @@ namespace AstroPhotoGallery.Controllers
                 var picture = db.Pictures
                     .Where(p => p.Id == id)
                     .Include(p => p.PicUploader)
+                    .Include(p => p.Category)
                     .FirstOrDefault();
 
                 // Check if picture exists
@@ -285,6 +309,7 @@ namespace AstroPhotoGallery.Controllers
                 var picture = db.Pictures
                     .Where(p => p.Id == id)
                     .Include(p => p.PicUploader)
+                    .Include(p => p.Category)
                     .FirstOrDefault();
 
                 // Check if picture exists
@@ -304,6 +329,7 @@ namespace AstroPhotoGallery.Controllers
                 System.IO.File.Delete(mappedPath);
 
                 // Redirect to index page
+                this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
                 return RedirectToAction("ListCategories", "Home");
             }
         }
@@ -339,15 +365,24 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
-                return View(picture);
+                var model = new PictureViewModel();
+                model.Id = picture.Id;
+                model.PicTitle = picture.PicTitle;
+                model.PicDescription = picture.PicDescription;
+                model.CategoryId = picture.CategoryId;
+                model.ImagePath = picture.ImagePath;
+                model.Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
+
+                return View(model);
             }
         }
 
         //POST: Picture/Edit
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(Picture model)
+        public ActionResult Edit(PictureViewModel model)
         {
             // Check if model state is valid
             if (ModelState.IsValid)
@@ -355,7 +390,9 @@ namespace AstroPhotoGallery.Controllers
                 using (var db = new GalleryDbContext())
                 {
                     // Get picture form database
-                    var picture = db.Pictures.Include(u => u.PicUploader).FirstOrDefault(p => p.Id == model.Id);
+                    var picture = db.Pictures
+                        .Include(u => u.PicUploader)
+                        .FirstOrDefault(p => p.Id == model.Id);
 
                     // Set picture properties
                     picture.PicTitle = model.PicTitle;
@@ -373,9 +410,9 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                var picture = db.Pictures.FirstOrDefault(p => p.Id == model.Id);
-                picture.Categories = db.Categories.OrderBy(c => c.Name).ToList();
-                return View(picture);
+                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+
+                return View(model);
             }
         }
 

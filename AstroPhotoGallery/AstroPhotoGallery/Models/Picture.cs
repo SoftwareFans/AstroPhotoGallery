@@ -25,14 +25,14 @@ namespace AstroPhotoGallery.Models
         [ForeignKey("PicUploader")]
         public string PicUploaderId { get; set; }
 
-        public string ImagePath { get; set; }
-
         public virtual ApplicationUser PicUploader { get; set; }
 
-        [DisplayName("Category")]
+        public string ImagePath { get; set; }
+
+        [ForeignKey("Category")]
         public int CategoryId { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public virtual Category Category { get; set; }
 
         public string CategoryName { get; set; }
        
