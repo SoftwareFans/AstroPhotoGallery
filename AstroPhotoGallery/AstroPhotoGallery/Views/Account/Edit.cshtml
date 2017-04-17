@@ -88,7 +88,7 @@
                 <div class="col-sm-4">
                     @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @readonly = "readonly", @id = "birthday", placeholder = Html.DisplayNameFor(x => x.Birthday) })
 
-                    @if (!Model.Birthday.Equals(string.Empty))
+                    @if (!string.IsNullOrEmpty(Model.Birthday))
                     {
                         <div class="checkbox">
                             <label>
