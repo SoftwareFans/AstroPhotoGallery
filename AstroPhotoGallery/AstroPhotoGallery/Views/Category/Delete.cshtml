@@ -6,7 +6,12 @@
 <div class="container">
     <div class="well">
         <h2>@ViewBag.Title</h2>
-        <h3 style="color: #e74c3c; text-align: center">Are you sure you want to delete the below category?</h3>
+        <h3 style="color: #e74c3c; text-align: center">
+            Are you sure you want to delete the below category?
+            <br />
+            <br />
+            All pictures in that category will be deleted too.
+        </h3>
         <br />
         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
         {
