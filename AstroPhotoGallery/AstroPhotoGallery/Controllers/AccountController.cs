@@ -419,9 +419,9 @@ namespace AstroPhotoGallery.Controllers
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
-            using (var bd = new GalleryDbContext())
+            using (var db = new GalleryDbContext())
             {
-                var user = bd.Users.First(x => x.Id == userId);
+                var user = db.Users.First(x => x.Id == userId);
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.Gender = user.Gender;
@@ -435,9 +435,8 @@ namespace AstroPhotoGallery.Controllers
                     ? "~/Content/images/blank-profile-picture.png"
                     : user.ImagePath;
 
-                bd.SaveChanges();
+                db.SaveChanges();
             }
-
 
             return View(model);
         }
@@ -497,11 +496,19 @@ namespace AstroPhotoGallery.Controllers
 
             var pic = Path.GetFileName(poImgFile.FileName);
             var hasNewImage = false;
+            var userIdFolder = model.Id;
 
             // If a picture is selected AND the remove picture option is not selected:
-            if (!string.IsNullOrEmpty(pic) && !model.RemovePicture) 
+            if (!string.IsNullOrEmpty(pic) && !model.RemovePicture)
             {
-                var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+                var userDirectory = Server.MapPath($"~/Content/images/profilePics/{userIdFolder}");
+
+                if (!System.IO.Directory.Exists(userDirectory))
+                {
+                    System.IO.Directory.CreateDirectory(userDirectory);
+                }
+
+                var path = Path.Combine(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}/"), pic);
                 poImgFile.SaveAs(path);
 
                 if (ImageValidator.IsImageValid(path))
@@ -510,8 +517,14 @@ namespace AstroPhotoGallery.Controllers
                 }
                 else
                 {
-                    // Deleting the file from ~/Content/images:
+                    // Deleting the file from ~/Content/images/profilePics:
                     System.IO.File.Delete(path);
+
+                    // If the person does not have a previous profile picture his/her whole folder is deleted
+                    if (!Directory.EnumerateFiles(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}")).Any())
+                    {
+                        Directory.Delete(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}"), true);
+                    }
 
                     this.AddNotification("Invalid picture format.", NotificationType.ERROR);
                     return View(model);
@@ -550,9 +563,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (model.RemovePicture)
                 {
-                    // Deleting the profile pic from ~/Content/images:
-                    var previousPicPath = Server.MapPath(user.ImagePath);
-                    System.IO.File.Delete(previousPicPath);
+                    // Deleting the user's directory and the pic in there from ~/Content/images/profilePics:
+                    System.IO.Directory.Delete(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}"), true);
 
                     hasNewImage = false;
                     user.ImagePath = null;
@@ -560,14 +572,14 @@ namespace AstroPhotoGallery.Controllers
 
                 if (hasNewImage)
                 {
-                    // Deleting the previous image from ~/Content/images:
+                    // Deleting the previous image from ~/Content/images/profilePics:
                     if (user.ImagePath != null)
                     {
                         var previousPicPath = Server.MapPath(user.ImagePath);
                         System.IO.File.Delete(previousPicPath);
                     }
 
-                    user.ImagePath = "~/Content/images/" + pic;
+                    user.ImagePath = $"~/Content/images/profilePics/{userIdFolder}/" + pic;
                 }
 
                 db.Entry(user).State = EntityState.Modified;

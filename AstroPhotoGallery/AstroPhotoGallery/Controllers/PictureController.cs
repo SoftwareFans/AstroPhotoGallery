@@ -185,12 +185,25 @@ namespace AstroPhotoGallery.Controllers
                         var poImgFile = Request.Files["ImagePath"];
                         var pic = Path.GetFileName(poImgFile.FileName);
 
-                        var path = Path.Combine(Server.MapPath("~/Content/images"), pic);
+                        var path = Path.Combine(Server.MapPath("~/Content/images/astroPics"), pic);
+
+                        // In case the picture already exists notification is shown:
+                        if (System.IO.File.Exists(path))
+                        {
+                            this.AddNotification("Picture with this name already exists.", NotificationType.ERROR);
+
+                            model.Categories = db.Categories
+                           .OrderBy(c => c.Name)
+                           .ToList();
+
+                            return View(model);
+                        }
+
                         poImgFile.SaveAs(path);
 
                         if (ImageValidator.IsImageValid(path))
                         {
-                            picture.ImagePath = "~/Content/images/" + pic;
+                            picture.ImagePath = "~/Content/images/astroPics/" + pic;
 
                             // Getting the name of the category to add it to the current picture's property:
                             var picCategoryName = db.Categories.Where(c => c.Id == picture.CategoryId).Select(c => c.Name).ToArray();
@@ -224,10 +237,14 @@ namespace AstroPhotoGallery.Controllers
                         }
                         else
                         {
-                            // Deleting the file from ~/Content/images:
+                            // Deleting the file from ~/Content/images/astroPics:
                             System.IO.File.Delete(path);
 
                             this.AddNotification("Invalid picture format.", NotificationType.ERROR);
+
+                            model.Categories = db.Categories
+                           .OrderBy(c => c.Name)
+                           .ToList();
 
                             return View(model);
                         }
@@ -324,7 +341,7 @@ namespace AstroPhotoGallery.Controllers
                 db.Pictures.Remove(picture);
                 db.SaveChanges();
 
-                // Delete the picture from the ~/Content/images folder:
+                // Delete the picture from the ~/Content/images/astroPics folder:
                 var mappedPath = Server.MapPath(picPath);
                 System.IO.File.Delete(mappedPath);
 
@@ -428,7 +445,7 @@ namespace AstroPhotoGallery.Controllers
                 fileExtension.Equals(".bmp") ||
                 fileExtension.Equals(".ico"))
             {
-                var dir = Server.MapPath("~/Content/images");
+                var dir = Server.MapPath("~/Content/images/astroPics");
                 var path = Path.Combine(dir, filename); //validate the path for security or use other means to generate the path.
 
                 var type = fileExtension.Substring(1);
