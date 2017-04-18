@@ -233,6 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\rating.css" />
     <Content Include="Scripts\browseButton.js" />
     <Content Include="Content\browseButtonStyles.css" />
     <Content Include="Content\font-awesome.min.css" />
