@@ -31,6 +31,7 @@ namespace AstroPhotoGallery.Controllers
                 // Get pictures from database
                 var pictures = db.Pictures
                     .Include(x => x.PicUploader)
+                    .Include(x=>x.Tags)
                     .ToList();
 
                 return View(pictures);
@@ -51,7 +52,8 @@ namespace AstroPhotoGallery.Controllers
                 // Get picture from database
                 var picture = db.Pictures
                     .Where(x => x.Id == id)
-                    .Include(u => u.PicUploader)
+                    .Include(x => x.PicUploader)
+                    .Include(x=>x.Tags)
                     .FirstOrDefault();
 
                 if (picture == null)
@@ -179,6 +181,7 @@ namespace AstroPhotoGallery.Controllers
                     picture.PicTitle = model.PicTitle;
                     picture.PicDescription = model.PicDescription;
                     picture.CategoryId = model.CategoryId;
+                    this.SetPictureTags(picture, model, db);
 
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
@@ -290,6 +293,8 @@ namespace AstroPhotoGallery.Controllers
                     .Include(p => p.Category)
                     .FirstOrDefault();
 
+                ViewBag.TagsString = string.Join(", ", picture.Tags.Select(t => t.Name));
+
                 // Check if picture exists
                 if (picture == null)
                 {
@@ -392,6 +397,8 @@ namespace AstroPhotoGallery.Controllers
                     .OrderBy(c => c.Name)
                     .ToList();
 
+                model.Tags = string.Join(", ", picture.Tags.Select(t => t.Name));
+
                 return View(model);
             }
         }
@@ -417,7 +424,7 @@ namespace AstroPhotoGallery.Controllers
                     picture.CategoryId = model.CategoryId;
                     var picCategoryName = db.Categories.Where(c => c.Id == model.CategoryId).Select(c => c.Name).ToArray();
                     picture.CategoryName = picCategoryName[0];
-
+                    this.SetPictureTags(picture, model, db);
                     // Save pic state in database
                     db.Entry(picture).State = EntityState.Modified;
                     db.SaveChanges();
@@ -457,6 +464,36 @@ namespace AstroPhotoGallery.Controllers
             {
                 this.AddNotification("Invalid picture format.", NotificationType.ERROR);
                 return RedirectToAction("ListCategories", "Home");
+            }
+        }
+
+        private void SetPictureTags(Picture picture, PictureViewModel model, GalleryDbContext db)
+        {
+            //Split tags
+            var tagsStrings = model.Tags
+                .Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(t => t.ToLower())
+                .Distinct();
+
+            //Clear current picture tags
+            picture.Tags.Clear();
+
+            //Set new pictre tags
+
+            foreach (var tagString in tagsStrings)
+            {
+                //Get tag from db by its name
+                var tag = db.Tags.FirstOrDefault(t => t.Name.Equals(tagString));
+
+                //If the tag is null create new tag
+                if (tag == null)
+                {
+                    tag = new Tag() { Name = tagString };
+                    db.Tags.Add(tag);
+                }
+
+                //Add tag to picture tags
+                picture.Tags.Add(tag);
             }
         }
 

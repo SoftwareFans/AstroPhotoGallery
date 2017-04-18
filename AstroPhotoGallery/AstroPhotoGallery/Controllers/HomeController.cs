@@ -87,6 +87,7 @@ namespace AstroPhotoGallery.Controllers
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
                     .Include(p => p.PicUploader)
+                    .Include(p=>p.Tags)
                     .ToList();
 
                 return View(pictures);

@@ -18,7 +18,7 @@
                 <div class="col-sm-12">
                     <div class="col-md-4">
                         <div class="well">
-
+                            @Html.ActionLink(@picture.PicTitle, "Details", "Picture", new { @id = picture.Id }, null)
                             <a target="_blank" href="@Url.Content(picture.ImagePath)">
                                 <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(picture.ImagePath)" />
                             </a>

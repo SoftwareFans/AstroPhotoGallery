@@ -27,5 +27,7 @@ namespace AstroPhotoGallery.Models
         public ICollection<Category> Categories { get; set; }
 
         public string ImagePath { get; set; }
+
+        public string Tags { get; set; }
     }
 }

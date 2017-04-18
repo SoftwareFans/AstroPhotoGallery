@@ -211,6 +211,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Extensions\ImageValidator.cs" />
     <Compile Include="Extensions\NotificationExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,6 +227,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PictureViewModel.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -309,6 +311,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Tag\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

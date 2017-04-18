@@ -48,6 +48,14 @@
                     Uploader: @Model.PicUploader.FirstName @Model.PicUploader.LastName
                     <br />
                     Category: @Model.CategoryName
+                    <br/>
+                    <div class="pull-left">
+                        @foreach (var tag in Model.Tags)
+                        {
+                            @Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })
+                        }
+                    </div>
+                 
                 </span>
                 <span class="pull-right">
                     
@@ -101,7 +109,8 @@
     </div>
 </div>
 
-<div class="container">
+@* <--- Comments examples --->
+ <div class="container">
     <div class="row">
         <div class="col-sm-12">
             <h3>User Comment Example</h3>
@@ -139,4 +148,4 @@
             </div><!-- /panel panel-default -->
         </div><!-- /col-sm-5 -->
     </div><!-- /row -->
-</div><!-- /container -->
+</div><!-- /container -->*@

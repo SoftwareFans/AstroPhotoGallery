@@ -10,6 +10,13 @@ namespace AstroPhotoGallery.Models
 {
     public class Picture
     {
+        private ICollection<Tag> tags;
+
+        public Picture()
+        {
+            this.tags = new HashSet<Tag>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -35,8 +42,12 @@ namespace AstroPhotoGallery.Models
         public virtual Category Category { get; set; }
 
         public string CategoryName { get; set; }
-       
-        public string Votes { get; set; }
+
+        public virtual ICollection<Tag> Tags
+        {
+            get { return this.tags; }
+            set { this.tags = value; }
+        }
 
         public bool IsUploader(string name)
         {
@@ -44,7 +55,7 @@ namespace AstroPhotoGallery.Models
         }
 
         // Boolean variables required for the "NextPicture" and "PreviousPicture" implementation in Picture/Details:
-        public bool IsLastOfCategory { get; set; } 
+        public bool IsLastOfCategory { get; set; }
 
         public bool IsFirstOfCategory { get; set; }
     }
