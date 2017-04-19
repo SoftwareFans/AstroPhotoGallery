@@ -38,7 +38,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (!String.IsNullOrEmpty(seatchCategory))
                 {
-                    categories = categories.Where(s => s.Name.Contains(seatchCategory)).ToList();
+                    categories = categories.Where(c => c.Name.ToLower().Contains(seatchCategory.ToLower())).ToList();
                 }
 
                 switch (sortOrder)
