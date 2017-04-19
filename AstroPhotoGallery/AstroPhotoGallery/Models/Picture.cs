@@ -26,6 +26,7 @@ namespace AstroPhotoGallery.Models
         public string PicTitle { get; set; }
 
         [Required]
+        [StringLength(1300)]
         [DisplayName("Description")]
         public string PicDescription { get; set; }
 
