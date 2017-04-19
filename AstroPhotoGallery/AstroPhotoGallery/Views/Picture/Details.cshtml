@@ -70,7 +70,7 @@
                         @if (Model.IsFirstOfCategory == false)
                         {
                             <span>
-                                @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @categoryId = Model.CategoryId, @picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                                @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
                             </span>
                         }
                         else
@@ -83,7 +83,7 @@
                         @if (Model.IsLastOfCategory == false)
                         {
                             <span>
-                                @Html.ActionLink("Next", "NextPicture", "Picture", new { @categoryId = Model.CategoryId, @picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                                @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
                             </span>
                         }
                         else
