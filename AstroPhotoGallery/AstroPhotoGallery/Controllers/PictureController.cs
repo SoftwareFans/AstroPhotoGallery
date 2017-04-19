@@ -30,8 +30,8 @@ namespace AstroPhotoGallery.Controllers
             {
                 // Get pictures from database
                 var pictures = db.Pictures
-                    .Include(x => x.PicUploader)
-                    .Include(x=>x.Tags)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
                     .ToList();
 
                 return View(pictures);
@@ -51,9 +51,9 @@ namespace AstroPhotoGallery.Controllers
             {
                 // Get picture from database
                 var picture = db.Pictures
-                    .Where(x => x.Id == id)
-                    .Include(x => x.PicUploader)
-                    .Include(x=>x.Tags)
+                    .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
                     .FirstOrDefault();
 
                 if (picture == null)
@@ -62,22 +62,11 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                var picsOfCategory = db.Pictures
-                    .Where(p => p.CategoryId == picture.CategoryId)
-                    .ToList();
-
-                // If there is only 1 picture in a category the boolean variable is changed for proper work of the "NextPicture" and "PreviousPicture" actions:
-                if (picsOfCategory.Count == 1)
-                {
-                    picture.IsFirstOfCategory = true;
-                    db.Entry(picture).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-
                 return View(picture);
             }
         }
 
+        // Method for getting the next picture from a category
         public ActionResult NextPicture(int? categoryId, int? picId)
         {
             if (categoryId == null || picId == null)
@@ -88,10 +77,20 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                // Getting the next picture after the current one from the DB
-                var nextPicsIDs = db.Pictures.Select(p => p.Id).Where(p => p > picId).ToList();
-                var nextPic = nextPicsIDs.FirstOrDefault();
-                var picture = db.Pictures.Where(x => (x.Id == nextPic) && (x.CategoryId == categoryId)).Include(u => u.PicUploader).FirstOrDefault();
+                // Getting the next pictures' IDs after the current one from the DB
+                var nextPicsIDs = db.Pictures
+                    .Where(p => p.CategoryId == categoryId)
+                    .Select(p => p.Id)
+                    .Where(p => p > picId)
+                    .ToList();
+
+                var nextPicId = nextPicsIDs.FirstOrDefault();
+
+                var picture = db.Pictures
+                    .Where(p => (p.Id == nextPicId) && (p.CategoryId == categoryId))
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .FirstOrDefault();
 
                 if (picture == null)
                 {
@@ -99,18 +98,11 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                // In case the next picture is the last picture in that category we set the boolean variable to true and that way hiding the "NextPicture" button of the view
-                if (nextPicsIDs.Count == 1)
-                {
-                    picture.IsLastOfCategory = true;
-                    db.Entry(picture).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-
                 return RedirectToAction("Details", new { id = picture.Id });
             }
         }
 
+        // Method for getting the previous picture from a category
         public ActionResult PreviousPicture(int? categoryId, int? picId)
         {
             if (categoryId == null || picId == null)
@@ -121,25 +113,26 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                // Getting the previous picture before the current from the DB:
-                var previousPicsIDs = db.Pictures.Select(p => p.Id).Where(p => p < picId).ToList();
-                previousPicsIDs.Reverse();
-                var previousPic = previousPicsIDs.FirstOrDefault();
+                // Getting the previous pictures' IDs before the current one from the DB:
+                var previousPicsIDs = db.Pictures
+                    .Where(p => p.CategoryId == categoryId)
+                    .Select(p => p.Id)
+                    .Where(p => p < picId)
+                    .ToList();
 
-                var picture = db.Pictures.Where(x => (x.Id == previousPic) && (x.CategoryId == categoryId)).Include(u => u.PicUploader).FirstOrDefault();
+                previousPicsIDs.Reverse();
+                var previousPicId = previousPicsIDs.FirstOrDefault();
+
+                var picture = db.Pictures
+                    .Where(p => (p.Id == previousPicId) && (p.CategoryId == categoryId))
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .FirstOrDefault();
 
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("ListCategories", "Home");
-                }
-
-                // In case the previous picture is the first picture in that category we set the boolean variable to true and that way hiding the "PreviousPicture" button of the view
-                if (previousPicsIDs.Count == 1)
-                {
-                    picture.IsFirstOfCategory = true;
-                    db.Entry(picture).State = EntityState.Modified;
-                    db.SaveChanges();
                 }
 
                 return RedirectToAction("Details", new { id = picture.Id });
@@ -186,14 +179,14 @@ namespace AstroPhotoGallery.Controllers
                     if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
                         var poImgFile = Request.Files["ImagePath"];
-                        var pic = Path.GetFileName(poImgFile.FileName);
+                        var picFileName = Path.GetFileName(poImgFile.FileName);
 
-                        var path = Path.Combine(Server.MapPath("~/Content/images/astroPics"), pic);
+                        var path = Path.Combine(Server.MapPath("~/Content/images/astroPics"), picFileName);
 
                         // In case the picture already exists notification is shown:
                         if (System.IO.File.Exists(path))
                         {
-                            this.AddNotification("Picture with this name already exists.", NotificationType.ERROR);
+                            this.AddNotification("Picture with this name of the file already exists.", NotificationType.ERROR);
 
                             model.Categories = db.Categories
                            .OrderBy(c => c.Name)
@@ -206,35 +199,17 @@ namespace AstroPhotoGallery.Controllers
 
                         if (ImageValidator.IsImageValid(path))
                         {
-                            picture.ImagePath = "~/Content/images/astroPics/" + pic;
+                            picture.ImagePath = "~/Content/images/astroPics/" + picFileName;
 
                             // Getting the name of the category to add it to the current picture's property:
-                            var picCategoryName = db.Categories.Where(c => c.Id == picture.CategoryId).Select(c => c.Name).ToArray();
+                            var picCategoryName = db.Categories
+                                .Where(c => c.Id == picture.CategoryId)
+                                .Select(c => c.Name)
+                                .ToArray();
+
                             picture.CategoryName = picCategoryName[0];
 
-                            // Every new uploaded picture is last in its category
-                            picture.IsLastOfCategory = true;
-                            db.Pictures.Add(picture);
-                            db.SaveChanges();
-
-                            // Getting the ID of the previous picture in DB and if there is such we change it not to be the last in its category
-                            var previousPicsIDs = db.Pictures
-                                .Select(p => p.Id)
-                                .Where(p => p < picture.Id)
-                                .ToList();
-
-                            previousPicsIDs.Reverse();
-                            var lastPicId = previousPicsIDs.FirstOrDefault();
-                            var previousPic = db.Pictures
-                                .Where(p => (p.Id == lastPicId) && (p.CategoryId == picture.CategoryId))
-                                .FirstOrDefault();
-
-                            if (previousPic != null)
-                            {
-                                previousPic.IsLastOfCategory = false;
-                                db.Entry(previousPic).State = EntityState.Modified;
-                                db.SaveChanges();
-                            }
+                            AdjustCategoryPositions(db, picture, "Upload");
 
                             return RedirectToAction("Details", new { id = picture.Id });
                         }
@@ -274,6 +249,244 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        // Method for adjusting the positional boolean variables of a pic required for the "Next" and "Previous" buttons and methods
+        private static void AdjustCategoryPositions(GalleryDbContext db, Picture picture, string operation)
+        {
+            switch (operation)
+            {
+                case "Upload":
+
+                    // Get all IDs of the pics in the category of the pic being uploaded
+                    var allPicsIdsInCategory = db.Pictures
+                        .Where(p => p.CategoryId == picture.CategoryId)
+                        .Select(p => p.Id)
+                        .ToList();
+
+                    db.Pictures.Add(picture);
+                    db.SaveChanges();
+
+                    // In case there are already pics in that category before the upload
+                    if (allPicsIdsInCategory.Count != 0)
+                    {
+                        var first = allPicsIdsInCategory.Min(); // The first pic in the category
+                        var last = allPicsIdsInCategory.Max(); // The last pic in the category
+
+                        // If there is only 1 pic in the category before the upload
+                        if (first == last)
+                        {
+                            var onlyPicInThatCategory = db.Pictures
+                                .Where(p => p.Id == first)
+                                .FirstOrDefault();
+
+                            // The only picture is not last anymore because the newly uploaded one will have higher ID
+                            onlyPicInThatCategory.IsLastOfCategory = false;
+
+                            db.Entry(onlyPicInThatCategory).State = EntityState.Modified;
+
+                            // The uploaded picture will have higher ID than the only picture before the upload so it will be last of category
+                            picture.IsFirstOfCategory = false;
+                            picture.IsLastOfCategory = true;
+                        }
+                        // If there are 2 or more pics in the category before the upload
+                        else
+                        {
+                            // If the uploaded pic's ID is lower than than the first one before the upload
+                            if (picture.Id < first)
+                            {
+                                picture.IsFirstOfCategory = true;
+
+                                // Modifying the first pic in a category before the upload not to be first anymore
+                                var previousMinPic = db.Pictures
+                                    .Where(p => p.Id == first)
+                                    .FirstOrDefault();
+
+                                previousMinPic.IsFirstOfCategory = false;
+
+                                db.Entry(previousMinPic).State = EntityState.Modified;
+
+                            }
+                            // If the uploaded pic's ID is higher than than the last one before the upload
+                            else if (picture.Id > last)
+                            {
+                                picture.IsLastOfCategory = true;
+
+                                // Modifying the last pic in a category before the upload not to be last anymore
+                                var previousMaxPic = db.Pictures
+                                    .Where(p => p.Id == last)
+                                    .FirstOrDefault();
+
+                                previousMaxPic.IsLastOfCategory = false;
+
+                                db.Entry(previousMaxPic).State = EntityState.Modified;
+                            }
+                        }
+                    }
+                    // In case there are no pics in the category before the currently uploaded one
+                    else
+                    {
+                        picture.IsFirstOfCategory = true;
+                        picture.IsLastOfCategory = true;
+                    }
+
+                    db.Entry(picture).State = EntityState.Modified;
+                    db.SaveChanges();
+                    break;
+
+                case "Edit":
+
+                    // Get all IDs of the pics in the category of the pic being edited
+                    allPicsIdsInCategory = db.Pictures
+                        .Where(p => p.CategoryId == picture.CategoryId)
+                        .Select(p => p.Id)
+                        .ToList();
+
+                    // Remove the currently edited picture from the collection
+                    allPicsIdsInCategory.Remove(picture.Id);
+
+                    // If there are any pics other than the currently edited
+                    if (allPicsIdsInCategory.Count > 0)
+                    {
+                        var first = allPicsIdsInCategory.Min();   // The first pic in the category
+                        var last = allPicsIdsInCategory.Max();   // The last pic in the category
+
+                        // If there is only 1 pic in the category before the edit
+                        if (first == last)
+                        {
+                            var onlyPicInThatCategory = db.Pictures
+                                .Where(p => p.Id == first)
+                                .FirstOrDefault();
+
+                            // If the only picture's ID is lower than the edited one's then the edited one is now last in the category
+                            if (onlyPicInThatCategory.Id < picture.Id)
+                            {
+                                onlyPicInThatCategory.IsFirstOfCategory = true;
+                                onlyPicInThatCategory.IsLastOfCategory = false;
+
+                                picture.IsFirstOfCategory = false;
+                                picture.IsLastOfCategory = true;
+                            }
+                            // If the currently edited picture's ID is lower than the only picture then the edited one is now first in the category
+                            else
+                            {
+                                onlyPicInThatCategory.IsFirstOfCategory = false;
+                                onlyPicInThatCategory.IsLastOfCategory = true;
+
+                                picture.IsFirstOfCategory = true;
+                                picture.IsLastOfCategory = false;
+                            }
+                            db.Entry(onlyPicInThatCategory).State = EntityState.Modified;
+                            db.Entry(picture).State = EntityState.Modified;
+                        }
+                        // If there are 2 or more pictures in the category before the edit
+                        else
+                        {
+                            // If the edited pic's ID is lower than the first pic in the category then the edited pic becomes first
+                            if (picture.Id < first)
+                            {
+                                picture.IsFirstOfCategory = true;
+                                picture.IsLastOfCategory = false;
+
+                                // Modifying the first pic in a category before the edit not to be first anymore
+                                var previousMinPic = db.Pictures
+                                    .Where(p => p.Id == first)
+                                    .FirstOrDefault();
+
+                                previousMinPic.IsFirstOfCategory = false;
+                                previousMinPic.IsLastOfCategory = false;
+
+                                db.Entry(previousMinPic).State = EntityState.Modified;
+
+                            }
+                            // If the edited pic's ID is higher than the last pic in the category then the edited pic becomes last
+                            else if (picture.Id > last)
+                            {
+                                picture.IsLastOfCategory = true;
+                                picture.IsFirstOfCategory = false;
+
+                                // Modifying the last pic in a category before the edit not to be last anymore
+                                var previousMaxPic = db.Pictures
+                                    .Where(p => p.Id == last)
+                                    .FirstOrDefault();
+
+                                previousMaxPic.IsFirstOfCategory = false;
+                                previousMaxPic.IsLastOfCategory = false;
+
+                                db.Entry(previousMaxPic).State = EntityState.Modified;
+                            }
+                            // If the edited picture is between the first and the last then it is not first or last
+                            else
+                            {
+                                picture.IsLastOfCategory = false;
+                                picture.IsFirstOfCategory = false;
+                            }
+                        }
+                    }
+                    // In case there are no pics in the category except the edited one then the edited one is first and last
+                    else
+                    {
+                        picture.IsFirstOfCategory = true;
+                        picture.IsLastOfCategory = true;
+                    }
+
+                    db.Entry(picture).State = EntityState.Modified;
+                    db.SaveChanges();
+                    break;
+
+                case "Delete":
+
+                    // Get the ID of the category of the pic that is being deleted
+                    var previousCategoryIdOfPic = picture.CategoryId;
+
+                    // Get the IDs of the pics from the category of the pic that is being deleted
+                    var previousCategoryPicsIdToBeChanged = db.Pictures
+                           .Where(p => p.CategoryId == previousCategoryIdOfPic)
+                           .Select(p => p.Id)
+                           .ToList();
+
+                    // Remove the currently deleted pic from the collection
+                    previousCategoryPicsIdToBeChanged.Remove(picture.Id);
+
+                    // If there are any other pics in the category other than the one being deleted
+                    if (previousCategoryPicsIdToBeChanged.Count > 0)
+                    {
+                        var first = previousCategoryPicsIdToBeChanged.Min();   // The first pic in the category
+                        var last = previousCategoryPicsIdToBeChanged.Max();   // The last pic in the category
+
+                        // If there is only 1 pic in the category before the delete except the one being deleted then it becomes now first and last
+                        if (first == last)
+                        {
+                            var onlyPicture = db.Pictures
+                                .Where(p => p.Id == first)
+                                .FirstOrDefault();
+
+                            onlyPicture.IsLastOfCategory = true;
+                            onlyPicture.IsFirstOfCategory = true;
+
+                            db.Entry(onlyPicture).State = EntityState.Modified;
+                        }
+                        // If there are 2 or more pics in the category before the delete except the one being deleted
+                        else
+                        {
+                            // The first pic is marked to be first now
+                            var firstPic = db.Pictures.Where(p => p.Id == first).FirstOrDefault();
+                            firstPic.IsFirstOfCategory = true;
+                            firstPic.IsLastOfCategory = false;
+                            db.Entry(firstPic).State = EntityState.Modified;
+
+                            // The last pic is marked to be last now
+                            var lastPic = db.Pictures.Where(p => p.Id == last).FirstOrDefault();
+                            lastPic.IsFirstOfCategory = false;
+                            lastPic.IsLastOfCategory = true;
+                            db.Entry(lastPic).State = EntityState.Modified;
+                        }
+
+                        db.SaveChanges();
+                    }
+
+                    break;
+            }
+        }
+
         //GET: Picture/Delete
         [Authorize]
         public ActionResult Delete(int? id)
@@ -293,8 +506,6 @@ namespace AstroPhotoGallery.Controllers
                     .Include(p => p.Category)
                     .FirstOrDefault();
 
-                ViewBag.TagsString = string.Join(", ", picture.Tags.Select(t => t.Name));
-
                 // Check if picture exists
                 if (picture == null)
                 {
@@ -302,13 +513,15 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
+                ViewBag.TagsString = string.Join(", ", picture.Tags.Select(t => t.Name));
+
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                // Pass picture to view
+                // Pass picture to the view
                 return View(picture);
             }
         }
@@ -341,18 +554,24 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                // Delete the picture from the database 
-                var picPath = picture.ImagePath;
-                db.Pictures.Remove(picture);
-                db.SaveChanges();
+                // Adjust the position boolean variables of the other pics before the deletion
+                AdjustCategoryPositions(db, picture, "Delete");
+
+                // Getting the category of the pic before the deletion in order to redirect to Home/ListPictures after that
+                var picCategoryId = (int?)picture.CategoryId;
 
                 // Delete the picture from the ~/Content/images/astroPics folder:
+                var picPath = picture.ImagePath;
                 var mappedPath = Server.MapPath(picPath);
                 System.IO.File.Delete(mappedPath);
 
-                // Redirect to index page
+                // Delete the picture from the database 
+                db.Pictures.Remove(picture);
+                db.SaveChanges();
+
+                // Redirect to the page with all pics in the current category page
                 this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
-                return RedirectToAction("ListCategories", "Home");
+                return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
             }
         }
 
@@ -418,23 +637,92 @@ namespace AstroPhotoGallery.Controllers
                         .Include(u => u.PicUploader)
                         .FirstOrDefault(p => p.Id == model.Id);
 
+                    if (picture == null)
+                    {
+                        this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                        return RedirectToAction("ListCategories", "Home");
+                    }
+
                     // Set picture properties
                     picture.PicTitle = model.PicTitle;
                     picture.PicDescription = model.PicDescription;
+
+                    // Getting the category of the pic in case it is being changed
+                    var previousCategoryIdOfPic = picture.CategoryId;
+
                     picture.CategoryId = model.CategoryId;
-                    var picCategoryName = db.Categories.Where(c => c.Id == model.CategoryId).Select(c => c.Name).ToArray();
+                    var picCategoryName = db.Categories
+                        .Where(c => c.Id == model.CategoryId)
+                        .Select(c => c.Name)
+                        .ToArray();
                     picture.CategoryName = picCategoryName[0];
+
                     this.SetPictureTags(picture, model, db);
+
                     // Save pic state in database
                     db.Entry(picture).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    // If the category of the pic is changed
+                    if (previousCategoryIdOfPic != picture.CategoryId)
+                    {
+                        // Adjust the position boolean variables of the other pics before the edit
+                        AdjustCategoryPositions(db, picture, "Edit");
+
+                        // Get the IDs of the pictures from the previous category of the edited pic
+                        var previousCategoryPicsIdToBeChanged = db.Pictures
+                            .Where(p => p.CategoryId == previousCategoryIdOfPic)
+                            .Select(p => p.Id)
+                            .ToList();
+
+                        // If there are pics from the previous category of the edited pic
+                        if (previousCategoryPicsIdToBeChanged.Count > 0)
+                        {
+                            // The first pic in the category
+                            var first = previousCategoryPicsIdToBeChanged.Min();
+
+                            // The last pic in the category
+                            var last = previousCategoryPicsIdToBeChanged.Max();    
+
+                            // If there is only 1 pic in the category it becomes now first and last one there
+                            if (first == last)
+                            {
+                                var onlyPicture = db.Pictures
+                                    .Where(p => p.Id == first)
+                                    .FirstOrDefault();
+
+                                onlyPicture.IsLastOfCategory = true;
+                                onlyPicture.IsFirstOfCategory = true;
+
+                                db.Entry(onlyPicture).State = EntityState.Modified;
+                            }
+                            // If there are 2 or more pics in the category before the edit
+                            else
+                            {
+                                var firstPic = db.Pictures.Where(p => p.Id == first).FirstOrDefault();
+                                firstPic.IsFirstOfCategory = true;
+                                firstPic.IsLastOfCategory = false;
+                                db.Entry(firstPic).State = EntityState.Modified;
+
+                                var lastPic = db.Pictures.Where(p => p.Id == last).FirstOrDefault();
+                                lastPic.IsFirstOfCategory = false;
+                                lastPic.IsLastOfCategory = true;
+                                db.Entry(lastPic).State = EntityState.Modified;
+                            }
+
+                            db.SaveChanges();
+                        }
+                    }
+
                     return View("Details", picture);
                 }
             }
 
             using (var db = new GalleryDbContext())
             {
-                model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+                model.Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
 
                 return View(model);
             }
@@ -443,7 +731,7 @@ namespace AstroPhotoGallery.Controllers
         public ActionResult DownlandFile(string filePath)
         {
             // The names of the pictures are not stored in DB so the name is taken from the path of the pic
-            var filename = filePath.Substring(17);
+            var filename = filePath.Substring(27);
             var fileExtension = Path.GetExtension(filename);
 
             if (fileExtension.Equals(".jpg") ||
