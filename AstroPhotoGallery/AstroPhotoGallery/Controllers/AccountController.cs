@@ -19,8 +19,6 @@ using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers
 {
-
-
     [Authorize]
     public class AccountController : Controller
     {
@@ -421,7 +419,7 @@ namespace AstroPhotoGallery.Controllers
             var model = new ProfileViewModel();
             using (var db = new GalleryDbContext())
             {
-                var user = db.Users.First(x => x.Id == userId);
+                var user = db.Users.First(u => u.Id == userId);
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.Gender = user.Gender;
@@ -448,15 +446,17 @@ namespace AstroPhotoGallery.Controllers
 
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
             }
 
             using (var db = new GalleryDbContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.Id == id);
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
                 if (user == null)
                 {
-                    return HttpNotFound();
+                    this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
                 }
 
                 var model = new EditViewModel();
@@ -534,7 +534,7 @@ namespace AstroPhotoGallery.Controllers
             var id = User.Identity.GetUserId();
             using (var db = new GalleryDbContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.Id == id);
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
 
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
