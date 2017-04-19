@@ -55,7 +55,7 @@ namespace AstroPhotoGallery.Controllers
                 }
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    categories = categories.Where(s => s.Name.Contains(searchString)).ToList();
+                    categories = categories.Where(c => c.Name.ToLower().Contains(searchString.ToLower())).ToList();
                 }
 
                 int pageSize = 8;
