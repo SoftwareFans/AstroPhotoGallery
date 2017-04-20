@@ -28,8 +28,8 @@ namespace AstroPhotoGallery.Migrations
 
             if (!context.Users.Any())
             {
-                this.CreateUser(context, "admin@admin.com", "Admin", "Admin", "123");
-                this.SetRoleToUser(context, "admin@admin.com", "Admin");
+                this.CreateUser(context, "admin@astrogallery.net", "Astrogallery", "Administrator", "123");
+                this.SetRoleToUser(context, "admin@astrogallery.net", "Admin");
             }
 
             if (!context.Categories.Any())
