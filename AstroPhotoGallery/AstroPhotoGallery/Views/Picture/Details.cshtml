@@ -23,7 +23,7 @@
                     @Model.PicDescription
                 </div>
             </div>
-            <div class="col-sm-6">               
+            <div class="col-sm-6">
                 <a href="#" data-toggle="modal" data-target=".dialog1">
                     <img src="@Url.Content(Model.ImagePath)" width="600" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
@@ -47,7 +47,7 @@
             <div class="col-md-12">
                 <div class="col-md-6">
                     <span style="opacity: 0.8" class="pull-left">
-                        Uploader: @Model.PicUploader.FirstName @Model.PicUploader.LastName
+                        Uploader: @Html.ActionLink(@Model.PicUploader.FirstName + @Model.PicUploader.LastName, "Show", "Account")
                         <br />
                         Category: @Model.CategoryName
                         <br />
@@ -107,11 +107,11 @@
                         </span>
 
                     </span>
-                   
+
                 </div>
 
-                 
-                </div>
+
+            </div>
         </div>
     </div>
 </div>
