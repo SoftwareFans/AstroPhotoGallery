@@ -20,7 +20,7 @@
                 @Html.ActionLink("Upload", "Upload", "Picture")
             </li>
             <li>
-                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Show", "Account", routeValues: null, htmlAttributes: new {title = "Manage"})
+                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Profile", "Account", routeValues: null, htmlAttributes: new {title = "Manage"})
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

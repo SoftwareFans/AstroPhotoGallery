@@ -412,8 +412,8 @@ namespace AstroPhotoGallery.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: /Account/Show
-        public ActionResult Show()
+        // GET: /Account/Profile
+        public ActionResult Profile()
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
@@ -447,7 +447,7 @@ namespace AstroPhotoGallery.Controllers
             if (id == null)
             {
                 this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             using (var db = new GalleryDbContext())
@@ -456,7 +456,7 @@ namespace AstroPhotoGallery.Controllers
                 if (user == null)
                 {
                     this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 var model = new EditViewModel();
@@ -586,7 +586,7 @@ namespace AstroPhotoGallery.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Show", "Account");
+            return RedirectToAction("Profile", "Account");
         }
         #region Helpers
         // Used for XSRF protection when adding external logins
