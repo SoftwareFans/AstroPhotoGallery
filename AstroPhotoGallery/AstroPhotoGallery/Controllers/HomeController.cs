@@ -19,7 +19,7 @@ namespace AstroPhotoGallery.Controllers
                 var categories = db.Categories
                    .Include(c => c.Pictures)
                    .OrderBy(c => c.Name)
-                   .Take(4)
+                   .Take(6)
                    .ToList();
 
                 return View(categories);
@@ -63,12 +63,11 @@ namespace AstroPhotoGallery.Controllers
                         .ToList();
                 }
 
-                int pageSize = 8;
+                int pageSize = 6;
                 int pageNumber = (page ?? 1);
 
                 return View(categories.ToPagedList(pageNumber, pageSize));
             }
-
         }
 
         //
@@ -96,11 +95,21 @@ namespace AstroPhotoGallery.Controllers
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
                     .Include(p => p.PicUploader)
-                    .Include(p=>p.Tags)
+                    .Include(p => p.Tags)
                     .ToList();
 
                 return View(pictures);
             }
+        }
+
+        public ActionResult Contacts()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
         }
     }
 }
