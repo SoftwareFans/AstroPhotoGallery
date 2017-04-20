@@ -2,7 +2,7 @@
 
 ### April 20th 2017:
 
-The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came a website for astronomy pictures: http://www.emilivanov.com/index2.htm. The right to use the pictures for this project has been given by Emil Ivanov via email and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.
+The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The right to use the pictures for this project has been given by Emil Ivanov via email and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.
 
 Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.
 
