@@ -9,37 +9,37 @@
     <div class="row">
         @foreach (var picture in Model)
             {
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="well col-sm-4">
-                    <h3>@Html.ActionLink(@picture.PicTitle, "Details", "Picture", new { @id = picture.Id }, null)</h3>
-                    <a target="_blank" href="@Url.Content(picture.ImagePath)">
-                        <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(picture.ImagePath)" />
-                    </a>
-                    <div class="pull-left" style="word-wrap: break-word">
-                        Uploader: @picture.PicUploader.FirstName @picture.PicUploader.LastName
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well col-sm-4">
+                        <h3>@Html.ActionLink(picture.PicTitle, "Details", "Picture", new { id = picture.Id }, null)</h3>
+                        <a target="_blank" href="@Url.Content(picture.ImagePath)">
+                            <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(picture.ImagePath)" />
+                        </a>
+                        <div class="pull-left" style="word-wrap: break-word">
+                            Uploader: @picture.PicUploader.FirstName @picture.PicUploader.LastName
+                        </div>
+                        <br />
+                        <div class="pull-left">
+                            Category: @picture.CategoryName
+                        </div>
                     </div>
-                    <br />
-                    <div class="pull-left">
-                        Category: @picture.CategoryName
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div style="word-wrap: break-word;">
-                        @picture.PicDescription
-                    </div>
-                    <br />
-                    <div class="pull-left">
-                        Tags:&nbsp;
-                        @foreach (var tag in picture.Tags)
-                        {
-                        <span>@Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
-                        }
+                    <div class="col-sm-8">
+                        <div style="word-wrap: break-word;">
+                            @picture.PicDescription
+                        </div>
+                        <br />
+                        <div class="pull-left">
+                            Tags:&nbsp;
+                            @foreach (var tag in picture.Tags)
+                            {
+                                <span>@Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br />
+            <br />
         }
     </div>
 </div>
