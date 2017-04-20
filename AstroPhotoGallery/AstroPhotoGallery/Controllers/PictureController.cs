@@ -16,7 +16,7 @@ namespace AstroPhotoGallery.Controllers
         {
             return RedirectToAction("ListCategories", "Home");
         }
-    
+
         //
         //GET: Picture/Details/id
         public ActionResult Details(int? id)
@@ -498,7 +498,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                ViewBag.TagsString = string.Join(", ", picture.Tags.Select(t => t.Name));
+                ViewBag.TagsString = string.Join(" ", picture.Tags.Select(t => t.Name));
 
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
@@ -603,7 +603,7 @@ namespace AstroPhotoGallery.Controllers
                     .OrderBy(c => c.Name)
                     .ToList();
 
-                model.Tags = string.Join(", ", picture.Tags.Select(t => t.Name));
+                model.Tags = string.Join(" ", picture.Tags.Select(t => t.Name));
 
                 return View(model);
             }
@@ -670,7 +670,7 @@ namespace AstroPhotoGallery.Controllers
                             var first = previousCategoryPicsIdToBeChanged.Min();
 
                             // The last pic in the category
-                            var last = previousCategoryPicsIdToBeChanged.Max();    
+                            var last = previousCategoryPicsIdToBeChanged.Max();
 
                             // If there is only 1 pic in the category it becomes now first and last one there
                             if (first == last)
@@ -748,7 +748,7 @@ namespace AstroPhotoGallery.Controllers
         {
             //Split tags
             var tagsStrings = model.Tags
-                .Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(t => t.ToLower())
                 .Distinct();
 
