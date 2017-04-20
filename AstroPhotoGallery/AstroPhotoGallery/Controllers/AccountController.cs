@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -8,13 +7,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
-using System.Net;
 using System.Data.Entity;
 using System.IO;
-using System.Text;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Image = System.Drawing.Image;
 using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers
@@ -41,6 +36,7 @@ namespace AstroPhotoGallery.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
+
             private set
             {
                 _signInManager = value;
@@ -53,12 +49,14 @@ namespace AstroPhotoGallery.Controllers
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
+
             private set
             {
                 _userManager = value;
             }
         }
 
+        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -67,6 +65,7 @@ namespace AstroPhotoGallery.Controllers
             return View();
         }
 
+        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -79,6 +78,7 @@ namespace AstroPhotoGallery.Controllers
             }
 
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -89,11 +89,12 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
             }
         }
 
+        //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -103,9 +104,11 @@ namespace AstroPhotoGallery.Controllers
             {
                 return View("Error");
             }
+
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
+        //
         // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
@@ -122,6 +125,7 @@ namespace AstroPhotoGallery.Controllers
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -130,11 +134,12 @@ namespace AstroPhotoGallery.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError(string.Empty, "Invalid code.");
                     return View(model);
             }
         }
 
+        //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -142,6 +147,7 @@ namespace AstroPhotoGallery.Controllers
             return View();
         }
 
+        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -175,6 +181,7 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
+        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -183,10 +190,13 @@ namespace AstroPhotoGallery.Controllers
             {
                 return View("Error");
             }
+
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+        //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
@@ -194,6 +204,7 @@ namespace AstroPhotoGallery.Controllers
             return View();
         }
 
+        //
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
@@ -203,6 +214,7 @@ namespace AstroPhotoGallery.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
+
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -221,6 +233,7 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
+        //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
@@ -228,6 +241,7 @@ namespace AstroPhotoGallery.Controllers
             return View();
         }
 
+        //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -235,6 +249,7 @@ namespace AstroPhotoGallery.Controllers
             return code == null ? View("Error") : View();
         }
 
+        //
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
@@ -245,21 +260,28 @@ namespace AstroPhotoGallery.Controllers
             {
                 return View(model);
             }
+
             var user = await UserManager.FindByNameAsync(model.Email);
+
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             AddErrors(result);
+
             return View();
         }
 
+        //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
@@ -267,6 +289,7 @@ namespace AstroPhotoGallery.Controllers
             return View();
         }
 
+        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -277,20 +300,25 @@ namespace AstroPhotoGallery.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
+        //
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
+
             if (userId == null)
             {
                 return View("Error");
             }
+
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
+        //
         // POST: /Account/SendCode
         [HttpPost]
         [AllowAnonymous]
@@ -310,11 +338,13 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
+        //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
@@ -339,6 +369,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
@@ -354,28 +385,36 @@ namespace AstroPhotoGallery.Controllers
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
                 AddErrors(result);
             }
 
             ViewBag.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
+        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -385,6 +424,7 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
@@ -412,11 +452,13 @@ namespace AstroPhotoGallery.Controllers
             base.Dispose(disposing);
         }
 
+        //
         // GET: /Account/Profile
-        public ActionResult Profile()
+        public new ActionResult Profile()
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
+
             using (var db = new GalleryDbContext())
             {
                 var user = db.Users.First(u => u.Id == userId);
@@ -439,6 +481,7 @@ namespace AstroPhotoGallery.Controllers
             return View(model);
         }
 
+        //
         //GET: /Account/Edit
         public ActionResult Edit()
         {
@@ -453,6 +496,7 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Id == id);
+
                 if (user == null)
                 {
                     this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
@@ -483,6 +527,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
         //POST: /Account/Edit
         [HttpPost]
         public ActionResult Edit([Bind(Exclude = "ImagePath")]EditViewModel model)
@@ -589,6 +634,7 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("Profile", "Account");
         }
 
+        //
         //GET: Account/ShowProfile
         public ActionResult ShowProfile(string id)
         {
@@ -641,6 +687,7 @@ namespace AstroPhotoGallery.Controllers
             {
                 return Redirect(returnUrl);
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -669,6 +716,7 @@ namespace AstroPhotoGallery.Controllers
                 {
                     properties.Dictionary[XsrfKey] = UserId;
                 }
+
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }

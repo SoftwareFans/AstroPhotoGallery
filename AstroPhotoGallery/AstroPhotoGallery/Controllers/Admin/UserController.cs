@@ -16,6 +16,7 @@ namespace AstroPhotoGallery.Controllers.Admin
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
+        //
         // GET: User
         public ActionResult Index(string sortOrder, string searchUser, string currentFilter, int? page)
         {
@@ -40,7 +41,7 @@ namespace AstroPhotoGallery.Controllers.Admin
 
                 if (!string.IsNullOrEmpty(searchUser))
                 {
-                    users = users.Where(s => s.Email.Contains(searchUser)).ToList();
+                    users = users.Where(u => u.Email.Contains(searchUser)).ToList();
                 }
 
                 var admins = this.GetAdminUserNames(users, db);
@@ -61,6 +62,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             }
         }
 
+        //
         //GET: User/Edit
         public ActionResult Edit(string id)
         {
@@ -74,7 +76,9 @@ namespace AstroPhotoGallery.Controllers.Admin
             using (var db = new GalleryDbContext())
             {
                 //Get user from database
-                var user = db.Users.Where(u => u.Id == id).FirstOrDefault();
+                var user = db.Users
+                    .Where(u => u.Id == id)
+                    .FirstOrDefault();
 
                 //Check if user exists
                 if (user == null)
@@ -93,6 +97,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             }
         }
 
+        //
         //POST: User/Edit
         [HttpPost]
         public ActionResult Edit(string id, EditUserViewModel viewModel)
@@ -140,6 +145,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             return View(viewModel);
         }
 
+        //
         //GET: User/Delete
         public ActionResult Delete(string id)
         {
@@ -167,6 +173,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             }
         }
 
+        //
         //POST: User/Delete
         [HttpPost]
         [ActionName("Delete")]
