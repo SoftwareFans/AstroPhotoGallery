@@ -20,7 +20,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         public ActionResult Index(string sortOrder, string searchUser, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.Email = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
+            ViewBag.Email = string.IsNullOrEmpty(sortOrder) ? "Email_desc" : String.Empty;
 
             if (searchUser != null)
             {
@@ -38,12 +38,12 @@ namespace AstroPhotoGallery.Controllers.Admin
                 var users = db.Users
                     .ToList();
 
-                if (!String.IsNullOrEmpty(searchUser))
+                if (!string.IsNullOrEmpty(searchUser))
                 {
                     users = users.Where(s => s.Email.Contains(searchUser)).ToList();
                 }
 
-                var admins = GetAdminUserNames(users, db);
+                var admins = this.GetAdminUserNames(users, db);
 
                 ViewBag.Admins = admins;
 
@@ -56,6 +56,7 @@ namespace AstroPhotoGallery.Controllers.Admin
 
                 int pageSize = 3;
                 int pageNumber = (page ?? 1);
+
                 return View(users.ToPagedList(pageNumber, pageSize));
             }
         }
@@ -85,7 +86,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 //Create a view model
                 var model = new EditUserViewModel();
                 model.User = user;
-                model.Roles = GetUserRoles(user, db);
+                model.Roles = this.GetUserRoles(user, db);
 
                 //Pass the model to the view
                 return View(model);
@@ -248,8 +249,8 @@ namespace AstroPhotoGallery.Controllers.Admin
 
                 userRoles.Add(role);
             }
-            //Return a list with all roles
 
+            //Return a list with all roles
             return userRoles;
         }
 
