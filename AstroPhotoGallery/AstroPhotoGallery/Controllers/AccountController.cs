@@ -453,8 +453,8 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        // GET: /Account/Profile
-        public ActionResult Profile()
+        // GET: /Account/MyProfile
+        public ActionResult MyProfile()
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
@@ -631,7 +631,7 @@ namespace AstroPhotoGallery.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Profile", "Account");
+            return RedirectToAction("MyProfile", "Account");
         }
 
         //
