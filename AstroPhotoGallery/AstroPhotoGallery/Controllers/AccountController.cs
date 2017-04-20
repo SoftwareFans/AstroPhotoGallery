@@ -588,6 +588,33 @@ namespace AstroPhotoGallery.Controllers
 
             return RedirectToAction("Profile", "Account");
         }
+
+        //GET: Account/ShowProfile
+        public ActionResult ShowProfile(string id)
+        {
+            var model = new ProfileViewModel();
+            using (var db = new GalleryDbContext())
+            {
+                var user = db.Users.First(u => u.Id == id);
+                model.FullName = user.FirstName + " " + user.LastName;
+                model.Email = user.Email;
+                model.Gender = user.Gender;
+                model.City = user.City;
+                model.Country = user.Country;
+
+                model.Birthday = user.Birthday;
+                model.PhoneNumber = user.PhoneNumber;
+
+                model.ImagePath = string.IsNullOrEmpty(user.ImagePath)
+                    ? "~/Content/images/blank-profile-picture.png"
+                    : user.ImagePath;
+
+                db.SaveChanges();
+            }
+
+            return View(model);
+        }
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
