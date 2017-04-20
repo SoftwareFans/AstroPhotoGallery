@@ -1,6 +1,6 @@
 # Astronomy gallery
 
-## April 20th 2017:
+### April 20th 2017:
 
 The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came a website for astronomy pictures: http://www.emilivanov.com/index2.htm. The right to use the pictures for this project has been given by Emil Ivanov via email and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.
 
@@ -22,8 +22,8 @@ More details and features:
 - Display modes: The pictures can be displayed by tags
 - Display modes: The pictures can be displayed by categories
 - Browsing: When looking at a picture the user can go to the next/previous picture in that category (if there is such)
-- Browsing: When looking at a picture the user can go to the category of the picture
-- Browsing: When looking at a picture the user can see the user profile of the uploader of the picture
+- Browsing: When looking at a picture the user can go to the category of the picture and see all pictures there
+- Browsing: When looking at a picture the user can see the user profile of the picture's uploader
 - Image validation: Image file extension and content validation - when a picture is being uploaded (valid for profile picture too) its content is being checked in order to be determined if it is really an image. That way even if a user change the extension of a .txt file for example to .jpg the application will reject the file and won't store it anywhere.
 - Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. Bootstrap notifications are used for that feature.
 - Search: Search feature for categories is included in the navigation bar (case-insensitive)
