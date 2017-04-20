@@ -47,9 +47,9 @@
             <div class="col-md-12">
                 <div class="col-md-6">
                     <span style="opacity: 0.8" class="pull-left">
-                        Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { @id=Model.PicUploader.Id},null)
+                        Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { @id = Model.PicUploader.Id }, null)
                         <br />
-                        Category: @Model.CategoryName
+                        Category: @Html.ActionLink(@Model.CategoryName, "ListPictures", "Home", new { @categoryId = Model.CategoryId }, null)
                         <br />
                         Tags:&nbsp;
                         @foreach (var tag in Model.Tags)
