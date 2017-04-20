@@ -21,14 +21,14 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.FirstName) })
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.FirstName) })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.LastName) })
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.LastName) })
                 </div>
             </div>
 
@@ -36,18 +36,18 @@
                 @Html.LabelFor(m => m.Gender, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-6">
 
-                    <span class="radio-inline">@Html.RadioButtonFor(model => model.Gender, "Male", false)@Html.Label("Male")</span>
+                    <span class="radio-inline">@Html.RadioButtonFor(m => m.Gender, "Male", false)@Html.Label("Male")</span>
 
                     <span class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Gender, "Female", false)@Html.Label("Female")
+                        @Html.RadioButtonFor(m => m.Gender, "Female", false)@Html.Label("Female")
                     </span>
 
                     <span class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Gender, "Prefer not so say", false)@Html.Label("Prefer not so say")
+                        @Html.RadioButtonFor(m => m.Gender, "Prefer not so say", false)@Html.Label("Prefer not so say")
                     </span>
 
                     <span class="radio-inline">
-                        @Html.RadioButtonFor(model => model.Gender, "N/A", false)@Html.Label("N/A")
+                        @Html.RadioButtonFor(m => m.Gender, "N/A", false)@Html.Label("N/A")
                     </span>
                 </div>
             </div>
@@ -72,21 +72,21 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Country, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Country) })
+                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Country) })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.City, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.City) })
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.City) })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Birthday, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @readonly = "readonly", @id = "birthday", placeholder = Html.DisplayNameFor(x => x.Birthday) })
+                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @readonly = "readonly", @id = "birthday", placeholder = Html.DisplayNameFor(m => m.Birthday) })
 
                     @if (!string.IsNullOrEmpty(Model.Birthday))
                     {
@@ -104,7 +104,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.PhoneNumber) })
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.PhoneNumber) })
                 </div>
             </div>
 
