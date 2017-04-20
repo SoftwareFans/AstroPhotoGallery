@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+﻿@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -20,7 +19,7 @@
                 @Html.ActionLink("Upload", "Upload", "Picture")
             </li>
             <li>
-                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Profile", "Account", routeValues: null, htmlAttributes: new {title = "Manage"})
+                @Html.ActionLink("Hello " + User.Identity.Name + "!", "MyProfile", "Account", routeValues: null, htmlAttributes: new {title = "Manage"})
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
