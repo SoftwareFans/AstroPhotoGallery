@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title Astronomy Photo Gallery </title>
+    <title>@ViewBag.Title Astronomy Photo Gallery</title>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -60,9 +60,13 @@
         @RenderBody()
         <footer class="pull-right">
             <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
+            <p>Inspired by: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm </a></p>
+        </footer>
+        <footer class="pull-left">
+            <p>@Html.ActionLink("Contacts", "Contacts", "Home")</p>
+            <p>@Html.ActionLink("About", "About", "Home")</p>
         </footer>
     </div>
-
 
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/custom.js")
