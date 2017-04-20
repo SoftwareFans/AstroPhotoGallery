@@ -17,7 +17,7 @@ More details and features:
 - Categories: Every uploaded picture is put in a category
 - Edit: Pictures can be edited (title, description, category) by administrators or by the picture's uploader
 - Security: Categories can be created and edited/deleted only by administrators
-		* If a whole category is deleted then all of the pictures in that category are deleted too
+	* If a whole category is deleted then all of the pictures in that category are deleted too
 - Tags: Every uploaded picture is required to has at least one tag for it
 - Display modes: The pictures can be displayed by tags
 - Display modes: The pictures can be displayed by categories
