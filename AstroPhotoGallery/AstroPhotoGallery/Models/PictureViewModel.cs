@@ -28,7 +28,7 @@ namespace AstroPhotoGallery.Models
         public string ImagePath { get; set; }
 
         [Required]
-        [DisplayName("Tags separated by \", \"")]
+        [DisplayName("Tags separated by space")]
         public string Tags { get; set; }
     }
 }
