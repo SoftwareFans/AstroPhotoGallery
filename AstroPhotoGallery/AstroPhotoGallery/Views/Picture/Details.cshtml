@@ -1,5 +1,4 @@
-﻿@using System.Diagnostics.Eventing.Reader
-@model AstroPhotoGallery.Models.Picture
+﻿@model AstroPhotoGallery.Models.Picture
 
 @{
     ViewBag.Title = "Details";
@@ -7,21 +6,21 @@
 
 <div>
     <h2>
-        <div class="pull-right">
-            @*Empty div required for proper view.*@
-        </div>
         @Model.PicTitle
+        <span class="pull-right">
+            @*Empty span required for proper view.*@
+        </span>
     </h2>
 
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading resume-heading">
+    <div class="panel-heading">
 
         <div class="row">
-            <div class="col-sm-6" style="color: #839496">
-                <div style="word-wrap: break-word;">
+            <div class="col-sm-6">
+                <p>
                     @Model.PicDescription
-                </div>
+                </p>
             </div>
             <div class="col-sm-6">
                 <a href="#" data-toggle="modal" data-target=".dialog1">
@@ -44,73 +43,68 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <span style="opacity: 0.8" class="pull-left">
-                        Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { @id = Model.PicUploader.Id }, null)
-                        <br />
-                        Category: @Html.ActionLink(@Model.CategoryName, "ListPictures", "Home", new { @categoryId = Model.CategoryId }, null)
-                        <br />
-                        Tags:&nbsp;
-                        @foreach (var tag in Model.Tags)
-                        {
-                            <span>@Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
-                        }
-                    </span>
-                </div>
-                <div class="col-md-6">
-                    <span class="pull-left">
-                        @if (Model.IsFirstOfCategory == false)
-                        {
-                            <span>
-                                @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                            </span>
-                        }
-                        else
-                        {
-                            <span>
-                                @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
-                            </span>
-                        }
 
-                        @if (Model.IsLastOfCategory == false)
-                        {
-                            <span>
-                                @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                            </span>
-                        }
-                        else
-                        {
-                            <span>
-                                @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
-                            </span>
-                        }
-                    </span>
-
-                    <span class="pull-right">
+            <div class="col-md-6">
+                <span style="opacity: 0.8; color: #839496" class="pull-left">
+                    Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { @id = Model.PicUploader.Id }, null)
+                    <br />
+                    Category: @Html.ActionLink(@Model.CategoryName, "ListPictures", "Home", new { @categoryId = Model.CategoryId }, null)
+                    <br />
+                    Tags:&nbsp;
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <span>@Html.ActionLink(tag.Name, "List", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                    }
+                </span>
+            </div>
+            <div class="col-md-6">
+                <span class="pull-left">
+                    @if (Model.IsFirstOfCategory == false)
+                    {
                         <span>
-                            @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
+                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
                         </span>
+                    }
+                    else
+                    {
+                        <span>
+                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
+                        </span>
+                    }
 
-                        @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
-                        {
-                            <span>
-                                @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
-                            </span>
+                    @if (Model.IsLastOfCategory == false)
+                    {
+                        <span>
+                            @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                        </span>
+                    }
+                    else
+                    {
+                        <span>
+                            @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
+                        </span>
+                    }
+                </span>
+
+                <span class="pull-right">
+                    <span>
+                        @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
+                    </span>
+
+                    @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
+                    {
+                        <span>
+                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
+                        </span>
 
                             <span>
                                 @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
                             </span>
-                        }
-                        <span>
-                            @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
-                        </span>
-
+                    }
+                    <span>
+                        @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
                     </span>
-
-                </div>
-
-
+                </span>
             </div>
         </div>
     </div>
