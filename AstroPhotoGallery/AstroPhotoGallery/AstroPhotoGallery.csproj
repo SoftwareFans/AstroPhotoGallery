@@ -297,7 +297,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Picture\List.cshtml" />
     <Content Include="Views\Picture\Details.cshtml" />
     <Content Include="Views\Picture\Upload.cshtml" />
     <Content Include="Views\Picture\Delete.cshtml" />
@@ -306,7 +305,6 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
-    <Content Include="Views\Home\ListPictures.cshtml" />
     <Content Include="Views\Home\ListCategories.cshtml" />
     <Content Include="Views\Shared\_Notifications.cshtml" />
     <Content Include="Views\User\Index.cshtml" />

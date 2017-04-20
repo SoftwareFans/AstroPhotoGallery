@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
@@ -13,6 +9,8 @@ namespace AstroPhotoGallery.Controllers
 {
     public class HomeController : Controller
     {
+        //
+        //GET: Home/Index
         public ActionResult Index()
         {
             using (var db = new GalleryDbContext())
@@ -28,6 +26,8 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
+        //GET: Home/ListCategories
         public ActionResult ListCategories(string searchString, int? page, string currentFilter)
         {
             if (searchString != null)
@@ -51,20 +51,28 @@ namespace AstroPhotoGallery.Controllers
                 if (categories.Count == 0)
                 {
                     this.AddNotification("No categories found.", NotificationType.ERROR);
+
                     return RedirectToAction("Index");
                 }
-                if (!String.IsNullOrEmpty(searchString))
+
+                if (!string.IsNullOrEmpty(searchString))
                 {
-                    categories = categories.Where(c => c.Name.ToLower().Contains(searchString.ToLower())).ToList();
+                    categories = categories
+                        .Where(c => c.Name.ToLower()
+                        .Contains(searchString.ToLower()))
+                        .ToList();
                 }
 
                 int pageSize = 8;
                 int pageNumber = (page ?? 1);
+
                 return View(categories.ToPagedList(pageNumber, pageSize));
             }
 
         }
 
+        //
+        //GET: Home/ListPictures/id
         public ActionResult ListPictures(int? categoryId)
         {
             if (categoryId == null)
@@ -76,6 +84,7 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var category = db.Categories.FirstOrDefault(c => c.Id == categoryId);
+
                 if (category == null)
                 {
                     this.AddNotification("Category doesn't exist.", NotificationType.ERROR);

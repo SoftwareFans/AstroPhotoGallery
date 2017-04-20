@@ -1,17 +1,15 @@
 ﻿using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AstroPhotoGallery.Controllers
 {
     public class TagController : Controller
     {
-        // GET: Tag
+        //
+        // GET: Tag/List/id
         public ActionResult List(int? id)
         {
             if (id == null)

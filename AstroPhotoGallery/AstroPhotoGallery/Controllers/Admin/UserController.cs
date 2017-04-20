@@ -63,7 +63,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         }
 
         //
-        //GET: User/Edit
+        //GET: User/Edit/id
         public ActionResult Edit(string id)
         {
             //Validate id
@@ -98,7 +98,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         }
 
         //
-        //POST: User/Edit
+        //POST: User/Edit/id
         [HttpPost]
         public ActionResult Edit(string id, EditUserViewModel viewModel)
         {
@@ -146,7 +146,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         }
 
         //
-        //GET: User/Delete
+        //GET: User/Delete/id
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -174,7 +174,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         }
 
         //
-        //POST: User/Delete
+        //POST: User/Delete/id
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)

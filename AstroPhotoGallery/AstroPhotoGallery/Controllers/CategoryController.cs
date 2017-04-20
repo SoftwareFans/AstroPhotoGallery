@@ -87,7 +87,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        //GET: Category/Edit
+        //GET: Category/Edit/id
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -147,7 +147,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        //GET: Category/Delete
+        //GET: Category/Delete/id
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -171,7 +171,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        //POST: Category/Delete
+        //POST: Category/Delete/id
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)

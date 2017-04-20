@@ -454,7 +454,7 @@ namespace AstroPhotoGallery.Controllers
 
         //
         // GET: /Account/Profile
-        public new ActionResult Profile()
+        public ActionResult Profile()
         {
             var userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
@@ -635,7 +635,7 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        //GET: Account/ShowProfile
+        //GET: Account/ShowProfile/id
         public ActionResult ShowProfile(string id)
         {
             var model = new ProfileViewModel();

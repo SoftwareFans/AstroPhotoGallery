@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
 
@@ -17,28 +10,15 @@ namespace AstroPhotoGallery.Controllers
 {
     public class PictureController : Controller
     {
+        //
         // GET: Picture
         public ActionResult Index()
         {
             return RedirectToAction("ListCategories", "Home");
         }
-
-        //GET: Picture/List - THIS CAN BE REMOVED BECAUSE IT IS NOT USED CURRENTLY
-        public ActionResult List()
-        {
-            using (var db = new GalleryDbContext())
-            {
-                // Get pictures from database
-                var pictures = db.Pictures
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Tags)
-                    .ToList();
-
-                return View(pictures);
-            }
-        }
-
-        //GET: Picture/Details
+    
+        //
+        //GET: Picture/Details/id
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -139,6 +119,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
         //GET: Picture/Upload
         [Authorize]
         public ActionResult Upload()
@@ -146,6 +127,7 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var model = new PictureViewModel();
+
                 model.Categories = db.Categories
                     .OrderBy(c => c.Name)
                     .ToList();
@@ -154,6 +136,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
         //POST: Picture/Upload
         [HttpPost]
         [Authorize]
@@ -239,6 +222,7 @@ namespace AstroPhotoGallery.Controllers
                     }
                 }
             }
+
             using (var db = new GalleryDbContext())
             {
                 model.Categories = db.Categories
@@ -487,7 +471,8 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        //GET: Picture/Delete
+        //
+        //GET: Picture/Delete/id
         [Authorize]
         public ActionResult Delete(int? id)
         {
@@ -526,7 +511,8 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        //POST: Picture/Delete
+        //
+        //POST: Picture/Delete/id
         [HttpPost]
         [ActionName("Delete")]
         [Authorize]
@@ -575,7 +561,8 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        //GET: Picture/Edit
+        //
+        //GET: Picture/Edit/id
         [Authorize]
         public ActionResult Edit(int? id)
         {
@@ -622,6 +609,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //
         //POST: Picture/Edit
         [Authorize]
         [HttpPost]
@@ -728,6 +716,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //Method for download picture to user PC
         public ActionResult DownlandFile(string filePath)
         {
             // The names of the pictures are not stored in DB so the name is taken from the path of the pic
