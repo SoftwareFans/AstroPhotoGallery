@@ -26,6 +26,7 @@ More details and features:
 - Browsing: When looking at a picture the user can see the user profile of the picture's uploader
 - Image validation: Image file extension and content validation - when a picture is being uploaded (valid for profile picture too) its content is being checked in order to be determined if it is really an image. That way even if a user change the extension of a .txt file for example to .jpg the application will reject the file and won't store it anywhere.
 - Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. Bootstrap notifications are used for that feature.
+	* Default redirect when a non-existing URL is entered - custom view for ERROR 404 is showed
 - Search: Search feature for categories is included in the navigation bar (case-insensitive)
 - Search: Search feature for categories is included in the administrator panel
 - Search: Search feature for users is included in the administrator panel
