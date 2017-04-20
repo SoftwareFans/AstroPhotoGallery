@@ -1,12 +1,13 @@
 ﻿@model AstroPhotoGallery.Models.Category
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create a category";
 }
 
 <div class="container">
     <div class="well">
-        <h2>Create Category</h2>
+        <h2>@ViewBag.Title</h2>
+        <hr/>
         @using (@Html.BeginForm("Create", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()

@@ -5,35 +5,32 @@
     ViewBag.Title = "List";
 }
 <link href="~/Content/PagedList.css" rel="stylesheet" />
-<div class="col-md-12">
-    <div class="panel">
-        <div class="panel-heading">
-            <h3>Browse by categories</h3>
-        </div>
-        <div class="panel-body"></div>
-        @foreach (var category in Model)
-        {
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail ">
-                    @if (category.Pictures.Any(p => p.CategoryId == category.Id))
-                    {
-                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="height:190px;width:350px">
-                    }
-                    else
-                    {
-                        <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px" />
-                    }
+<div class="container">
+    <h2 class="text-center">Browse by categories</h2>
+    <br/>
 
-                    <div class="caption text-center ">
-                        <h4>
-                            @Html.ActionLink(string.Format($"{category.Name}"),
+    @foreach (var category in Model)
+    {
+        <div class="col-sm-4">
+            <div class="thumbnail ">
+                @if (category.Pictures.Any(p => p.CategoryId == category.Id))
+                {
+                    <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="height:190px;width:350px">
+                }
+                else
+                {
+                    <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px" />
+                }
+
+                <div class="caption text-center ">
+                    <h4>
+                        @Html.ActionLink(string.Format($"{category.Name}"),
                                 "ListPictures", "Home", new { @categoryId = category.Id }, null)
-                        </h4>
-                    </div>
+                    </h4>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
 
 
