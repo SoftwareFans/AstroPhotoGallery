@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 
 namespace AstroPhotoGallery.Extensions
 {
@@ -33,10 +30,15 @@ namespace AstroPhotoGallery.Extensions
 
                 imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
                 imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 });
                 imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+
                 imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
                 imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 });
+                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 });
                 imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+
                 imageHeaders["PNG"].Add(new byte[] { 0x89, 0x50, 0x4E, 0x47 });
                 imageHeaders["BMP"].Add(new byte[] { 0x42, 0x4D });
                 imageHeaders["ICO"].Add(new byte[] { 0x00, 0x00, 0x01, 0x00 });
@@ -59,7 +61,7 @@ namespace AstroPhotoGallery.Extensions
                     {
                         byte[] standardHeader = subType;
                         byte[] checkedHeader = new byte[standardHeader.Length];
-
+                        inputStream.Position = 0;
                         inputStream.Read(checkedHeader, 0, checkedHeader.Length);
 
                         if (AreTwoByteArrsEqual(standardHeader, checkedHeader))
