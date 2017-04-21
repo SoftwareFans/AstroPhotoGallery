@@ -12,14 +12,14 @@
     @foreach (var category in Model)
     {
         <div class="col-sm-4">
-            <div class="thumbnail ">
+            <div class="thumbnail">
                 @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                 {
-                    <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="height:190px;width:350px">
+                    <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px" >
                 }
                 else
                 {
-                    <img src="~/Content/images/default-gallery-image.jpg" style="height:190px;width:350px" />
+                    <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px"/>
                 }
 
                 <div class="caption text-center ">
