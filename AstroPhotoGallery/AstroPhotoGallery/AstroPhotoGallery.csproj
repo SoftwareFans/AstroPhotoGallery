@@ -236,10 +236,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\images\astroPics\.gitignore" />
-    <Content Include="Content\images\astroPics\Desert.jpg" />
     <Content Include="Content\images\astroPics\Lighthouse.jpg" />
     <Content Include="Content\images\astroPics\Penguins.jpg" />
-    <Content Include="Content\images\astroPics\StefkaProfilePic.jpg" />
     <Content Include="Content\images\blank-profile-picture.png" />
     <Content Include="Content\images\default-gallery-image.jpg" />
     <Content Include="Content\images\GeorgiProfilePic.jpg" />
@@ -247,7 +245,6 @@
     <Content Include="Content\images\IC443_HSO_com_b.jpg" />
     <Content Include="Content\images\NGC2237_New_b.jpg" />
     <Content Include="Content\images\profilePics\.gitignore" />
-    <Content Include="Content\images\profilePics\333cda58-cf88-4f1c-a080-5695dc3e9503\NGC2237_New_b.jpg" />
     <Content Include="Content\images\StefkaProfilePic.jpg" />
     <Content Include="Scripts\browseButton.js" />
     <Content Include="Content\browseButtonStyles.css" />
@@ -264,6 +261,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\astrogallery - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\astrogallery - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
