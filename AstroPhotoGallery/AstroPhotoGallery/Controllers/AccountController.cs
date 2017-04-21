@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +8,6 @@ using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
 using System.Data.Entity;
 using System.IO;
-using System.Web.UI.WebControls;
 using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers
@@ -530,14 +528,14 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: /Account/Edit
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude = "ImagePath")]EditViewModel model)
+        public ActionResult Edit(EditViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var poImgFile = Request.Files["ImagePath"];
+            var poImgFile = Request.Files["image"];
 
             var pic = Path.GetFileName(poImgFile.FileName);
             var hasNewImage = false;
