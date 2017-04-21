@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
@@ -140,7 +141,7 @@ namespace AstroPhotoGallery.Controllers
         //POST: Picture/Upload
         [HttpPost]
         [Authorize]
-        public ActionResult Upload([Bind(Exclude = "ImagePath")]PictureViewModel model)
+        public ActionResult Upload(PictureViewModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -157,17 +158,17 @@ namespace AstroPhotoGallery.Controllers
                     picture.PicTitle = model.PicTitle;
                     picture.PicDescription = model.PicDescription;
                     picture.CategoryId = model.CategoryId;
+
                     this.SetPictureTags(picture, model, db);
 
-                    if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                    if (image != null && image.ContentLength > 0)
                     {
-                        var poImgFile = Request.Files["ImagePath"];
-                        var picFileName = Path.GetFileName(poImgFile.FileName);
-
-                        var path = Path.Combine(Server.MapPath("~/Content/images/astroPics"), picFileName);
+                        var imagesDir = "~/Content/images/astroPics/";
+                        var picFileName = image.FileName;
+                        var uploadPath = imagesDir + picFileName;
 
                         // In case the picture already exists notification is shown:
-                        if (System.IO.File.Exists(path))
+                        if (System.IO.File.Exists(uploadPath))
                         {
                             this.AddNotification("Picture with this name of the file already exists.", NotificationType.ERROR);
 
@@ -178,11 +179,12 @@ namespace AstroPhotoGallery.Controllers
                             return View(model);
                         }
 
-                        poImgFile.SaveAs(path);
+                        var physicalPath = Server.MapPath(uploadPath);
+                        image.SaveAs(physicalPath);
 
-                        if (ImageValidator.IsImageValid(path))
+                        if (ImageValidator.IsImageValid(physicalPath))
                         {
-                            picture.ImagePath = "~/Content/images/astroPics/" + picFileName;
+                            picture.ImagePath = uploadPath;
 
                             // Getting the name of the category to add it to the current picture's property:
                             var picCategoryName = db.Categories
@@ -199,7 +201,7 @@ namespace AstroPhotoGallery.Controllers
                         else
                         {
                             // Deleting the file from ~/Content/images/astroPics:
-                            System.IO.File.Delete(path);
+                            System.IO.File.Delete(physicalPath);
 
                             this.AddNotification("Invalid picture format.", NotificationType.ERROR);
 
@@ -309,8 +311,8 @@ namespace AstroPhotoGallery.Controllers
 
                 // Delete the picture from the ~/Content/images/astroPics folder:
                 var picPath = picture.ImagePath;
-                var mappedPath = Server.MapPath(picPath);
-                System.IO.File.Delete(mappedPath);
+                var physicalPath = Server.MapPath(picPath);
+                System.IO.File.Delete(physicalPath);
 
                 // Delete the picture from the database 
                 db.Pictures.Remove(picture);
