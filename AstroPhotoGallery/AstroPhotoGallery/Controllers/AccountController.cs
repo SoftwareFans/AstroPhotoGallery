@@ -588,7 +588,7 @@ namespace AstroPhotoGallery.Controllers
                 user.City = model.City;
                 user.Country = model.Country;
 
-                if (String.IsNullOrEmpty(model.Birthday))
+                if (string.IsNullOrEmpty(model.Birthday))
                 {
                     user.Birthday = string.Empty;
                 }
@@ -638,10 +638,23 @@ namespace AstroPhotoGallery.Controllers
         //GET: Account/ShowProfile/id
         public ActionResult ShowProfile(string id)
         {
+            if (id == null)
+            {
+                this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                return RedirectToAction("Index", "Home");
+            }
+
             var model = new ProfileViewModel();
             using (var db = new GalleryDbContext())
             {
                 var user = db.Users.First(u => u.Id == id);
+
+                if (user == null)
+                {
+                    this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index", "Home");
+                }
+
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.Gender = user.Gender;
