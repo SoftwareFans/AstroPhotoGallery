@@ -57,20 +57,20 @@
                         <div class="thumbnail">
                             @if (Model[j].Pictures.Any(p => p.CategoryId == Model[j].Id))
                             {
-                                <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" class="img-responsive">
+                                <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px">
                             }
                             else
                             {
-                                <img src="~/Content/images/default-gallery-image.jpg" class="img-responsive" />
+                                <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px" />
                             }
-                            <br />
+
                         </div>
                         <h3>@Model[j].Name</h3>
                         @Html.ActionLink("All pictures", "ListPictures", new { @categoryId = Model[j].Id }, new { @class = "btn btn-primary" })
                     </div>
                 }
             </div>
-            <br/>
+            <br />
         }
     </div>
 </div>
