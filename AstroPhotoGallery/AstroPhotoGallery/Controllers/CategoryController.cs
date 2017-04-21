@@ -176,6 +176,12 @@ namespace AstroPhotoGallery.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                this.AddNotification("No category ID provided.", NotificationType.ERROR);
+                return RedirectToAction("Index");
+            }
+
             using (var db = new GalleryDbContext())
             {
                 var category = db.Categories.FirstOrDefault(c => c.Id == id);
