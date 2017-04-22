@@ -55,11 +55,13 @@
                             </li>
 
                             <li class="list-group-item col-sm-4">
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">Email:</div>
-                                    <div style="word-wrap: break-word; font-weight: bold">@Model.Email</div>
-                                </div>
-
+                                @if (Model.IsEmailPublic)
+                                {
+                                    <div style="margin: 22px">
+                                        <div style="opacity: 0.8">Email:</div>
+                                        <div style="word-wrap: break-word; font-weight: bold">@Model.Email</div>
+                                    </div>
+                                }
                                 <div style="margin: 22px">
                                     <div style="opacity: 0.8">Phone:</div>
                                     <div style="font-weight: bold">@Model.PhoneNumber</div>

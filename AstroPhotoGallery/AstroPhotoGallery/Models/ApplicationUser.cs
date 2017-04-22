@@ -29,6 +29,8 @@ namespace AstroPhotoGallery.Models
 
         public string ImagePath { get; set; }
 
+        public bool IsEmailPublic { get; set; } = false; // setting the default to be false due to privacy reasons
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

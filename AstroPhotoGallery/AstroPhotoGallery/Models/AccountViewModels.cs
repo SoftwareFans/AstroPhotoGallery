@@ -148,6 +148,8 @@ namespace AstroPhotoGallery.Models
         public string Birthday{ get; set; }
 
         public string ImagePath { get; set; } 
+
+        public bool IsEmailPublic { get; set; }
     }
 
     public class EditViewModel 
@@ -188,5 +190,10 @@ namespace AstroPhotoGallery.Models
 
         [Display(Name = "Upload profile picture")]
         public string ImagePath { get; set; }
+
+        public string Email { get; set; }
+
+        [Display(Name = "Show my email in my profile (public)")]
+        public bool IsEmailPublic { get; set; }
     }
 }

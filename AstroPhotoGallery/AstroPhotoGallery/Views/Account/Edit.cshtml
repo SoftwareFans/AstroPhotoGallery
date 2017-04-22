@@ -33,6 +33,20 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly", id = "email", placeholder = Html.DisplayNameFor(m => m.Email) })
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" />
+                                @Html.CheckBoxFor(m => m.IsEmailPublic)
+                                @Html.LabelFor(m => m.IsEmailPublic)
+                            </label>
+                        </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.LabelFor(m => m.Gender, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-6">
 
@@ -86,7 +100,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Birthday, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @readonly = "readonly", @id = "birthday", placeholder = Html.DisplayNameFor(m => m.Birthday) })
+                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @readonly = "readonly", id = "birthday", placeholder = Html.DisplayNameFor(m => m.Birthday) })
 
                     @if (!string.IsNullOrEmpty(Model.Birthday))
                     {

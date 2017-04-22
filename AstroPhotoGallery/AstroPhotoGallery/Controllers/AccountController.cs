@@ -462,6 +462,7 @@ namespace AstroPhotoGallery.Controllers
                 var user = db.Users.First(u => u.Id == userId);
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
+                model.IsEmailPublic = user.IsEmailPublic;
                 model.Gender = user.Gender;
                 model.City = user.City;
                 model.Country = user.Country;
@@ -487,7 +488,7 @@ namespace AstroPhotoGallery.Controllers
 
             if (id == null)
             {
-                this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -497,7 +498,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (user == null)
                 {
-                    this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -509,6 +510,8 @@ namespace AstroPhotoGallery.Controllers
                 model.Gender = user.Gender;
                 model.City = user.City;
                 model.Country = user.Country;
+                model.Email = user.Email;
+                model.IsEmailPublic = user.IsEmailPublic;
 
                 if (user.Birthday == null)
                 {
@@ -625,6 +628,15 @@ namespace AstroPhotoGallery.Controllers
                     user.ImagePath = $"~/Content/images/profilePics/{userIdFolder}/" + pic;
                 }
 
+                if (model.IsEmailPublic)
+                {
+                    user.IsEmailPublic = true;
+                }
+                else
+                {
+                    user.IsEmailPublic = false;
+                }
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -638,27 +650,27 @@ namespace AstroPhotoGallery.Controllers
         {
             if (id == null)
             {
-                this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                this.AddNotification("No user ID provided.", NotificationType.ERROR);
                 return RedirectToAction("Index", "Home");
             }
 
             var model = new ProfileViewModel();
             using (var db = new GalleryDbContext())
             {
-                var user = db.Users.First(u => u.Id == id);
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
 
                 if (user == null)
                 {
-                    this.AddNotification("Such a user does not exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index", "Home");
                 }
 
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
+                model.IsEmailPublic = user.IsEmailPublic;
                 model.Gender = user.Gender;
                 model.City = user.City;
                 model.Country = user.Country;
-
                 model.Birthday = user.Birthday;
                 model.PhoneNumber = user.PhoneNumber;
 
