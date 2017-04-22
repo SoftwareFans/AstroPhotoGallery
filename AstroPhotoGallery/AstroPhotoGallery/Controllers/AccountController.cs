@@ -502,16 +502,18 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                var model = new EditViewModel();
-                model.Id = user.Id;
-                model.FirstName = user.FirstName;
-                model.LastName = user.LastName;
-                model.PhoneNumber = user.PhoneNumber;
-                model.Gender = user.Gender;
-                model.City = user.City;
-                model.Country = user.Country;
-                model.Email = user.Email;
-                model.IsEmailPublic = user.IsEmailPublic;
+                var model = new EditViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    Gender = user.Gender,
+                    City = user.City,
+                    Country = user.Country,
+                    Email = user.Email,
+                    IsEmailPublic = user.IsEmailPublic
+                };
 
                 if (user.Birthday == null)
                 {
