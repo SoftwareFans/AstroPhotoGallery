@@ -50,6 +50,8 @@
                     <br />
                     Category: @Html.ActionLink(@Model.CategoryName, "ListPictures", "Home", new { @categoryId = Model.CategoryId }, null)
                     <br />
+                    Upload date: @Model.UploadDate.ToString("d-MMM-yyyy")
+                    <br />
                     Tags:&nbsp;
                     @foreach (var tag in Model.Tags)
                     {

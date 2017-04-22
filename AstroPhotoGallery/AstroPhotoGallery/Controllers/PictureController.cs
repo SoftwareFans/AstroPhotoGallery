@@ -127,11 +127,12 @@ namespace AstroPhotoGallery.Controllers
         {
             using (var db = new GalleryDbContext())
             {
-                var model = new PictureViewModel();
-
-                model.Categories = db.Categories
+                var model = new PictureViewModel
+                {
+                    Categories = db.Categories
                     .OrderBy(c => c.Name)
-                    .ToList();
+                    .ToList()
+                };
 
                 return View(model);
             }
@@ -149,15 +150,17 @@ namespace AstroPhotoGallery.Controllers
                 {
                     // Get uploader's id
                     var uploaderId = db.Users
-                        .Where(u => u.UserName == this.User.Identity.Name)
-                        .First()
+                        .First(u => u.UserName == this.User.Identity.Name)
                         .Id;
 
-                    var picture = new Picture();
-                    picture.PicUploaderId = uploaderId;
-                    picture.PicTitle = model.PicTitle;
-                    picture.PicDescription = model.PicDescription;
-                    picture.CategoryId = model.CategoryId;
+                    var picture = new Picture
+                    {
+                        PicUploaderId = uploaderId,
+                        PicTitle = model.PicTitle,
+                        PicDescription = model.PicDescription,
+                        CategoryId = model.CategoryId,
+                        UploadDate = DateTime.Today
+                    };
 
                     this.SetPictureTags(picture, model, db);
 
@@ -356,17 +359,20 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                var model = new PictureViewModel();
-                model.Id = picture.Id;
-                model.PicTitle = picture.PicTitle;
-                model.PicDescription = picture.PicDescription;
-                model.CategoryId = picture.CategoryId;
-                model.ImagePath = picture.ImagePath;
-                model.Categories = db.Categories
-                    .OrderBy(c => c.Name)
-                    .ToList();
+                var model = new PictureViewModel
+                {
+                    Id = picture.Id,
+                    PicTitle = picture.PicTitle,
+                    PicDescription = picture.PicDescription,
+                    CategoryId = picture.CategoryId,
+                    ImagePath = picture.ImagePath,
 
-                model.Tags = string.Join(" ", picture.Tags.Select(t => t.Name));
+                    Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList(),
+
+                    Tags = string.Join(" ", picture.Tags.Select(t => t.Name))
+                };
 
                 return View(model);
             }
@@ -439,8 +445,7 @@ namespace AstroPhotoGallery.Controllers
                             if (first == last)
                             {
                                 var onlyPicture = db.Pictures
-                                    .Where(p => p.Id == first)
-                                    .FirstOrDefault();
+                                    .FirstOrDefault(p => p.Id == first);
 
                                 onlyPicture.IsLastOfCategory = true;
                                 onlyPicture.IsFirstOfCategory = true;
@@ -450,12 +455,12 @@ namespace AstroPhotoGallery.Controllers
                             // If there are 2 or more pics in the category before the edit
                             else
                             {
-                                var firstPic = db.Pictures.Where(p => p.Id == first).FirstOrDefault();
+                                var firstPic = db.Pictures.FirstOrDefault(p => p.Id == first);
                                 firstPic.IsFirstOfCategory = true;
                                 firstPic.IsLastOfCategory = false;
                                 db.Entry(firstPic).State = EntityState.Modified;
 
-                                var lastPic = db.Pictures.Where(p => p.Id == last).FirstOrDefault();
+                                var lastPic = db.Pictures.FirstOrDefault(p => p.Id == last);
                                 lastPic.IsFirstOfCategory = false;
                                 lastPic.IsLastOfCategory = true;
                                 db.Entry(lastPic).State = EntityState.Modified;
@@ -518,8 +523,7 @@ namespace AstroPhotoGallery.Controllers
             //Clear current picture tags
             picture.Tags.Clear();
 
-            //Set new pictre tags
-
+            //Set new picture tags
             foreach (var tagString in tagsStrings)
             {
                 //Get tag from db by its name
