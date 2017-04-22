@@ -480,6 +480,8 @@ namespace AstroPhotoGallery.Controllers
                     .OrderBy(c => c.Name)
                     .ToList();
 
+                model.ImagePath = db.Pictures.First(p => p.Id == model.Id).ImagePath;
+
                 return View(model);
             }
         }
