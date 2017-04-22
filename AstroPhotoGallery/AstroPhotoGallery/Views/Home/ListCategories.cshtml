@@ -24,7 +24,7 @@
 
                 <div class="caption text-center ">
                     <h4>
-                        @Html.ActionLink(string.Format($"{category.Name}({category.Pictures.Count})"),
+                        @Html.ActionLink(string.Format($"{category.Name} ({category.Pictures.Count})"),
                                 "ListPictures", "Home", new { @categoryId = category.Id }, null)                     
                     </h4>
                 </div>
