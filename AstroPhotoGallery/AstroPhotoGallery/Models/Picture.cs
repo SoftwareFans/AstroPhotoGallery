@@ -15,6 +15,16 @@ namespace AstroPhotoGallery.Models
             this.tags = new HashSet<Tag>();
         }
 
+        public Picture(string uploaderId, string title, string description, int categoryId)
+        {
+            this.PicUploaderId = uploaderId;
+            this.PicTitle = title;
+            this.PicDescription = description;
+            this.CategoryId = categoryId;
+            this.UploadDate = DateTime.Today;
+            this.tags = new HashSet<Tag>();
+        }
+
         [Key]
         public int Id { get; set; }
 
