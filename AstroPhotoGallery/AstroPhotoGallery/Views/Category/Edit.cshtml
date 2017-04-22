@@ -7,21 +7,27 @@
 <div class="container">
     <div class="well">
         <h2>@ViewBag.Title</h2>
-        <hr/>
-        @using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
+        <h3 style="color: #e74c3c; text-align: center">
+            Are you sure you want to edit the below category's name?
+            <br/>
+            <br/>
+            All pictures in that category will be edited too. This can take much time and resources, depending on their count.
+        </h3>
+        <br/>
+        @using (Html.BeginForm("Edit", "Category", FormMethod.Post, new {@class = "form-horizontal"}))
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.ValidationSummary("", new {@class = "text-danger"})
             <div class="form-group">
-                @Html.LabelFor(m => m.Name, new { @class = "control-label col-sm-4" })
+                @Html.LabelFor(m => m.Name, new {@class = "control-label col-sm-4"})
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    <input type="submit" value="Edit" class="btn btn-success" />
+                    <input type="submit" value="Edit" class="btn btn-success"/>
                     @Html.ActionLink("Cancel", "Index", "Category", new {@class = "btn btn-default"})
                 </div>
             </div>
