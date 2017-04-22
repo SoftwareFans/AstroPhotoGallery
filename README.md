@@ -34,8 +34,10 @@ More details and features:
 - Paging: If the number of users is higher than a certain value then the users in the administrator panel are being showed on more than one page
 - Slider: On the index page of the project there is a slider showing a picture from each possible category (e.g. one planet, one galaxy, one nebulae, one star cluster etc.). The pictures in the slider are static and not taken from the currently uploaded pictures by the users because there can be category with no pictures in it
 - User profiles: Every user can edit her/his user profile – e.g. gender, city, country, birthday, profile picture
-	* The profile picture of a user is saved in a subdirectory with name the user ID in directory ~/Content/images/profilePics
-	* The birthday date of the user profile is being selected using Javascript date picker
+	* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics
+	* The birthday date of the user profile is being selected using date picker
+	* Every user can hide/show his/her email address from his/her public user profile
+	* Every user can view other users' profiles
 - Administrator panel: Users in role "Admin" have access to administrator panel giving them rights to edit/delete user accounts (make them administrators too) and edit/delete categories
 
 
