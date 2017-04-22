@@ -153,14 +153,7 @@ namespace AstroPhotoGallery.Controllers
                         .First(u => u.UserName == this.User.Identity.Name)
                         .Id;
 
-                    var picture = new Picture
-                    {
-                        PicUploaderId = uploaderId,
-                        PicTitle = model.PicTitle,
-                        PicDescription = model.PicDescription,
-                        CategoryId = model.CategoryId,
-                        UploadDate = DateTime.Today
-                    };
+                    var picture = new Picture(uploaderId, model.PicTitle, model.PicDescription, model.CategoryId);
 
                     this.SetPictureTags(picture, model, db);
 
@@ -169,9 +162,10 @@ namespace AstroPhotoGallery.Controllers
                         var imagesDir = "~/Content/images/astroPics/";
                         var picFileName = image.FileName;
                         var uploadPath = imagesDir + picFileName;
+                        var physicalPath = Server.MapPath(uploadPath);
 
                         // In case the picture already exists notification is shown:
-                        if (System.IO.File.Exists(uploadPath))
+                        if (System.IO.File.Exists(physicalPath))
                         {
                             this.AddNotification("Picture with this name of the file already exists.", NotificationType.ERROR);
 
@@ -182,7 +176,7 @@ namespace AstroPhotoGallery.Controllers
                             return View(model);
                         }
 
-                        var physicalPath = Server.MapPath(uploadPath);
+                        
                         image.SaveAs(physicalPath);
 
                         if (ImageValidator.IsImageValid(physicalPath))
