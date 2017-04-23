@@ -29,7 +29,7 @@ textarea {
 }
 
 .starFade{
-    background-image:url('/Content/images/Star-Empty-icon.png');
+    background-image:url('/Content/images/star-empty.png');
     min-width:30px;
     min-height:30px;
     display:inline-block;
@@ -37,21 +37,21 @@ textarea {
 }
 
 .starFadeN{
-    background-image:url('/Content/images/Star-Empty-icon.png');
+    background-image:url('/Content/images/star-empty.png');
     min-width:30px;
     min-height:30px;
     display:inline-block;
 }
 
 .starGlow{
-    background-image:url('/Content/images/Star-Full-icon.png');
+    background-image:url('/Content/images/star-full.png');
     min-width:30px;
     min-height:30px;
     display:inline-block;
     cursor:pointer;
 }
 .starGlowN{
-    background-image:url('/Content/images/Star-Full-icon.png');
+    background-image:url('/Content/images/star-full.png');
     min-width:30px;
     min-height:30px;
     display:inline-block;

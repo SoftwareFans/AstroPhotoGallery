@@ -245,8 +245,8 @@
     <Content Include="Content\images\IC443_HSO_com_b.jpg" />
     <Content Include="Content\images\NGC2237_New_b.jpg" />
     <Content Include="Content\images\profilePics\.gitignore" />
-    <Content Include="Content\images\Star-Empty-icon.png" />
-    <Content Include="Content\images\Star-Full-icon.png" />
+    <Content Include="Content\images\star-empty.png" />
+    <Content Include="Content\images\star-full.png" />
     <Content Include="Content\images\StefkaProfilePic.jpg" />
     <Content Include="Scripts\browseButton.js" />
     <Content Include="Content\browseButtonStyles.css" />
