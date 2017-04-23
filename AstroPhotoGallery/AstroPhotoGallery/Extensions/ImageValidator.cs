@@ -17,35 +17,9 @@ namespace AstroPhotoGallery.Extensions
         // Method for IsImageValid - checking the data passed to the stream:
         public static bool IsStreamValid(FileStream inputStream)
         {
-            using (inputStream)
+            if (inputStream.Length > 0) // If the file has any data at all 
             {
-                Dictionary<string, List<byte[]>> imageHeaders = new Dictionary<string, List<byte[]>>();
-
-                // For every image type there is a list of byte arrays with its headers possible values.
-                // Other image types can be added in case of need - TIF, GIF etc.
-
-                imageHeaders.Add("JPG", new List<byte[]>());
-                imageHeaders.Add("JPEG", new List<byte[]>());
-                imageHeaders.Add("PNG", new List<byte[]>());
-                imageHeaders.Add("BMP", new List<byte[]>());
-                imageHeaders.Add("ICO", new List<byte[]>());
-
-                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
-                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
-                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 });
-                imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
-
-                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
-                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
-                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 });
-                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 });
-                imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
-
-                imageHeaders["PNG"].Add(new byte[] { 0x89, 0x50, 0x4E, 0x47 });
-                imageHeaders["BMP"].Add(new byte[] { 0x42, 0x4D });
-                imageHeaders["ICO"].Add(new byte[] { 0x00, 0x00, 0x01, 0x00 });
-
-                if (inputStream.Length > 0) // If the file has any data at all
+                using (inputStream)
                 {
                     string fileExt = inputStream.Name.Substring(inputStream.Name.LastIndexOf('.') + 1).ToUpper();
 
@@ -57,6 +31,46 @@ namespace AstroPhotoGallery.Extensions
                         ))
                     {
                         return false;
+                    }
+
+                    Dictionary<string, List<byte[]>> imageHeaders = new Dictionary<string, List<byte[]>>();
+
+                    // For every image type there is a list of byte arrays with its headers possible values.
+                    // Other image types can be added in case of need - TIF, GIF etc.
+
+                    switch (fileExt)
+                    {
+                        case "JPG":
+                            imageHeaders.Add("JPG", new List<byte[]>());
+                            imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+                            imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                            imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 });
+                            imageHeaders["JPG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+                            break;
+
+                        case "JPEG":
+                            imageHeaders.Add("JPEG", new List<byte[]>());
+                            imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+                            imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 });
+                            imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 });
+                            imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 });
+                            imageHeaders["JPEG"].Add(new byte[] { 0xFF, 0xD8, 0xFF, 0xFE });
+                            break;
+
+                        case "PNG":
+                            imageHeaders.Add("PNG", new List<byte[]>());
+                            imageHeaders["PNG"].Add(new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+                            break;
+
+                        case "BMP":
+                            imageHeaders.Add("BMP", new List<byte[]>());
+                            imageHeaders["BMP"].Add(new byte[] { 0x42, 0x4D });
+                            break;
+
+                        case "ICO":
+                            imageHeaders.Add("ICO", new List<byte[]>());
+                            imageHeaders["ICO"].Add(new byte[] { 0x00, 0x00, 0x01, 0x00 });
+                            break;
                     }
 
                     foreach (var subType in imageHeaders[fileExt])
@@ -71,13 +85,13 @@ namespace AstroPhotoGallery.Extensions
                             return true;
                         }
                     }
-
                     return false;
                 }
-                else
-                {
-                    return false; // the file is empty
-                }
+            }
+            else
+            {
+                inputStream.Dispose();
+                return false; // the file is empty
             }
         }
 
