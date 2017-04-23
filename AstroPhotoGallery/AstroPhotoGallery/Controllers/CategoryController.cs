@@ -62,6 +62,7 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: Category/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
@@ -113,6 +114,7 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: Category/Edit
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
@@ -173,6 +175,7 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: Category/Delete/id
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)
         {
