@@ -2,7 +2,7 @@
 @model AstroPhotoGallery.Models.Picture
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.PicTitle;
 }
 
 <div class="container">
@@ -118,7 +118,7 @@
                             else
                             {
                                 <div>
-                                    You have already rated this picture<br>or you uploaded it.
+                                    You have already rated this picture<br>or you have uploaded it.
                                 </div>
                             }
                         }

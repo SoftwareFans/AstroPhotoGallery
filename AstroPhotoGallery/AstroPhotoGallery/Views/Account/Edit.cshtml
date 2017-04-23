@@ -1,6 +1,6 @@
 ﻿@model AstroPhotoGallery.Models.EditViewModel
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit your profile";
 }
 <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui.css" />  @*Used for the date picker*@
 <link rel="stylesheet" type="text/css" href="~/Content/browseButtonStyles.css" /> @*Used for the browse custom button*@
@@ -14,7 +14,7 @@
             @Html.ValidationSummary()
             @Html.HiddenFor(m => m.Id)
             @Html.AntiForgeryToken()
-            <h3>Edit your profile.</h3>
+            <h3>@ViewBag.Title</h3>
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
 
