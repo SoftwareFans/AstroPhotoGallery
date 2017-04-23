@@ -24,6 +24,52 @@
                 <a href="#" data-toggle="modal" data-target=".dialog1">
                     <img src="@Url.Content(Model.ImagePath)" width="600" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
+                <br>
+                @if (Model.IsFirstOfCategory == false)
+                {
+                    <span>
+                        @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
+                    </span>
+                }
+
+                @if (Model.IsLastOfCategory == false)
+                {
+                    <span>
+                        @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
+                    </span>
+                }
+
+                <span>
+                    @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
+                </span>
+
+                @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
+                {
+                    <span>
+                        @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
+                    </span>
+
+                    <span>
+                        @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
+                    </span>
+                }
+                <span>
+                    @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
+                </span>
+                <br />
+
             </div>
 
             @*Used for the enlargement of the picture when clicked*@
@@ -43,12 +89,11 @@
         </div>
         <br />
         <div class="row">
-
             <div class="col-md-6">
                 <span style="opacity: 0.8; color: #839496" class="pull-left">
-                    Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { @id = Model.PicUploader.Id }, null)
+                    Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { id = Model.PicUploader.Id }, null)
                     <br />
-                    Category: @Html.ActionLink(@Model.CategoryName, "ListPictures", "Home", new { @categoryId = Model.CategoryId }, null)
+                    Category: @Html.ActionLink(Model.CategoryName, "ListPictures", "Home", new { categoryId = Model.CategoryId }, null)
                     <br />
                     Upload date: @Model.UploadDate.ToString("d-MMM-yyyy")
                     <br />
@@ -65,34 +110,6 @@
             </div>
             <div class="col-md-6">
                 <span class="pull-left">
-                    @if (Model.IsFirstOfCategory == false)
-                    {
-                        <span>
-                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
-                        </span>
-                    }
-
-                    @if (Model.IsLastOfCategory == false)
-                    {
-                        <span>
-                            @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
-                        </span>
-                    }
-                    <br />
-                    <br />
-
                     <span>
                         @*Getting the users that already rated this picture*@
                         @{var usersRatedThePic = Model.UserIdsRatedPic.Split(' ').ToList();}
@@ -127,27 +144,6 @@
                             <div>You must be logged in to be able to rate pictures.</div>
                         }
                     </span>
-                </span>
-
-                <span class="pull-right">
-                    <span>
-                        @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
-                    </span>
-
-                    @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
-                    {
-                        <span>
-                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
-                        </span>
-
-                        <span>
-                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
-                        </span>
-                    }
-                    <span>
-                        @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
-                    </span>
-                    <br />
                 </span>
             </div>
         </div>
