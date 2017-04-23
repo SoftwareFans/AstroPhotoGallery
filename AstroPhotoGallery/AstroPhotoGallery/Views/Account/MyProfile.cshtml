@@ -15,7 +15,9 @@
                         <img src="@Url.Content(Model.ImagePath)" alt="MyProfile picture" class="img-thumbnail img-responsive" />
                     </figure>
                     <br />
-                    <button class="btn btn-primary center-block" onclick="location.href = '@Url.Action("Edit", "Account")';return false;">Edit your profile</button>
+                    <button class="btn btn-info center-block" onclick="location.href = '@Url.Action("ChangePassword", "Manage")';return false;">Change your password</button>
+                    <br/>
+                    <button class="btn btn-primary center-block" onclick="location.href = '@Url.Action("Edit", "Account")';return false;">Edit your profile</button>                   
                     <br />
                 </div>
                 <div class="col-sm-12 col-sm-9">
