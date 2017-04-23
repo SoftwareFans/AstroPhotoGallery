@@ -1,18 +1,18 @@
 ﻿@model AstroPhotoGallery.Models.EditUserViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Admin - edit user";
 }
 
 <div class="container">
     <div class="well">
-        <h2>Edit User</h2>
-
+        <h2>@ViewBag.Title</h2>
+        <hr />
         @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })
-           
+
             <div class="form-group">
                 @Html.LabelFor(m => m.User.Email, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
@@ -45,7 +45,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" , placeholder = Html.DisplayNameFor(m => m.ConfirmPassword) })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ConfirmPassword) })
                 </div>
             </div>
 

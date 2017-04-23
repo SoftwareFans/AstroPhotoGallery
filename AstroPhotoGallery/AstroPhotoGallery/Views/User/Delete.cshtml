@@ -1,20 +1,21 @@
 ﻿@model AstroPhotoGallery.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Delete User";
+    ViewBag.Title = "Admin - delete user";
 }
 
-<div class="container body-content span-8 offset-2">
+<div class="container">
     <div class="well">
         <h2>@ViewBag.Title</h2>
         <h3 style="color: #e74c3c; text-align: center;">Are you sure you want to delete the below user?</h3>
         <br />
         @using (Html.BeginForm("Delete", "User", FormMethod.Post, new { @class = "form-horizontal" }))
         {
+            @Html.AntiForgeryToken()
             <div class="form-group">
-                @Html.LabelFor(m => m.UserName, new { @class = "control-label col-sm-4" })
+                <label class="control-label col-sm-4">Username</label>
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control col-sm-4", @readonly = "readonly" })
+                    @Html.TextBoxFor(m => m.UserName, new {@class = "form-control col-sm-4", @readonly = "readonly"})
                 </div>
             </div>
 
