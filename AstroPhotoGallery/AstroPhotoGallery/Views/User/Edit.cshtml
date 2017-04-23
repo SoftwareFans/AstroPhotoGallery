@@ -16,7 +16,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.User.Email, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
 
