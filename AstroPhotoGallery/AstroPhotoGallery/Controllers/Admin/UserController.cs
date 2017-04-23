@@ -100,6 +100,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         //
         //POST: User/Edit/id
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(string id, EditUserViewModel viewModel)
         {
             //Check if model is valid
@@ -176,6 +177,7 @@ namespace AstroPhotoGallery.Controllers.Admin
         //
         //POST: User/Delete/id
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
