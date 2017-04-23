@@ -551,9 +551,9 @@ namespace AstroPhotoGallery.Controllers
             {
                 var userDirectory = Server.MapPath($"~/Content/images/profilePics/{userIdFolder}");
 
-                if (!System.IO.Directory.Exists(userDirectory))
+                if (!Directory.Exists(userDirectory))
                 {
-                    System.IO.Directory.CreateDirectory(userDirectory);
+                    Directory.CreateDirectory(userDirectory);
                 }
 
                 var path = Path.Combine(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}/"), pic);
@@ -611,8 +611,8 @@ namespace AstroPhotoGallery.Controllers
 
                 if (model.RemovePicture)
                 {
-                    // Deleting the user's directory and the pic in there from ~/Content/images/profilePics:
-                    System.IO.Directory.Delete(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}"), true);
+                    // Delete the user's directory and the pic in there from ~/Content/images/profilePics:
+                    Directory.Delete(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}"), true);
 
                     hasNewImage = false;
                     user.ImagePath = null;
