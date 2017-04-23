@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Extensions;
@@ -78,6 +79,16 @@ namespace AstroPhotoGallery.Controllers
 
                     db.Categories.Add(category);
                     db.SaveChanges();
+
+                    // Creating the folder of the category on the server
+                    var categoryDir = Server.MapPath($"~/Content/images/astroPics/{category.Name}");
+                    Directory.CreateDirectory(categoryDir);
+
+                    //if (!System.IO.Directory.Exists(categoryDir))
+                    //{
+                    //    System.IO.Directory.CreateDirectory(categoryDir);
+                    //}
+
                     this.AddNotification("Category created.", NotificationType.SUCCESS);
 
                     return RedirectToAction("Index");
@@ -123,28 +134,50 @@ namespace AstroPhotoGallery.Controllers
                 {
                     if (db.Categories.Any(c => c.Name == category.Name))
                     {
-                        this.AddNotification("Category already exists.", NotificationType.ERROR);
+                        this.AddNotification("Category with this name already exists.", NotificationType.ERROR);
                         return RedirectToAction("Index");
                     }
 
-                    db.Entry(category).State = EntityState.Modified;
-
-                    // When the name of a category is being changed all the pictures in that category in DB should be changed:
-                    var picsToBeChanged = db.Pictures.Where(p => p.CategoryId == category.Id).ToList();
-                    foreach (var pic in picsToBeChanged)
+                    // Getting the old name of the category
+                    var categoryFromDb = db.Categories.FirstOrDefault(c => c.Id == category.Id);
+                    if (categoryFromDb == null)
                     {
-                        pic.CategoryName = category.Name;
-                        db.Entry(pic).State = EntityState.Modified;
+                        this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                        return RedirectToAction("Index");
                     }
 
-                    db.SaveChanges();
+                    var categoryOldName = categoryFromDb.Name;
+                    db.Dispose(); // Dispose required in order to use "category" again
 
-                    this.AddNotification("Category edited.", NotificationType.SUCCESS);
+                    using (var database = new GalleryDbContext())
+                    {
+                        database.Entry(category).State = EntityState.Modified;
 
-                    return RedirectToAction("Index");
+                        var catOldDir = Server.MapPath($"/Content/images/astroPics/{categoryOldName}/");
+                        var catNewDir = Server.MapPath($"/Content/images/astroPics/{category.Name}/");
+                        // Rename(move) the category's directory + all pics in it
+                        Directory.Move(catOldDir, catNewDir);
+
+                        // When the name of a category is being changed all the pictures in that category in DB must be changed:
+                        var picsToBeChanged = database.Pictures.Where(p => p.CategoryId == category.Id).ToList();
+
+                        foreach (var pic in picsToBeChanged)
+                        {
+                            pic.CategoryName = category.Name;
+                            var picFileName = pic.ImagePath.Substring(pic.ImagePath.LastIndexOf('/') + 1);
+                            pic.ImagePath = $"~/Content/images/astroPics/{category.Name}/{picFileName}";
+
+                            database.Entry(pic).State = EntityState.Modified;
+                        }
+
+                        database.SaveChanges();
+
+                        this.AddNotification("Category edited.", NotificationType.SUCCESS);
+
+                        return RedirectToAction("Index");
+                    }
                 }
             }
-
             return View(category);
         }
 
@@ -164,7 +197,7 @@ namespace AstroPhotoGallery.Controllers
 
                 if (category == null)
                 {
-                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index");
                 }
 
@@ -191,26 +224,26 @@ namespace AstroPhotoGallery.Controllers
 
                 if (category == null)
                 {
-                    this.AddNotification("Category doesn't exist.", NotificationType.ERROR);
+                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("Index");
                 }
 
-                var categoryPictures = category.Pictures.ToList();
+                // When a category is being deleted all the pictures in that category in DB must be deleted:
+                var picsToBeDeleted = category.Pictures.ToList();
 
-                foreach (var pic in categoryPictures)
+                foreach (var pic in picsToBeDeleted)
                 {
-                    // Delete the pic from ~/Content/images:
-                    string path = pic.ImagePath;
-                    var mappedPath = Server.MapPath(path);
-                    System.IO.File.Delete(mappedPath);
-
                     // Delete the pic from DB
                     db.Pictures.Remove(pic);
                 }
 
+                // Delete the category's directory + all files in it(recursive true)
+                Directory.Delete(Server.MapPath($"~/Content/images/astroPics/{category.Name}"), true);
+
                 db.Categories.Remove(category);
                 db.SaveChanges();
-                this.AddNotification("Category deleted.", NotificationType.SUCCESS);
+
+                this.AddNotification("Category deleted.", NotificationType.WARNING);
 
                 return RedirectToAction("Index");
             }

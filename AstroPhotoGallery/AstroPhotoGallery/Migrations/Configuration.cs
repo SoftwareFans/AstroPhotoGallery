@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Remoting.Channels;
+using System.Web;
 
 namespace AstroPhotoGallery.Migrations
 {
@@ -104,8 +107,6 @@ namespace AstroPhotoGallery.Migrations
 
         private void CreateCategory(GalleryDbContext context, string name)
         {
-
-
             if (!context.Categories.Any())
             {
                 var category = new Category
@@ -116,6 +117,9 @@ namespace AstroPhotoGallery.Migrations
 
                 context.Categories.Add(category);
                 context.SaveChanges();
+
+                var categoryDir = HttpContext.Current.Server.MapPath($"~/Content/images/astroPics/{category.Name}");
+                Directory.CreateDirectory(categoryDir);
             }
         }
     }

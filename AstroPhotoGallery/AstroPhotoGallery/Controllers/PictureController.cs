@@ -151,34 +151,41 @@ namespace AstroPhotoGallery.Controllers
             {
                 using (var db = new GalleryDbContext())
                 {
-                    // Get uploader's id
+                    // Get uploader's ID
                     var uploaderId = db.Users
                         .First(u => u.UserName == this.User.Identity.Name)
                         .Id;
 
                     var picture = new Picture(uploaderId, model.PicTitle, model.PicDescription, model.CategoryId);
 
-                    this.SetPictureTags(picture, model, db);
+                    // Getting the name of the category to add it to the current picture's property:
+                    var picCategoryName = db.Categories
+                        .Where(c => c.Id == picture.CategoryId)
+                        .Select(c => c.Name)
+                        .ToArray();
+
+                    picture.CategoryName = picCategoryName[0];
+
+                    SetPictureTags(picture, model, db);
 
                     if (image != null && image.ContentLength > 0)
                     {
-                        var imagesDir = "~/Content/images/astroPics/";
+                        var imagesOfThatCategoryDir = $"~/Content/images/astroPics/{picture.CategoryName}/";
                         var picFileName = image.FileName;
-                        var uploadPath = imagesDir + picFileName;
+                        var uploadPath = imagesOfThatCategoryDir + picFileName;
                         var physicalPath = Server.MapPath(uploadPath);
 
-                        // In case the picture already exists notification is shown:
+                        // In case the picture already exists a notification is shown:
                         if (System.IO.File.Exists(physicalPath))
                         {
-                            this.AddNotification("Picture with this name of the file already exists.", NotificationType.ERROR);
+                            this.AddNotification("Picture with this name of the file already exists in that category.", NotificationType.ERROR);
 
                             model.Categories = db.Categories
-                           .OrderBy(c => c.Name)
-                           .ToList();
+                                .OrderBy(c => c.Name)
+                                .ToList();
 
                             return View(model);
                         }
-
 
                         image.SaveAs(physicalPath);
 
@@ -186,28 +193,20 @@ namespace AstroPhotoGallery.Controllers
                         {
                             picture.ImagePath = uploadPath;
 
-                            // Getting the name of the category to add it to the current picture's property:
-                            var picCategoryName = db.Categories
-                                .Where(c => c.Id == picture.CategoryId)
-                                .Select(c => c.Name)
-                                .ToArray();
-
-                            picture.CategoryName = picCategoryName[0];
-
                             AdjustCategoryPositions.Upload(db, picture);
 
                             return RedirectToAction("Details", new { id = picture.Id });
                         }
                         else
                         {
-                            // Deleting the file from ~/Content/images/astroPics:
+                            // Deleting the file from ~/Content/images/astroPics/:
                             System.IO.File.Delete(physicalPath);
 
                             this.AddNotification("Invalid picture format.", NotificationType.ERROR);
 
                             model.Categories = db.Categories
-                           .OrderBy(c => c.Name)
-                           .ToList();
+                                .OrderBy(c => c.Name)
+                                .ToList();
 
                             return View(model);
                         }
@@ -237,7 +236,6 @@ namespace AstroPhotoGallery.Controllers
 
         //GET: Picture/Delete/id
         [Authorize]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -278,8 +276,9 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: Picture/Delete/id
         [HttpPost]
-        [ActionName("Delete")]
         [Authorize]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)
         {
             if (id == null)
@@ -304,22 +303,21 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                // Adjust the position boolean variables of the other pics before the deletion
+                // Adjust the positional boolean variables of the other pics before the deletion
                 AdjustCategoryPositions.Delete(db, picture);
 
                 // Getting the category of the pic before the deletion in order to redirect to Home/ListPictures after that
                 var picCategoryId = (int?)picture.CategoryId;
 
                 // Delete the picture from the ~/Content/images/astroPics folder:
-                var picPath = picture.ImagePath;
-                var physicalPath = Server.MapPath(picPath);
+                var physicalPath = Server.MapPath(picture.ImagePath);
                 System.IO.File.Delete(physicalPath);
 
                 // Delete the picture from the database 
                 db.Pictures.Remove(picture);
                 db.SaveChanges();
 
-                // Redirect to the page with all pics in the current category page
+                // Redirect to the page with all pics in the current category
                 this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
                 return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
             }
@@ -378,9 +376,9 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //POST: Picture/Edit
+        [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        [HttpPost]
         public ActionResult Edit(PictureViewModel model)
         {
             // Check if model state is valid
@@ -407,13 +405,15 @@ namespace AstroPhotoGallery.Controllers
                     var previousCategoryIdOfPic = picture.CategoryId;
 
                     picture.CategoryId = model.CategoryId;
+
                     var picCategoryName = db.Categories
                         .Where(c => c.Id == model.CategoryId)
                         .Select(c => c.Name)
                         .ToArray();
+
                     picture.CategoryName = picCategoryName[0];
 
-                    this.SetPictureTags(picture, model, db);
+                    SetPictureTags(picture, model, db);
 
                     // Save pic state in database
                     db.Entry(picture).State = EntityState.Modified;
@@ -467,8 +467,20 @@ namespace AstroPhotoGallery.Controllers
 
                             db.SaveChanges();
                         }
-                    }
 
+                        // Getting the old directory of the pic
+                        var picOldDir = Server.MapPath(picture.ImagePath);
+
+                        var picFileName = picture.ImagePath.Substring(picture.ImagePath.LastIndexOf('/') + 1);
+
+                        picture.ImagePath = $"~/Content/images/astroPics/{picture.CategoryName}/{picFileName}";
+
+                        db.Entry(picture).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        var picNewDir = Server.MapPath(picture.ImagePath);
+                        System.IO.File.Move(picOldDir, picNewDir);
+                    }
                     return View("Details", picture);
                 }
             }
@@ -488,8 +500,7 @@ namespace AstroPhotoGallery.Controllers
         //Method for download picture to user PC
         public ActionResult DownlandFile(string filePath)
         {
-            // The names of the pictures are not stored in DB so the name is taken from the path of the pic
-            var filename = filePath.Substring(27);
+            var filename = filePath.Substring(filePath.LastIndexOf('/') + 1);
             var fileExtension = Path.GetExtension(filename);
 
             if (fileExtension.Equals(".jpg") ||
@@ -498,13 +509,12 @@ namespace AstroPhotoGallery.Controllers
                 fileExtension.Equals(".bmp") ||
                 fileExtension.Equals(".ico"))
             {
-                var dir = Server.MapPath("~/Content/images/astroPics");
-                var path = Path.Combine(dir, filename); //validate the path for security or use other means to generate the path.
+                var dir = Server.MapPath(filePath);
 
                 var type = fileExtension.Substring(1);
                 var imageType = $"image/{type}";
 
-                return base.File(path, imageType, filename);
+                return File(dir, imageType, filename);
             }
             else
             {
