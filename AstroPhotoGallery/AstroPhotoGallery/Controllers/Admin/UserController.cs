@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -77,8 +78,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             {
                 //Get user from database
                 var user = db.Users
-                    .Where(u => u.Id == id)
-                    .FirstOrDefault();
+                    .FirstOrDefault(u => u.Id == id);
 
                 //Check if user exists
                 if (user == null)
@@ -194,14 +194,36 @@ namespace AstroPhotoGallery.Controllers.Admin
                 var user = db.Users
                     .FirstOrDefault(u => u.Id == id);
 
+                if (user == null)
+                {
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index");
+                }
+
                 //Get user's pictures form database
                 var userPictures = db.Pictures
-                    .Where(p => p.PicUploader.Id == user.Id);
+                    .Where(p => p.PicUploader.Id == user.Id).ToList();
 
-                //Delete user pictures
+                //Delete user's pictures
                 foreach (var picture in userPictures)
                 {
+                    //Adjust the positional boolean variables of the other pics before the deletion
+                    AdjustCategoryPositions.Delete(db, picture);
+                    
+                    //Delete the picture from the server
+                    var physicalPath = Server.MapPath(picture.ImagePath);
+                    System.IO.File.Delete(physicalPath);
+
                     db.Pictures.Remove(picture);
+                    db.SaveChanges();
+                }
+
+                // Delete the user's directory and the pic in there from ~/Content/images/profilePics:
+                var userIdFolder = user.Id;
+                var userDirectory = Server.MapPath($"~/Content/images/profilePics/{userIdFolder}");
+                if (Directory.Exists(userDirectory))
+                {
+                    Directory.Delete(userDirectory, true);
                 }
 
                 //Delete user and save changes 
