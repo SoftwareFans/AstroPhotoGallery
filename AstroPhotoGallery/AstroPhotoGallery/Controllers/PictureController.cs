@@ -144,6 +144,7 @@ namespace AstroPhotoGallery.Controllers
         //POST: Picture/Upload
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(PictureViewModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -236,6 +237,7 @@ namespace AstroPhotoGallery.Controllers
 
         //GET: Picture/Delete/id
         [Authorize]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -377,6 +379,7 @@ namespace AstroPhotoGallery.Controllers
         //
         //POST: Picture/Edit
         [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Edit(PictureViewModel model)
         {
