@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
+using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -258,6 +259,8 @@ namespace AstroPhotoGallery.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+
+                this.AddNotification("Password changed.", NotificationType.SUCCESS);
                 return RedirectToAction("MyProfile", "Account");
             }
 
