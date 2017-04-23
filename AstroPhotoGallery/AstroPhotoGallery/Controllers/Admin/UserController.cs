@@ -51,7 +51,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 switch (sortOrder)
                 {
                     case "Email_desc":
-                        users = users.OrderByDescending(s => s.Email).ToList();
+                        users = users.OrderByDescending(u => u.Email).ToList();
                         break;
                 }
 
@@ -88,9 +88,11 @@ namespace AstroPhotoGallery.Controllers.Admin
                 }
 
                 //Create a view model
-                var model = new EditUserViewModel();
-                model.User = user;
-                model.Roles = this.GetUserRoles(user, db);
+                var model = new EditUserViewModel
+                {
+                    User = user,
+                    Roles = this.GetUserRoles(user, db)
+                };
 
                 //Pass the model to the view
                 return View(model);
@@ -133,7 +135,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     user.FirstName = viewModel.User.FirstName;
                     user.LastName = viewModel.User.LastName;
                     user.UserName = viewModel.User.Email;
-                    this.SetUserRoles(viewModel, user, db);
+                    SetUserRoles(viewModel, user, db);
 
                     //Save changes
                     db.Entry(user).State = EntityState.Modified;
@@ -160,8 +162,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             {
                 //Get user from database
                 var user = db.Users
-                    .Where(u => u.Id == id)
-                    .FirstOrDefault();
+                    .FirstOrDefault(u => u.Id == id);
 
                 //Check if user exists
                 if (user == null)
@@ -191,10 +192,9 @@ namespace AstroPhotoGallery.Controllers.Admin
             {
                 //Get user from database
                 var user = db.Users
-                    .Where(u => u.Id == id)
-                    .FirstOrDefault();
+                    .FirstOrDefault(u => u.Id == id);
 
-                //Get user pictures form database
+                //Get user's pictures form database
                 var userPictures = db.Pictures
                     .Where(p => p.PicUploader.Id == user.Id);
 
@@ -208,6 +208,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 db.Users.Remove(user);
                 db.SaveChanges();
 
+                this.AddNotification("The user was deleted.", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }
         }
