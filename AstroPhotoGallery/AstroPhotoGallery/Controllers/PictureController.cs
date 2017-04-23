@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -176,7 +178,7 @@ namespace AstroPhotoGallery.Controllers
                             return View(model);
                         }
 
-                        
+
                         image.SaveAs(physicalPath);
 
                         if (ImageValidator.IsImageValid(physicalPath))
@@ -506,6 +508,52 @@ namespace AstroPhotoGallery.Controllers
                 this.AddNotification("Invalid picture format.", NotificationType.ERROR);
                 return RedirectToAction("ListCategories", "Home");
             }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult RatePicture(FormCollection form)
+        {
+            var rating = int.Parse(form["Rating"]);
+            var pictureId = int.Parse(form["PictureId"]);
+
+            if (rating != 0)
+            {
+                using (var db = new GalleryDbContext())
+                {
+                    var picture = db.Pictures.FirstOrDefault(p => p.Id == pictureId);
+
+                    if (picture == null)
+                    {
+                        this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                        return RedirectToAction("ListCategories", "Home");
+                    }
+
+                    picture.RatingSum += rating;
+                    picture.RatingCount++;
+                    picture.Rating = picture.RatingSum / picture.RatingCount;
+
+                    // Getting the ID of the currently logged in user
+                    var currentUserId = User.Identity.GetUserId();
+                    // Adding the ID to the IDs of the users that have already rated this picture
+                    picture.UserIdsRatedPic += " " + currentUserId;
+
+                    db.Entry(picture).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (rating == 1)
+                    {
+                        this.AddNotification("The picture was rated with 1 star.", NotificationType.SUCCESS);
+                    }
+                    else
+                    {
+                        this.AddNotification($"The picture was rated with {rating} stars.", NotificationType.SUCCESS);
+                    }
+                }
+            }
+
+            return RedirectToAction("Details", new { id = pictureId });
         }
 
         private void SetPictureTags(Picture picture, PictureViewModel model, GalleryDbContext db)

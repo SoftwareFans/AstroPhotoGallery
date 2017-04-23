@@ -1,20 +1,18 @@
-﻿@model AstroPhotoGallery.Models.Picture
+﻿@using Microsoft.AspNet.Identity
+@model AstroPhotoGallery.Models.Picture
 
 @{
     ViewBag.Title = "Details";
 }
 
-<div>
+<div class="container">
     <h2>
         @Model.PicTitle
         <span class="pull-right">
             @*Empty span required for proper view.*@
         </span>
     </h2>
-
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="well">
 
         <div class="row">
             <div class="col-sm-6">
@@ -57,6 +55,10 @@
                     {
                         <span>@Html.ActionLink(tag.Name, "List", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                     }
+                    <br /><br />
+                    <span>
+                        <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+                    </span>
                 </span>
             </div>
             <div class="col-md-6">
@@ -86,6 +88,43 @@
                             @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
                         </span>
                     }
+                    <br />
+                    <br />
+                    <span>
+
+                        @using (Html.BeginForm("RatePicture", "Picture", FormMethod.Post, new { onsubmit = "return true" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                var usersRatedThePic = Model.UserIdsRatedPic.Split(' ').ToList();
+                                if (!usersRatedThePic.Contains(User.Identity.GetUserId()))
+                                {
+                                    <span onmouseout="CRateSelected()">
+                                        <span class="starFade" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span><span class="starFade" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span><span class="starFade" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span><span class="starFade" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span><span class="starFade" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+                                    </span>
+                                    <input type="hidden" name="Rating" id="Rating" value="0" />
+                                    <input type="hidden" name="PictureId" value="@Model.Id" />
+                                    <div>
+                                        <input type="submit" id="btnRate" name="btnRate" value="Rate" class="btn btn-success" />
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div>
+                                        You have already rated this picture.
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div>
+                                    You must be logged in to be able to rate pictures.
+                                </div>
+                            }
+                        }
+                    </span>
                 </span>
 
                 <span class="pull-right">
@@ -106,9 +145,51 @@
                     <span>
                         @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
                     </span>
+                    <br />
                 </span>
             </div>
         </div>
     </div>
 </div>
 
+@*Script for the rating system*@
+<script>
+    function CRate(r) {
+        $("#Rating").val(r);
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+        // unselect remaining
+        for (var i = r + 1; i <= 5; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+
+    function CRateOut(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateSelected() {
+        var setRating = $("#Rating").val();
+        for (var i = 1; i <= setRating; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+
+    function SCRate() {
+        for (var i = 1; i <= @Math.Round(Model.Rating, MidpointRounding.AwayFromZero); i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+</script>

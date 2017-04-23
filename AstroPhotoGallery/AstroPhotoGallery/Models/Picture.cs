@@ -69,5 +69,14 @@ namespace AstroPhotoGallery.Models
         public bool IsLastOfCategory { get; set; }
 
         public bool IsFirstOfCategory { get; set; }
+
+        public decimal RatingSum { get; set; }
+
+        public int RatingCount { get; set; }
+
+        public decimal Rating { get; set; }
+
+        // String containing the user IDs that already rated the picture
+        public string UserIdsRatedPic { get; set; } = string.Empty;
     }
 }
