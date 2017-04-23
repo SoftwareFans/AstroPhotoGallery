@@ -247,8 +247,6 @@
     <Content Include="Content\images\profilePics\.gitignore" />
     <Content Include="Content\images\Star-Empty-icon.png" />
     <Content Include="Content\images\Star-Full-icon.png" />
-    <Content Include="Content\images\StarFade.jpg" />
-    <Content Include="Content\images\StarGlow.png" />
     <Content Include="Content\images\StefkaProfilePic.jpg" />
     <Content Include="Scripts\browseButton.js" />
     <Content Include="Content\browseButtonStyles.css" />
