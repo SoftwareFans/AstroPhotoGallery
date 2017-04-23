@@ -25,6 +25,8 @@
                     <img src="@Url.Content(Model.ImagePath)" width="600" class="img-responsive img-rounded center-block" alt="Astro picture" />
                 </a>
             </div>
+            
+            @*Used for the enlargement of the picture when clicked*@
             <div class="modal fade dialog1" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -95,9 +97,11 @@
                         @using (Html.BeginForm("RatePicture", "Picture", FormMethod.Post, new { onsubmit = "return true" }))
                         {
                             @Html.AntiForgeryToken()
+
                             if (User.Identity.IsAuthenticated)
                             {
                                 var usersRatedThePic = Model.UserIdsRatedPic.Split(' ').ToList();
+
                                 if (!usersRatedThePic.Contains(User.Identity.GetUserId()))
                                 {
                                     <span onmouseout="CRateSelected()">
@@ -109,7 +113,6 @@
                                         <input type="submit" id="btnRate" name="btnRate" value="Rate" class="btn btn-success" />
                                     </div>
                                 }
-
                                 else
                                 {
                                     <div>
