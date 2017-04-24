@@ -2,23 +2,27 @@
     ViewBag.Title = "About Astrogallery";
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
-<div class="panel panel-default">
-    <div class="panel-heading resume-heading">
-        <div class="row">
-            <div class="col-sm-12">
-                <div>
-                    <div class="well well-sm text-center" style="font-size: 25px; word-wrap: break-word;">Astro gallery project</div>
-                    <br />
-                    <p>The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project has been given by Emil Ivanov and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.</p>
-                    <p>Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.</p>
-                    <p>The beautiful pictures are separated by categories. They can be searched by tags or by categories. Enjoy!</p>
-                    <p>GitHub repository of the project: <a style="word-break: break-all; display: inline-block" href="https://github.com/SoftwareFans/AstroPhotoGallery" target="_blank">https://github.com/SoftwareFans/AstroPhotoGallery </a></p>
-                    <p>Development team: @Html.ActionLink("Contacts", "Contacts", "Home")</p>
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div>
+                        <div class="well well-sm text-center" style="font-size: 25px; word-wrap: break-word;">Astro gallery project</div>
+                        <br/>
+                        <p>The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project has been given by Emil Ivanov and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.
+                        </p>
+                        <p>Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.</p>
+                        <p>The beautiful pictures are separated by categories. They can be searched by tags or by categories. Enjoy!</p>
+                        <p>GitHub repository of the project: <a style="word-break: break-all; display: inline-block" href="https://github.com/SoftwareFans/AstroPhotoGallery" target="_blank">https://github.com/SoftwareFans/AstroPhotoGallery </a>
+                        </p>
+                        <p>Development team: @Html.ActionLink("Contacts", "Contacts", "Home")</p>
+                    </div>
                 </div>
             </div>
+            <br/>
         </div>
-        <br />
     </div>
 </div>

@@ -22,7 +22,7 @@
                     <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px"/>
                 }
 
-                <div class="caption text-center ">
+                <div class="caption text-center">
                     <h4>
                         @Html.ActionLink(string.Format($"{category.Name} ({category.Pictures.Count})"),
                                 "ListPictures", "Home", new { @categoryId = category.Id }, null)                     
@@ -33,8 +33,10 @@
     }
 </div>
 
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("ListCategories",
+    @Html.PagedListPager(Model, page => Url.Action("ListCategories",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+

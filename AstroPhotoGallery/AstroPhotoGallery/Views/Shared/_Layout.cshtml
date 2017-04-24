@@ -58,15 +58,18 @@
         <div class="container">@Html.Partial("_Notifications")</div>
 
         @RenderBody()
-        <hr />
-        <footer class="pull-right">
-            <p class="pull-right">&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p><br/>
-            <p class="pull-right">Inspired by: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm </a></p>
-        </footer>
-        <footer class="pull-left">
-            <p>@Html.ActionLink("Contacts", "Contacts", "Home")</p>
-            <p>@Html.ActionLink("About", "About", "Home")</p>
-        </footer>
+        <div class="container">
+            <hr />
+            <footer class="pull-right">
+                <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
+                <p>Inspired by: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm </a>
+                </p>
+            </footer>
+            <footer class="pull-left">
+                <p>@Html.ActionLink("Contacts", "Contacts", "Home")</p>
+                <p>@Html.ActionLink("About", "About", "Home")</p>
+            </footer>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/bootstrap")
