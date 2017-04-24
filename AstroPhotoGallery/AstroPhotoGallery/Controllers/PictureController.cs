@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AstroPhotoGallery.Controllers
 {

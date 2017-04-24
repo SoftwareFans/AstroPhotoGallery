@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Channels;
 using System.Web;
 
 namespace AstroPhotoGallery.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using AstroPhotoGallery.Models;
