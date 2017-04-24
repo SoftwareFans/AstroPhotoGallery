@@ -8,8 +8,12 @@
     <div class="well">
         @using (Html.BeginForm("Index", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
-            <h2>Categories @Html.ActionLink("Create a new category", "Create", "Category", null, new { @class = "btn btn-primary pull-right" })</h2>
-            <hr />
+            <div class="container-fluid">
+                <h2>
+                    Categories <span class="pull-right">@Html.ActionLink("Create a new category", "Create", "Category", null, new { @class = "btn btn-primary" })</span>
+                </h2>
+            </div>
+                <hr />
                 <div class="form-group">
                     @Html.Label("Find category by name:", new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-3">
