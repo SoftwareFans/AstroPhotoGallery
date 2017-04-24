@@ -75,7 +75,7 @@ namespace AstroPhotoGallery.Controllers
                         // In case the picture already exists a notification is shown:
                         if (System.IO.File.Exists(physicalPath))
                         {
-                            this.AddNotification("Picture with this name of the file already exists in that category.", NotificationType.ERROR);
+                            this.AddNotification("Picture with this file name already exists in that category.", NotificationType.ERROR);
 
                             model.Categories = db.Categories
                                 .OrderBy(c => c.Name)
@@ -259,7 +259,7 @@ namespace AstroPhotoGallery.Controllers
                     // If the category of the pic is changed
                     if (previousCategoryIdOfPic != picture.CategoryId)
                     {
-                        // Adjust the position boolean variables of the other pics before the edit
+                        // Adjust the positional boolean variables of the other pics before the edit
                         AdjustCategoryPositions.Edit(db, picture);
 
                         // Get the IDs of the pictures from the previous category of the edited pic
