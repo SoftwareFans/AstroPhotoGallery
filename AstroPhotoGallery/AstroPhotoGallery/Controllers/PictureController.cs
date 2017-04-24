@@ -500,7 +500,7 @@ namespace AstroPhotoGallery.Controllers
         public ActionResult DownlandFile(string filePath)
         {
             var filename = filePath.Substring(filePath.LastIndexOf('/') + 1);
-            var fileExtension = Path.GetExtension(filename);
+            var fileExtension = Path.GetExtension(filename).ToLower();
 
             if (fileExtension.Equals(".jpg") ||
                 fileExtension.Equals(".png") ||
