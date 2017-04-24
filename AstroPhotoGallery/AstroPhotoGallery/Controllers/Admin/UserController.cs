@@ -42,7 +42,7 @@ namespace AstroPhotoGallery.Controllers.Admin
 
                 if (!string.IsNullOrEmpty(searchUser))
                 {
-                    users = users.Where(u => u.Email.Contains(searchUser)).ToList();
+                    users = users.Where(u => u.Email.ToLower().Contains(searchUser.ToLower())).ToList();
                     if (users.Count == 0)
                     {
                         this.AddNotification("No users containing this string were found.", NotificationType.INFO);
