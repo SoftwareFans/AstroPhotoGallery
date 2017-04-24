@@ -43,6 +43,10 @@ namespace AstroPhotoGallery.Controllers.Admin
                 if (!string.IsNullOrEmpty(searchUser))
                 {
                     users = users.Where(u => u.Email.Contains(searchUser)).ToList();
+                    if (users.Count == 0)
+                    {
+                        this.AddNotification("No users containing this string were found.", NotificationType.INFO);
+                    }
                 }
 
                 var admins = this.GetAdminUserNames(users, db);

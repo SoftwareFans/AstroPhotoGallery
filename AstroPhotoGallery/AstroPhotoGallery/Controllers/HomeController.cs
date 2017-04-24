@@ -64,7 +64,7 @@ namespace AstroPhotoGallery.Controllers
 
                     if (categories.Count == 0)
                     {
-                        this.AddNotification("No categories containing this string were found.", NotificationType.WARNING);                       
+                        this.AddNotification("No categories containing this string were found.", NotificationType.INFO);                       
                     }
                 }
 

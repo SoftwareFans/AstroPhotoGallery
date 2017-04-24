@@ -37,6 +37,11 @@ namespace AstroPhotoGallery.Controllers.Admin
                 if (!string.IsNullOrEmpty(seatchCategory))
                 {
                     categories = categories.Where(c => c.Name.ToLower().Contains(seatchCategory.ToLower())).ToList();
+
+                    if (categories.Count == 0)
+                    {
+                        this.AddNotification("No categories containing this string were found..", NotificationType.INFO);
+                    }
                 }
 
                 switch (sortOrder)
