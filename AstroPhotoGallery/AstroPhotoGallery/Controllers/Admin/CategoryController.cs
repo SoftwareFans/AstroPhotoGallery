@@ -6,7 +6,7 @@ using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
