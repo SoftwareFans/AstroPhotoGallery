@@ -45,7 +45,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     users = users.Where(u => u.Email.ToLower().Contains(searchUser.ToLower())).ToList();
                     if (users.Count == 0)
                     {
-                        this.AddNotification("No users containing this string were found.", NotificationType.INFO);
+                        this.AddNotification("No users' emails containing this string were found.", NotificationType.INFO);
                     }
                 }
 
