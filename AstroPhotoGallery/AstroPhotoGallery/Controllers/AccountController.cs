@@ -157,10 +157,11 @@ namespace AstroPhotoGallery.Controllers
                 var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                var addRoleResult = UserManager.AddToRole(user.Id, "User");
+                //var addRoleResult = UserManager.AddToRole(user.Id, "User");
 
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "User");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
