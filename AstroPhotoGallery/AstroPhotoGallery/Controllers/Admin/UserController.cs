@@ -141,6 +141,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
+                    this.AddNotification("The user was edited.", NotificationType.SUCCESS);
                     return RedirectToAction("Index");
                 }
             }
@@ -202,7 +203,8 @@ namespace AstroPhotoGallery.Controllers.Admin
 
                 //Get user's pictures form database
                 var userPictures = db.Pictures
-                    .Where(p => p.PicUploader.Id == user.Id).ToList();
+                    .Where(p => p.PicUploader.Id == user.Id)
+                    .ToList();
 
                 //Delete user's pictures
                 foreach (var picture in userPictures)

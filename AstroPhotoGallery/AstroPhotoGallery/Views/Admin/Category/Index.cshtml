@@ -6,21 +6,22 @@
 
 <div class="container">
     <div class="well">
-           @using (Html.BeginForm("Index", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Index", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
-                <h2>Categories @Html.ActionLink("Create a new category", "Create", "Category", null, new { @class = "btn btn-primary pull-right" })</h2>
-                <hr/>
-                    <div class="form-group">
-                        @Html.Label("Find category by name:", new { @class = "col-sm-3 control-label" })
-                        <div class="col-sm-3">
-                            @Html.TextBox("seatchCategory", null, new { @class = "form-control", placeholder = "Category's name" })
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="submit" value="Search" class="btn btn-default" />
-                        </div>
-                    </div>   
-            }
-            <br/>
+            <h2>Categories @Html.ActionLink("Create a new category", "Create", "Category", null, new { @class = "btn btn-primary pull-right" })</h2>
+            <hr />
+                <div class="form-group">
+                    @Html.Label("Find category by name:", new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-3">
+                        @Html.TextBox("seatchCategory", null, new { @class = "form-control", placeholder = "Category's name" })
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="submit" value="Search" class="btn btn-default" />
+                    </div>
+                </div>
+        }
+        <br />
+        <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -45,11 +46,11 @@
                     }
                 </tbody>
             </table>
-
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
-    </div>
 
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

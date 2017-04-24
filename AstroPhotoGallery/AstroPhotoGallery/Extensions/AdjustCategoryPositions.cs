@@ -29,8 +29,7 @@ namespace AstroPhotoGallery.Extensions
                 if (first == last)
                 {
                     var onlyPicInThatCategory = db.Pictures
-                        .Where(p => p.Id == first)
-                        .FirstOrDefault();
+                        .FirstOrDefault(p => p.Id == first);
 
                     // The only picture is not last anymore because the newly uploaded one will have higher ID
                     onlyPicInThatCategory.IsLastOfCategory = false;
@@ -107,8 +106,7 @@ namespace AstroPhotoGallery.Extensions
                 if (first == last)
                 {
                     var onlyPicInThatCategory = db.Pictures
-                        .Where(p => p.Id == first)
-                        .FirstOrDefault();
+                        .FirstOrDefault(p => p.Id == first);
 
                     // If the only picture's ID is lower than the edited one's then the edited one is now last in the category
                     if (onlyPicInThatCategory.Id < picture.Id)
@@ -142,8 +140,7 @@ namespace AstroPhotoGallery.Extensions
 
                         // Modifying the first pic in a category before the edit not to be first anymore
                         var previousMinPic = db.Pictures
-                            .Where(p => p.Id == first)
-                            .FirstOrDefault();
+                            .FirstOrDefault(p => p.Id == first);
 
                         previousMinPic.IsFirstOfCategory = false;
                         previousMinPic.IsLastOfCategory = false;
@@ -159,8 +156,7 @@ namespace AstroPhotoGallery.Extensions
 
                         // Modifying the last pic in a category before the edit not to be last anymore
                         var previousMaxPic = db.Pictures
-                            .Where(p => p.Id == last)
-                            .FirstOrDefault();
+                            .FirstOrDefault(p => p.Id == last);
 
                         previousMaxPic.IsFirstOfCategory = false;
                         previousMaxPic.IsLastOfCategory = false;
@@ -210,8 +206,7 @@ namespace AstroPhotoGallery.Extensions
                 if (first == last)
                 {
                     var onlyPicture = db.Pictures
-                        .Where(p => p.Id == first)
-                        .FirstOrDefault();
+                        .FirstOrDefault(p => p.Id == first);
 
                     onlyPicture.IsLastOfCategory = true;
                     onlyPicture.IsFirstOfCategory = true;

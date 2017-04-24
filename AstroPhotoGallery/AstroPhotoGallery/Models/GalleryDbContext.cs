@@ -4,7 +4,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AstroPhotoGallery.Models
 {
-
     public class GalleryDbContext : IdentityDbContext<ApplicationUser>
     {
         public GalleryDbContext()

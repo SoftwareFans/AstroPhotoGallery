@@ -31,7 +31,6 @@ namespace AstroPhotoGallery.Controllers
                 //Return the view
                 return View(pictures);
             }
-
         }
     }
 }

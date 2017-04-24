@@ -452,6 +452,7 @@ namespace AstroPhotoGallery.Controllers
 
         //
         // GET: /Account/MyProfile
+        [Authorize]
         public ActionResult MyProfile()
         {
             var userId = User.Identity.GetUserId();
@@ -460,6 +461,7 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var user = db.Users.First(u => u.Id == userId);
+
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.IsEmailPublic = user.IsEmailPublic;
@@ -482,6 +484,7 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //GET: /Account/Edit
+        [Authorize]
         public ActionResult Edit()
         {
             var id = User.Identity.GetUserId();
@@ -532,7 +535,9 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //POST: /Account/Edit
+        [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(EditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -540,9 +545,9 @@ namespace AstroPhotoGallery.Controllers
                 return View(model);
             }
 
-            var poImgFile = Request.Files["image"];
+            var postedProfilePic = Request.Files["image"];
 
-            var pic = Path.GetFileName(poImgFile.FileName);
+            var pic = Path.GetFileName(postedProfilePic.FileName);
             var hasNewImage = false;
             var userIdFolder = model.Id;
 
@@ -557,7 +562,7 @@ namespace AstroPhotoGallery.Controllers
                 }
 
                 var path = Path.Combine(Server.MapPath($"~/Content/images/profilePics/{userIdFolder}/"), pic);
-                poImgFile.SaveAs(path);
+                postedProfilePic.SaveAs(path);
 
                 if (ImageValidator.IsImageValid(path))
                 {
@@ -583,6 +588,12 @@ namespace AstroPhotoGallery.Controllers
             using (var db = new GalleryDbContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Id == id);
+
+                if (user == null)
+                {
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index", "Home");
+                }
 
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;

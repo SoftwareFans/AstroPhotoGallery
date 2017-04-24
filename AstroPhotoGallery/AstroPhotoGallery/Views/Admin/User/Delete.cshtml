@@ -7,7 +7,12 @@
 <div class="container">
     <div class="well">
         <h2>@ViewBag.Title</h2>
-        <h3 style="color: #e74c3c; text-align: center;">Are you sure you want to delete the below user?</h3>
+        <h3 style="color: #e74c3c; text-align: center;">
+            Are you sure you want to delete the below user?
+            <br />
+            <br />
+            All of the user's pictures will be deleted too. This can take much time and resources, depending on their count.
+        </h3>
         <br />
         @using (Html.BeginForm("Delete", "User", FormMethod.Post, new { @class = "form-horizontal" }))
         {
@@ -15,7 +20,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4">Username</label>
                 <div class="col-sm-4">
-                    @Html.TextBoxFor(m => m.UserName, new {@class = "form-control col-sm-4", @readonly = "readonly"})
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control col-sm-4", @readonly = "readonly" })
                 </div>
             </div>
 
@@ -40,6 +45,5 @@
                 </div>
             </div>
         }
-
     </div>
 </div>

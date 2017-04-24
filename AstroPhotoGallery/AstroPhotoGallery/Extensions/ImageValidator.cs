@@ -10,7 +10,7 @@ namespace AstroPhotoGallery.Extensions
         // Primary method for checking if the image is in valid format:
         public static bool IsImageValid(string filePath)
         {
-            return System.IO.File.Exists(filePath) &&
+            return File.Exists(filePath) &&
                    IsStreamValid(new FileStream(filePath, FileMode.Open, FileAccess.Read));
         }
 

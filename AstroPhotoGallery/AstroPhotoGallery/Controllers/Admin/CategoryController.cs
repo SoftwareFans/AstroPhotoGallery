@@ -84,11 +84,6 @@ namespace AstroPhotoGallery.Controllers.Admin
                     var categoryDir = Server.MapPath($"~/Content/images/astroPics/{category.Name}");
                     Directory.CreateDirectory(categoryDir);
 
-                    //if (!System.IO.Directory.Exists(categoryDir))
-                    //{
-                    //    System.IO.Directory.CreateDirectory(categoryDir);
-                    //}
-
                     this.AddNotification("Category created.", NotificationType.SUCCESS);
 
                     return RedirectToAction("Index");
@@ -159,7 +154,9 @@ namespace AstroPhotoGallery.Controllers.Admin
                         Directory.Move(catOldDir, catNewDir);
 
                         // When the name of a category is being changed all the pictures in that category in DB must be changed:
-                        var picsToBeChanged = database.Pictures.Where(p => p.CategoryId == category.Id).ToList();
+                        var picsToBeChanged = database.Pictures
+                            .Where(p => p.CategoryId == category.Id)
+                            .ToList();
 
                         foreach (var pic in picsToBeChanged)
                         {

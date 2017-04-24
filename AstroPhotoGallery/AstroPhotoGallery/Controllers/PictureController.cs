@@ -21,108 +21,6 @@ namespace AstroPhotoGallery.Controllers
         }
 
         //
-        //GET: Picture/Details/id
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
-            }
-
-            using (var db = new GalleryDbContext())
-            {
-                // Get picture from database
-                var picture = db.Pictures
-                    .Where(p => p.Id == id)
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Tags)
-                    .FirstOrDefault();
-
-                if (picture == null)
-                {
-                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                return View(picture);
-            }
-        }
-
-        // Method for getting the next picture from a category
-        public ActionResult NextPicture(int? categoryId, int? picId)
-        {
-            if (categoryId == null || picId == null)
-            {
-                this.AddNotification("No picture or category ID provided.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
-            }
-
-            using (var db = new GalleryDbContext())
-            {
-                // Getting the next pictures' IDs after the current one from the DB
-                var nextPicsIDs = db.Pictures
-                    .Where(p => p.CategoryId == categoryId)
-                    .Select(p => p.Id)
-                    .Where(p => p > picId)
-                    .ToList();
-
-                var nextPicId = nextPicsIDs.FirstOrDefault();
-
-                var picture = db.Pictures
-                    .Where(p => (p.Id == nextPicId) && (p.CategoryId == categoryId))
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Tags)
-                    .FirstOrDefault();
-
-                if (picture == null)
-                {
-                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                return RedirectToAction("Details", new { id = picture.Id });
-            }
-        }
-
-        // Method for getting the previous picture from a category
-        public ActionResult PreviousPicture(int? categoryId, int? picId)
-        {
-            if (categoryId == null || picId == null)
-            {
-                this.AddNotification("No picture or category ID provided.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
-            }
-
-            using (var db = new GalleryDbContext())
-            {
-                // Getting the previous pictures' IDs before the current one from the DB:
-                var previousPicsIDs = db.Pictures
-                    .Where(p => p.CategoryId == categoryId)
-                    .Select(p => p.Id)
-                    .Where(p => p < picId)
-                    .ToList();
-
-                previousPicsIDs.Reverse();
-                var previousPicId = previousPicsIDs.FirstOrDefault();
-
-                var picture = db.Pictures
-                    .Where(p => (p.Id == previousPicId) && (p.CategoryId == categoryId))
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Tags)
-                    .FirstOrDefault();
-
-                if (picture == null)
-                {
-                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                return RedirectToAction("Details", new { id = picture.Id });
-            }
-        }
-
-        //
         //GET: Picture/Upload
         [Authorize]
         public ActionResult Upload()
@@ -153,7 +51,7 @@ namespace AstroPhotoGallery.Controllers
                 {
                     // Get uploader's ID
                     var uploaderId = db.Users
-                        .First(u => u.UserName == this.User.Identity.Name)
+                        .First(u => u.UserName == User.Identity.Name)
                         .Id;
 
                     var picture = new Picture(uploaderId, model.PicTitle, model.PicDescription, model.CategoryId);
@@ -234,52 +132,9 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        //GET: Picture/Delete/id
-        [Authorize]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
-            }
-
-            using (var db = new GalleryDbContext())
-            {
-                // Get picture from database
-                var picture = db.Pictures
-                    .Where(p => p.Id == id)
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Category)
-                    .FirstOrDefault();
-
-                // Check if picture exists
-                if (picture == null)
-                {
-                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                ViewBag.TagsString = string.Join(" ", picture.Tags.Select(t => t.Name));
-
-                if (!IsUserAuthorizedToEditAndDelete(picture))
-                {
-                    this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                // Pass picture to the view
-                return View(picture);
-            }
-        }
-
         //
-        //POST: Picture/Delete/id
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int? id)
+        //GET: Picture/Details/id
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -293,33 +148,16 @@ namespace AstroPhotoGallery.Controllers
                 var picture = db.Pictures
                     .Where(p => p.Id == id)
                     .Include(p => p.PicUploader)
-                    .Include(p => p.Category)
+                    .Include(p => p.Tags)
                     .FirstOrDefault();
 
-                // Check if picture exists
                 if (picture == null)
                 {
                     this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                // Adjust the positional boolean variables of the other pics before the deletion
-                AdjustCategoryPositions.Delete(db, picture);
-
-                // Getting the category of the pic before the deletion in order to redirect to Home/ListPictures after that
-                var picCategoryId = (int?)picture.CategoryId;
-
-                // Delete the picture from the ~/Content/images/astroPics folder:
-                var physicalPath = Server.MapPath(picture.ImagePath);
-                System.IO.File.Delete(physicalPath);
-
-                // Delete the picture from the database 
-                db.Pictures.Remove(picture);
-                db.SaveChanges();
-
-                // Redirect to the page with all pics in the current category
-                this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
-                return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
+                return View(picture);
             }
         }
 
@@ -497,6 +335,168 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
+        //GET: Picture/Delete/id
+        [Authorize]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                // Get picture from database
+                var picture = db.Pictures
+                    .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Category)
+                    .FirstOrDefault();
+
+                // Check if picture exists
+                if (picture == null)
+                {
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                ViewBag.TagsString = string.Join(" ", picture.Tags.Select(t => t.Name));
+
+                if (!IsUserAuthorizedToEditAndDelete(picture))
+                {
+                    this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                // Pass picture to the view
+                return View(picture);
+            }
+        }
+
+        //
+        //POST: Picture/Delete/id
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                this.AddNotification("No picture ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                // Get picture from database
+                var picture = db.Pictures
+                    .Where(p => p.Id == id)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Category)
+                    .FirstOrDefault();
+
+                // Check if picture exists
+                if (picture == null)
+                {
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                // Adjust the positional boolean variables of the other pics before the deletion
+                AdjustCategoryPositions.Delete(db, picture);
+
+                // Getting the category of the pic before the deletion in order to redirect to Home/ListPictures after that
+                var picCategoryId = (int?)picture.CategoryId;
+
+                // Delete the picture from the ~/Content/images/astroPics folder:
+                var physicalPath = Server.MapPath(picture.ImagePath);
+                System.IO.File.Delete(physicalPath);
+
+                // Delete the picture from the database 
+                db.Pictures.Remove(picture);
+                db.SaveChanges();
+
+                // Redirect to the page with all pics in the current category
+                this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
+                return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
+            }
+        }
+
+        // Method for getting the next picture from a category
+        public ActionResult NextPicture(int? categoryId, int? picId)
+        {
+            if (categoryId == null || picId == null)
+            {
+                this.AddNotification("No picture or category ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                // Getting the next pictures' IDs after the current one from the DB
+                var nextPicsIDs = db.Pictures
+                    .Where(p => p.CategoryId == categoryId)
+                    .Select(p => p.Id)
+                    .Where(p => p > picId)
+                    .ToList();
+
+                var nextPicId = nextPicsIDs.FirstOrDefault();
+
+                var picture = db.Pictures
+                    .Where(p => (p.Id == nextPicId) && (p.CategoryId == categoryId))
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .FirstOrDefault();
+
+                if (picture == null)
+                {
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                return RedirectToAction("Details", new { id = picture.Id });
+            }
+        }
+
+        // Method for getting the previous picture from a category
+        public ActionResult PreviousPicture(int? categoryId, int? picId)
+        {
+            if (categoryId == null || picId == null)
+            {
+                this.AddNotification("No picture or category ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                // Getting the previous pictures' IDs before the current one from the DB:
+                var previousPicsIDs = db.Pictures
+                    .Where(p => p.CategoryId == categoryId)
+                    .Select(p => p.Id)
+                    .Where(p => p < picId)
+                    .ToList();
+
+                previousPicsIDs.Reverse();
+                var previousPicId = previousPicsIDs.FirstOrDefault();
+
+                var picture = db.Pictures
+                    .Where(p => (p.Id == previousPicId) && (p.CategoryId == categoryId))
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .FirstOrDefault();
+
+                if (picture == null)
+                {
+                    this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                return RedirectToAction("Details", new { id = picture.Id });
+            }
+        }
+
         //Method for download picture to user PC
         public ActionResult DownlandFile(string filePath)
         {
@@ -549,6 +549,7 @@ namespace AstroPhotoGallery.Controllers
 
                     // Getting the ID of the currently logged in user
                     var currentUserId = User.Identity.GetUserId();
+
                     // Adding the ID to the IDs of the users that have already rated this picture
                     picture.UserIdsRatedPic += " " + currentUserId;
 
