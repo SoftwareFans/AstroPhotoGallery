@@ -6,12 +6,55 @@
 }
 
 <div class="container">
-    <h2>
-        @Model.PicTitle
-        <span class="pull-right">
-            @*Empty span required for proper view.*@
-        </span>
-    </h2>
+    <div class="container-fluid">
+        <h2>
+            @Model.PicTitle
+            <span class="pull-right">
+                @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
+                {
+                    <span>
+                        @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
+                    </span>
+
+                    <span>
+                        @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
+                    </span>
+                }
+                @if (Model.IsFirstOfCategory == false)
+                {
+                    <span>
+                        @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
+                    </span>
+                }
+
+                @if (Model.IsLastOfCategory == false)
+                {
+                    <span>
+                        @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
+                    </span>
+                }
+
+                <span>
+                    @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
+                </span>
+                <span>
+                    @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
+                </span>
+            </span>
+        </h2>
+    </div>
     <div class="well">
 
         <div class="row">
@@ -56,59 +99,10 @@
                     {
                         <span>@Html.ActionLink(tag.Name, "List", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                     }
-                    <br /><br />
-                    <span>
-                        <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
-                    </span>
                 </span>
             </div>
             <div class="col-md-6">
                 <span class="pull-left">
-                    @if (Model.IsFirstOfCategory == false)
-                    {
-                        <span>
-                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            @Html.ActionLink("Previous", "PreviousPicture", "Picture", new { @class = "btn btn-default disabled" })
-                        </span>
-                    }
-
-                    @if (Model.IsLastOfCategory == false)
-                    {
-                        <span>
-                            @Html.ActionLink("Next", "NextPicture", "Picture", new { categoryId = Model.CategoryId, picId = Model.Id }, new { @class = "btn btn-primary btn-md" })
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            @Html.ActionLink("Next", "NextPicture", "Picture", new { @class = "btn btn-default disabled" })
-                        </span>
-                    }
-
-                    <span>
-                        @Html.ActionLink("Download", "DownlandFile", new { filePath = Model.ImagePath }, new { @class = "btn btn-info btn-md" })
-                    </span>
-
-                    @if (Model.IsUploader(User.Identity.Name) || User.IsInRole("Admin"))
-                    {
-                        <span>
-                            @Html.ActionLink("Edit", "Edit", "Picture", new { @id = Model.Id }, new { @class = "btn btn-success btn-md" })
-                        </span>
-
-                        <span>
-                            @Html.ActionLink("Delete", "Delete", "Picture", new { @id = Model.Id }, new { @class = "btn btn-danger btn-md" })
-                        </span>
-                    }
-                    <span>
-                        @Html.ActionLink("Back", "ListPictures", "Home", new { @categoryId = Model.CategoryId }, new { @class = "btn btn-default btn-md" })
-                    </span>
-                    <br />
-                    <br />
                     <span>
                         @*Getting the users that already rated this picture*@
                         @{var usersRatedThePic = Model.UserIdsRatedPic.Split(' ').ToList();}
@@ -134,16 +128,23 @@
                             }
                             else
                             {
-                                <span>
-                                    You have already rated this picture<br>or you have uploaded it.
-                                </span>
+                                @*<span class="small">
+                                    You already rated the picture<br>
+                                    or you uploaded it.
+                                </span>*@
                             }
                         }
                         else
                         {
-                            <span>You must be logged in to be able to rate pictures.</span>
+                            @*<span class="small">
+                                You must be logged in <br>
+                                to be able to rate pictures.
+                            </span>*@
                         }
                     </span>
+                </span>
+                <span class="pull-right">
+                    <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
                 </span>
             </div>
         </div>
