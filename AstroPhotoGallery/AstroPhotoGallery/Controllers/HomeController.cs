@@ -61,6 +61,11 @@ namespace AstroPhotoGallery.Controllers
                         .Where(c => c.Name.ToLower()
                         .Contains(searchString.ToLower()))
                         .ToList();
+
+                    if (categories.Count == 0)
+                    {
+                        this.AddNotification("No categories containing this string were found.", NotificationType.WARNING);                       
+                    }
                 }
 
                 int pageSize = 6;
