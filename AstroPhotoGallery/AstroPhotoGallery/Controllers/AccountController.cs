@@ -659,6 +659,7 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //GET: Account/ShowProfile/id
+        [AllowAnonymous]
         public ActionResult ShowProfile(string id)
         {
             if (id == null)
