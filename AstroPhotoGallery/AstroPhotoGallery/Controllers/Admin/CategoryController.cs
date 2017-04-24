@@ -245,7 +245,7 @@ namespace AstroPhotoGallery.Controllers.Admin
                 db.Categories.Remove(category);
                 db.SaveChanges();
 
-                this.AddNotification("Category deleted.", NotificationType.WARNING);
+                this.AddNotification("Category deleted.", NotificationType.SUCCESS);
 
                 return RedirectToAction("Index");
             }
