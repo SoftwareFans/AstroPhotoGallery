@@ -30,10 +30,8 @@
                         </div>
                     </div>
                     <div class="col-sm-8">
-                        <div style="word-wrap: break-word;">
-                            @picture.PicDescription
-                        </div>
-                        <br />
+                        <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@picture.PicDescription
+                         </pre>
                         <div class="pull-left">
                             Tags:&nbsp;
                             @foreach (var tag in picture.Tags)

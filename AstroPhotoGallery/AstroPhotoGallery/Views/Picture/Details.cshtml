@@ -59,9 +59,8 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <p>
-                    @Model.PicDescription
-                </p>
+                <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model.PicDescription
+                </pre>
             </div>
             <div class="col-sm-6">
                 <a href="#" data-toggle="modal" data-target=".dialog1">
@@ -129,17 +128,17 @@
                             else
                             {
                                 @*<span class="small">
-                                    You already rated the picture<br>
-                                    or you uploaded it.
-                                </span>*@
+                                        You already rated the picture<br>
+                                        or you uploaded it.
+                                    </span>*@
                             }
                         }
                         else
                         {
                             @*<span class="small">
-                                You must be logged in <br>
-                                to be able to rate pictures.
-                            </span>*@
+                                    You must be logged in <br>
+                                    to be able to rate pictures.
+                                </span>*@
                         }
                     </span>
                 </span>
