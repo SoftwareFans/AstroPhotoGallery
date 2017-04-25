@@ -34,8 +34,7 @@ More details and features:
 - Search: Search feature for categories is included in the navigation bar 
 - Search: Search feature for categories is included in the administrator panel 
 - Search: Search feature for users is included in the administrator panel
-- Paging: If the number of categories is higher than a certain value then the categories are being showed on more than one page
-- Paging: If the number of users is higher than a certain value then the users in the administrator panel are being showed on more than one page
+- Paging: If the number of categories, pics, or users(in the admin panel) is higher than a certain value then they are being snowed on more than one page
 - Slider: On the index page of the project there is a slider showing a picture from each possible category (e.g. one planet, one galaxy, one nebulae, one star cluster etc.). The pictures in the slider are static and not taken from the currently uploaded pictures by the users because there can be category with no pictures in it
 - User profiles: Every user can edit her/his user profile – e.g. gender, city, country, birthday, profile picture
 	* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
