@@ -64,7 +64,7 @@ namespace AstroPhotoGallery.Controllers
 
                     if (categories.Count == 0)
                     {
-                        this.AddNotification("No categories containing this string were found.", NotificationType.INFO);                       
+                        this.AddNotification("No categories containing this string were found.", NotificationType.INFO);
                     }
                 }
 
@@ -77,7 +77,7 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //GET: Home/ListPictures/id
-        public ActionResult ListPictures(int? categoryId)
+        public ActionResult ListPictures(int? categoryId, int page = 1)
         {
             if (categoryId == null)
             {
@@ -97,11 +97,31 @@ namespace AstroPhotoGallery.Controllers
 
                 TempData["CategoryName"] = category.Name;
 
+                var pageSize = 2;
+
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
+                    .OrderByDescending(p => p.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .Include(p => p.PicUploader)
                     .Include(p => p.Tags)
                     .ToList();
+
+                ViewBag.CurrentPage = page;
+                ViewBag.IsLastPage = false;
+
+                var nextPagePics = db.Pictures
+                    .Where(p => p.CategoryId == categoryId)
+                    .OrderByDescending(p => p.Id)
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                if (nextPagePics.Count == 0)
+                {
+                    ViewBag.IsLastPage = true;
+                }
 
                 return View(pictures);
             }
