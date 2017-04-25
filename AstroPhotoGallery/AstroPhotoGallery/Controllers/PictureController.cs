@@ -569,6 +569,56 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("Details", new { id = pictureId });
         }
 
+        public ActionResult ShowUserPics(string id, int page = 1)
+        {
+            if (id == null)
+            {
+                this.AddNotification("No user ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
+
+                if (user == null)
+                {
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                var pageSize = 8;
+
+                var picsOfUser = db.Pictures
+                    .Where(p => p.PicUploaderId == id)
+                    .OrderByDescending(p => p.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .ToList();
+
+                ViewBag.CurrentPage = page;
+                ViewBag.IsLastPage = false;
+
+                ViewBag.UserFullname = user.FirstName + " " + user.LastName;
+
+                var nextPagePics = db.Pictures
+                    .Where(p => p.PicUploaderId == id)
+                    .OrderByDescending(p => p.Id)
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                if (nextPagePics.Count == 0)
+                {
+                    ViewBag.IsLastPage = true;
+                }
+
+                return View(picsOfUser);
+            }
+        }
+
         private void SetPictureTags(Picture picture, PictureViewModel model, GalleryDbContext db)
         {
             //Split tags

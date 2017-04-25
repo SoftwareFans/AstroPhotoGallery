@@ -1,7 +1,7 @@
 ﻿@model List<AstroPhotoGallery.Models.Picture>
 
 @{
-    ViewBag.Title = TempData["CategoryName"];
+    ViewBag.Title = $"Pictures of {ViewBag.UserFullname}";
 }
 
 <div class="container">
@@ -51,20 +51,20 @@
 
         @if (ViewBag.CurrentPage > 1)
         {
-            <span> @Html.ActionLink("Previous page", "ListPictures", "Home", new {categoryId = Model.FirstOrDefault().CategoryId, page = (ViewBag.CurrentPage - 1)}, new {@class = "btn btn-primary"}) </span>
+            <span> @Html.ActionLink("Previous page", "ShowUserPics", "Picture", new { id = Model.FirstOrDefault().PicUploaderId, page = (ViewBag.CurrentPage - 1) }, new { @class = "btn btn-primary" }) </span>
         }
         else
         {
-            @Html.ActionLink("Previous page", "ListPictures", "Home", new { @class = "btn btn-primary disabled" })
+            @Html.ActionLink("Previous page", "ShowUserPics", "Picture", new { @class = "btn btn-primary disabled" })
         }
 
         @if (ViewBag.IsLastPage == false)
         {
-            <span>@Html.ActionLink("Next page", "ListPictures", "Home", new { categoryId = Model.FirstOrDefault().CategoryId, page = (ViewBag.CurrentPage + 1) }, new { @class = "btn btn-primary" })</span>
+            <span>@Html.ActionLink("Next page", "ShowUserPics", "Picture", new { id = Model.FirstOrDefault().PicUploaderId, page = (ViewBag.CurrentPage + 1) }, new { @class = "btn btn-primary" })</span>
         }
         else
         {
-            @Html.ActionLink("Next page", "ListPictures", "Home", new { @class = "btn btn-primary disabled" })
+            @Html.ActionLink("Next page", "ShowUserPics", "Picture", new { @class = "btn btn-primary disabled" })
         }
     </div>
 </div>

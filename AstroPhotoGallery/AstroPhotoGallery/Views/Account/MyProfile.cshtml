@@ -20,6 +20,8 @@
                         <br/>
                         <button class="btn btn-primary center-block" onclick="location.href = '@Url.Action("Edit", "Account")';return false;">Edit profile</button>
                         <br/>
+                        <div class="text-center">@Html.ActionLink("Uploaded pictures", "ShowUserPics", "Picture", new { id = Model.Id }, new { @class = "btn btn-primary" })</div> 
+                        <br/>
                     </div>
                     <div class="col-sm-12 col-sm-9">
                         <div>

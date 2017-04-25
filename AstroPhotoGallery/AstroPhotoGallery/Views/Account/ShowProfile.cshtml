@@ -14,7 +14,8 @@
                     <figure class="text-center">
                         <img src="@Url.Content(Model.ImagePath)" alt="Profile picture" class="img-thumbnail img-responsive" />
                     </figure>     
-                    <br>             
+                    <br>   
+                    <div class="text-center">@Html.ActionLink("Uploaded pictures", "ShowUserPics", "Picture", new { id = Model.Id }, new { @class = "btn btn-primary" })</div>          
                 </div>
                 <div class="col-sm-12 col-sm-9">
                     <div>

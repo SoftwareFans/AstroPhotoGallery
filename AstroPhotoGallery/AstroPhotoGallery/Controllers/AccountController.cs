@@ -461,6 +461,7 @@ namespace AstroPhotoGallery.Controllers
             {
                 var user = db.Users.First(u => u.Id == userId);
 
+                model.Id = user.Id;
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.IsEmailPublic = user.IsEmailPublic;
@@ -679,6 +680,7 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                model.Id = user.Id;
                 model.FullName = user.FirstName + " " + user.LastName;
                 model.Email = user.Email;
                 model.IsEmailPublic = user.IsEmailPublic;
