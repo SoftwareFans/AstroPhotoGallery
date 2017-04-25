@@ -7,27 +7,28 @@
 
 <div class="container">
     <h2 class="text-center">Browse by categories</h2>
-    <br/>
+    <br />
 
     @foreach (var category in Model)
     {
         <div class="col-sm-4">
             <div class="thumbnail">
-                @if (category.Pictures.Any(p => p.CategoryId == category.Id))
-                {
-                    <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px" >
-                }
-                else
-                {
-                    <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px"/>
-                }
-
-                <div class="caption text-center">
-                    <h4>
-                        @Html.ActionLink(string.Format($"{category.Name} ({category.Pictures.Count})"),
-                                "ListPictures", "Home", new { @categoryId = category.Id }, null)                     
-                    </h4>
-                </div>
+                <a href="/Home/ListPictures/?categoryId=@category.Id">
+                    @if (category.Pictures.Any(p => p.CategoryId == category.Id))
+                    {
+                        <img src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px">
+                    }
+                    else
+                    {
+                        <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px" />
+                    }
+                </a>
+                    <div class="caption text-center">
+                        <h4>
+                            @string.Format($"{category.Name} ({category.Pictures.Count()})")                          
+                        </h4>
+                    </div>
+               
             </div>
         </div>
     }
