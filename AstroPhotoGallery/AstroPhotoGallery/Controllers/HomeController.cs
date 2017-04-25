@@ -97,7 +97,7 @@ namespace AstroPhotoGallery.Controllers
 
                 TempData["CategoryName"] = category.Name;
 
-                var pageSize = 2;
+                var pageSize = 8;
 
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
