@@ -5,32 +5,35 @@
 }
 
 <div class="container">
-    <h2>@TempData["CategoryName"]</h2>
+    <div class="text-center">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <br />
 
-    @foreach (var picture in Model)
+    @for (var i = 0; i < Model.Count; i++)
     {
         <div class="row">
             <div class="col-sm-12">
                 <div class="well col-sm-4">
-                    <h3>@Html.ActionLink(picture.PicTitle, "Details", "Picture", new { id = picture.Id }, null)</h3>
-                    <a target="_blank" href="@Url.Content(picture.ImagePath)">
-                        <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(picture.ImagePath)" />
+                    <h3>@Html.ActionLink(Model[i].PicTitle, "Details", "Picture", new { id = Model[i].Id }, null)</h3>
+                    <a target="_blank" href="@Url.Content(Model[i].ImagePath)">
+                        <img class="thumbnail img-responsive" alt="Gallery photo" src="@Url.Content(Model[i].ImagePath)" />
                     </a>
                     <div class="pull-left" style="word-wrap: break-word">
-                        Uploader: @picture.PicUploader.FirstName @picture.PicUploader.LastName
+                        Uploader: @Model[i].PicUploader.FirstName @Model[i].PicUploader.LastName
                     </div>
                     <br />
                     <div class="pull-left">
-                        Category: @picture.CategoryName
+                        Category: @Model[i].CategoryName
                     </div>
                     <br />
                 </div>
                 <div class="col-sm-8">
-                    <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@picture.PicDescription
+                    <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model[i].PicDescription
                     </pre>
                     <div class="pull-left">
                         Tags:&nbsp;
-                        @foreach (var tag in picture.Tags)
+                        @foreach (var tag in Model[i].Tags)
                         {
                             <span>@Html.ActionLink(tag.Name, "List", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                         }
@@ -38,8 +41,12 @@
                 </div>
             </div>
         </div>
-        <br />
+        if (i < Model.Count - 1)
+        {
+            <hr />
+        }
     }
+
     <div class="text-center">
 
         @if (ViewBag.CurrentPage > 1)
