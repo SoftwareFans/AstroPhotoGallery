@@ -18,7 +18,7 @@ namespace AstroPhotoGallery.Controllers
                 //Get pictures from database
                 var categories = db.Categories
                    .Include(c => c.Pictures)
-                   .OrderBy(c => c.Name)
+                   .OrderByDescending(c => c.Id)
                    .Take(6)
                    .ToList();
 
@@ -45,7 +45,7 @@ namespace AstroPhotoGallery.Controllers
             {
                 var categories = db.Categories
                     .Include(c => c.Pictures)
-                    .OrderBy(c => c.Name)
+                    .OrderByDescending(c => c.Id)
                     .ToList();
 
                 if (categories.Count == 0)
@@ -101,7 +101,7 @@ namespace AstroPhotoGallery.Controllers
 
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == categoryId)
-                    .OrderByDescending(p => p.Id)
+                    .OrderBy(p => p.Id)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .Include(p => p.PicUploader)
