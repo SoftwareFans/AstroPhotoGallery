@@ -245,13 +245,13 @@
     <Content Include="Content\images\IC443_HSO_com_b.jpg" />
     <Content Include="Content\images\NGC2237_New_b.jpg" />
     <Content Include="Content\images\profilePics\.gitignore" />
-    <Content Include="Content\images\sliderImages\atmospheric phenomena.jpg" />
+    <Content Include="Content\images\sliderImages\atmospheric_phenomena.jpg" />
     <Content Include="Content\images\sliderImages\galaxy.jpg" />
     <Content Include="Content\images\sliderImages\landscape.jpg" />
     <Content Include="Content\images\sliderImages\nebulae.jpg" />
-    <Content Include="Content\images\sliderImages\solar system.jpg" />
-    <Content Include="Content\images\sliderImages\star cluster.jpg" />
-    <Content Include="Content\images\sliderImages\wide andle image.jpg" />
+    <Content Include="Content\images\sliderImages\solar_system.jpg" />
+    <Content Include="Content\images\sliderImages\star_cluster.jpg" />
+    <Content Include="Content\images\sliderImages\wide_angle_image.jpg" />
     <Content Include="Content\images\star-empty.png" />
     <Content Include="Content\images\star-full.png" />
     <Content Include="Content\images\StefkaProfilePic.jpg" />
