@@ -9,22 +9,23 @@
         @using (Html.BeginForm("Index", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
             <div class="container-fluid">
-                <h2>
-                    Categories <span class="pull-right">@Html.ActionLink("Create a new category", "Create", "Category", null, new { @class = "btn btn-primary" })</span>
-                </h2>
+                <h2>Categories</h2>
             </div>
-                <hr />
+            <hr />
                 <div class="form-group">
                     @Html.Label("Find category by name:", new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-3">
-                        @Html.TextBox("seatchCategory", null, new { @class = "form-control", placeholder = "Category's name" })
+                        @Html.TextBox("searchedCategory", null, new { @class = "form-control", placeholder = "Category's name" })
                     </div>
                     <div class="col-sm-2">
                         <input type="submit" value="Search" class="btn btn-default" />
                     </div>
                 </div>
         }
-        <br />
+        <div class="row container-fluid">
+            <span class="pull-right">@Html.ActionLink("Create a new category", "Create", "Category", new { @class = "btn btn-primary" })</span>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
