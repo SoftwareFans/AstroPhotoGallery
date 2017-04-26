@@ -13,30 +13,30 @@ namespace AstroPhotoGallery.Controllers.Admin
     {
         //
         //GET: Category
-        public ActionResult Index(string sortOrder, string seatchCategory, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchedCategory, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Name = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : string.Empty;
 
-            if (seatchCategory != null)
+            if (searchedCategory != null)
             {
                 page = 1;
             }
             else
             {
-                seatchCategory = currentFilter;
+                searchedCategory = currentFilter;
             }
 
-            ViewBag.CurrentFilter = seatchCategory;
+            ViewBag.CurrentFilter = searchedCategory;
 
             using (var db = new GalleryDbContext())
             {
 
                 var categories = db.Categories.ToList();
 
-                if (!string.IsNullOrEmpty(seatchCategory))
+                if (!string.IsNullOrEmpty(searchedCategory))
                 {
-                    categories = categories.Where(c => c.Name.ToLower().Contains(seatchCategory.ToLower())).ToList();
+                    categories = categories.Where(c => c.Name.ToLower().Contains(searchedCategory.ToLower())).ToList();
 
                     if (categories.Count == 0)
                     {
