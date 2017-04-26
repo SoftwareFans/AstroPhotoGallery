@@ -5,35 +5,38 @@
 
 <div class="container">
     <div id="mainCarousel" class="carousel slide" data-ride="carousel">
-
+        
         <ol class="carousel-indicators">
             <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#mainCarousel" data-slide-to="1"></li>
             <li data-target="#mainCarousel" data-slide-to="2"></li>
+            <li data-target="#mainCarousel" data-slide-to="3"></li>
+            <li data-target="#mainCarousel" data-slide-to="4"></li>
+            <li data-target="#mainCarousel" data-slide-to="5"></li>
+            <li data-target="#mainCarousel" data-slide-to="6"></li>
         </ol>
 
-        <!--Not responsive 350px height-->
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner">
             <div class="item active">
-                <img src="~/Content/images/sliderImages/star_cluster.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/star_cluster.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/galaxy.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/galaxy.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/nebulae.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/nebulae.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/solar_system.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/solar_system.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/wide_angle_image.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/wide_angle_image.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/atmospheric_phenomena.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/atmospheric_phenomena.jpg" alt="Carousel astro pic"/>
             </div>
             <div class="item">
-                <img src="~/Content/images/sliderImages/landscape.jpg" alt="Astro picture">
+                <img src="~/Content/images/sliderImages/landscape.jpg" alt="Carousel astro pic"/>
             </div>
         </div>
 
@@ -68,11 +71,11 @@
                         <div class="thumbnail">
                             @if (Model[j].Pictures.Any(p => p.CategoryId == Model[j].Id))
                             {
-                                <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px">
+                                <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px" alt="Category first pic" />
                             }
                             else
                             {
-                                <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px" />
+                                <img src="~/Content/images/default-gallery-image.jpg" style="width: 360px; height:270px" alt="Category first pic" />
                             }
                         </div>
                         <h3>@Model[j].Name</h3>
