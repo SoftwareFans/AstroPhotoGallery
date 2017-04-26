@@ -381,6 +381,7 @@
     <Content Include="Content\images\IC2177_Ha_RGB_new_b.jpg" />
     <Content Include="Content\images\IC443_HSO_com_b.jpg" />
     <Content Include="Content\images\NGC2237_New_b.jpg" />
+    <Content Include="Content\images\planet.png" />
     <Content Include="Content\images\profilePics\.gitignore" />
     <Content Include="Content\images\profilePics\6df697a4-36bd-483a-b5eb-616309f21e7c\profilepic.jpg" />
     <Content Include="Content\images\sliderImages\atmospheric_phenomena.jpg" />
