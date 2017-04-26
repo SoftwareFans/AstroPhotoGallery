@@ -49,9 +49,9 @@ namespace AstroPhotoGallery
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 3,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = false,
-                RequireDigit = false,
+                RequireDigit = true,
                 RequireLowercase = false,
                 RequireUppercase = false
             };

@@ -29,7 +29,7 @@ namespace AstroPhotoGallery.Migrations
 
             if (!context.Users.Any())
             {
-                this.CreateUser(context, "admin@astrogallery.net", "Astrogallery", "Administrator", "123");
+                this.CreateUser(context, "admin@astrogallery.net", "Astrogallery", "Administrator", "password1");
                 this.SetRoleToUser(context, "admin@astrogallery.net", "Admin");
             }
 
@@ -63,8 +63,8 @@ namespace AstroPhotoGallery.Migrations
             //Set user manager password validator
             userManager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 3,
-                RequireDigit = false,
+                RequiredLength = 8,
+                RequireDigit = true,
                 RequireLowercase = false,
                 RequireNonLetterOrDigit = false,
                 RequireUppercase = false
