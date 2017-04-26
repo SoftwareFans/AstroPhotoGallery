@@ -3,13 +3,6 @@ body {
   font-family: 'Open Sans', Tahoma, Arial;
 }
 
-.carousel-inner {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 400px;
-}
-
 .nav-wrapper {
   position: absolute;
   left: 0;
