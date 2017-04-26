@@ -21,7 +21,7 @@ namespace AstroPhotoGallery.Models
             this.PicTitle = title;
             this.PicDescription = description;
             this.CategoryId = categoryId;
-            this.UploadDate = DateTime.Today;
+            this.UploadDate = DateTime.UtcNow.Date;
             this.tags = new HashSet<Tag>();
         }
 
