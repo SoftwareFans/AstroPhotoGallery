@@ -14,9 +14,9 @@
     {
         <div class="row">
             <div class="col-sm-12">
-                <div class="well col-sm-4">                                 
+                <div class="well col-sm-4">
                     <h3 style="font-weight: bold">@Model[i].PicTitle</h3>
-                    <a href="@Url.Action("Details", "Picture", new {id = Model[i].Id})"><img class="thumbnail img-responsive" alt="Astro picture" src="@Url.Content(Model[i].ImagePath)"></a>    
+                    <a href="@Url.Action("Details", "Picture", new {id = Model[i].Id})"><img class="thumbnail img-responsive" alt="Astro picture" src="@Url.Content(Model[i].ImagePath)"></a>
                     <div class="pull-left" style="word-wrap: break-word">
                         Uploader: @Model[i].PicUploader.FirstName @Model[i].PicUploader.LastName
                     </div>
@@ -27,7 +27,7 @@
                     <br />
                 </div>
                 <div class="col-sm-8">
-                    <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model[i].PicDescription
+                    <pre style="font-family: 'Open Sans', Tahoma, Arial; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model[i].PicDescription
                     </pre>
                     <div class="pull-left">
                         Tags:&nbsp;
@@ -39,7 +39,8 @@
                 </div>
             </div>
         </div>
-        if (i < Model.Count - 1)
+
+        if (i < Model.Count - 1) // Put line after all rows except the last one
         {
             <hr />
         }
@@ -49,11 +50,11 @@
 
         @if (ViewBag.CurrentPage > 1)
         {
-            <span> @Html.ActionLink("Previous page", "ListPictures", "Home", new {categoryId = Model.FirstOrDefault().CategoryId, page = (ViewBag.CurrentPage - 1)}, new {@class = "btn btn-primary"}) </span>
+            <span> @Html.ActionLink("Previous page", "ListPictures", "Home", new { categoryId = Model.FirstOrDefault().CategoryId, page = (ViewBag.CurrentPage - 1) }, new { @class = "btn btn-primary" }) </span>
         }
         else
         {
-            @Html.ActionLink("Previous page", "ListPictures", "Home", new { @class = "btn btn-primary disabled" })
+            <span class="btn btn-default disabled">Previous page</span>
         }
 
         @if (ViewBag.IsLastPage == false)
@@ -62,7 +63,7 @@
         }
         else
         {
-            @Html.ActionLink("Next page", "ListPictures", "Home", new { @class = "btn btn-primary disabled" })
+            <span class="btn btn-default disabled">Next page</span>
         }
     </div>
 </div>
