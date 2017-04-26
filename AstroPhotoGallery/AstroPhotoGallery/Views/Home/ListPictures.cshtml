@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="well col-sm-4">                                 
-                    <h3>@Model[i].PicTitle</h3>
+                    <h3 style="font-weight: bold">@Model[i].PicTitle</h3>
                     <a href="@Url.Action("Details", "Picture", new {id = Model[i].Id})"><img class="thumbnail img-responsive" alt="Astro picture" src="@Url.Content(Model[i].ImagePath)"></a>    
                     <div class="pull-left" style="word-wrap: break-word">
                         Uploader: @Model[i].PicUploader.FirstName @Model[i].PicUploader.LastName
