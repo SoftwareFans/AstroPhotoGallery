@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/mainpage.css")
     @Styles.Render("~/Content/font-awesome.min.css")
-     
+
 </head>
 <body>
 
@@ -26,10 +26,11 @@
 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li style="margin:14px;margin-right: 0px"><img src="../../Content/images/planet.png"/></li>
-                       
-                        <li style="font-weight: bold; font-size: 20px; margin-left:0px">
-                            @Html.ActionLink("ASTRO GALLERY", "Index", "Home")
+                        <li>
+                            <a href="/" style="font-weight: bold; font-size: 20px;">
+                                <img src="/Content/images/planet.png" alt="Planet mini logo" />
+                                ASTRO GALLERY
+                            </a>
                         </li>
                         <li>
                             @Html.ActionLink("All categories", "ListCategories", "Home")
@@ -65,7 +66,8 @@
             <hr />
             <footer class="pull-right">
                 <p>&copy; @DateTime.Now.Year - Astronomy Photo Gallery </p>
-                <p>Inspired by: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm </a>
+                <p>
+                    Inspired by: <a style="word-break: break-all; display: inline-block" href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm </a>
                 </p>
             </footer>
             <footer class="pull-left">
