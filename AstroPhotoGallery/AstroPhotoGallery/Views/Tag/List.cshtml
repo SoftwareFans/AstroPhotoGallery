@@ -18,7 +18,9 @@
             <div class="col-sm-12">
                 <div class="well col-sm-4">
                     <h3 style="font-weight: bold">@Model[i].PicTitle</h3>
-                    <a href="@Url.Action("Details", "Picture", new {id = Model[i].Id})"><img class="thumbnail img-responsive" alt="Astro picture" src="@Url.Content(Model[i].ImagePath)"></a>    
+
+                    <a href="@Url.Action("Details", "Picture", new {id = Model[i].Id})"><img class="thumbnail img-responsive" alt="Astro picture" src="@Url.Content(Model[i].ImagePath)"></a>
+
                     <div class="pull-left" style="word-wrap: break-word">
                         Uploader: @Model[i].PicUploader.FirstName @Model[i].PicUploader.LastName
                     </div>
@@ -28,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-sm-8">
-                    <pre style="font-family: sans-serif; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model[i].PicDescription
+                    <pre style="font-family: 'Open Sans', Tahoma, Arial; font-size: 14px; color: #839496; border: none; background-color: transparent;word-wrap: break-word">@Model[i].PicDescription
                          </pre>
                     <div class="pull-left">
                         Tags:&nbsp;
