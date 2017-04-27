@@ -53,7 +53,7 @@ More details and features:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/pic%20validation.png" alt="Image validaiton message" align="middle"/>
 
-- Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. Bootstrap notifications are used for that feature.
+- Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. "Bootstrap Notifications" NuGet package is used for that feature.
 - Default redirect when a non-existent URL is entered - custom view for ERROR 404 is showed allowing the user to go back to the home page:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/error404%20custom%20view.png" alt="Error 404 custom view" align="middle"/>
