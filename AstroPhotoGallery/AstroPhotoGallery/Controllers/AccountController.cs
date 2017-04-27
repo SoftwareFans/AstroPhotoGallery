@@ -699,8 +699,6 @@ namespace AstroPhotoGallery.Controllers
                     .OrderByDescending(p => p.Id)
                     .Take(6)
                     .ToList();
-
-                db.SaveChanges();
             }
 
             return View(model);
