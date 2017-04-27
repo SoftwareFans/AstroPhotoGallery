@@ -62,15 +62,14 @@ More details and features:
 
 - User profiles: Every user can edit her/his user profile – e.g. gender, city, country, birthday, profile picture:
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/profile.JPG" alt="User profile"/>
-
-	* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
-	* The birthday in the user profile is being selected using jquery date picker:
+* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
+* The birthday in the user profile is being selected using jquery date picker:
 	<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/birthday%20date%20picker.JPG" alt="jquery datepicker"/>
 	
-	* Every user can hide/show her/his email address from her/his public user profile:
+* Every user can hide/show her/his email address from her/his public user profile:
 	<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/email.JPG" alt="Email hide option"/>
 	
-	* Every user can view other users' profiles and the pictures that they have uploaded
+* Every user can view other users' profiles and the pictures that they have uploaded
 - Administrator panel: Users in role "Admin" have access to administrator panel giving them rights to edit/delete user accounts (make them administrators too) and edit/delete categories
 	* If a user is deleted all of her/his pictures are deleted too
 
