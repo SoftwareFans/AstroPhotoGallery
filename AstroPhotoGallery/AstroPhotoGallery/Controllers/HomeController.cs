@@ -97,9 +97,7 @@ namespace AstroPhotoGallery.Controllers
                 }
 
                 TempData["CategoryName"] = category.Name;
-
-               
-
+             
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == id)
                     .OrderByDescending(p => p.Id)
