@@ -38,6 +38,7 @@ namespace AstroPhotoGallery.Controllers.Admin
             using (var db = new GalleryDbContext())
             {
                 var users = db.Users
+                    .OrderBy(u => u.Email)
                     .ToList();
 
                 if (!string.IsNullOrEmpty(searchUser))
