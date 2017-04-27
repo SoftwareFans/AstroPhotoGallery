@@ -1,5 +1,5 @@
-﻿@model List<AstroPhotoGallery.Models.Picture>
-
+﻿@model PagedList.IPagedList<AstroPhotoGallery.Models.Picture>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = TempData["CategoryName"];
 }
@@ -67,3 +67,6 @@
         }
     </div>
 </div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ListPictures", new { page }))

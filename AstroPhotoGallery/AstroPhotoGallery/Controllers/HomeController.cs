@@ -77,9 +77,9 @@ namespace AstroPhotoGallery.Controllers
 
         //
         //GET: Home/ListPictures/id
-        public ActionResult ListPictures(int? categoryId, int page = 1)
+        public ActionResult ListPictures(int? id, int? page)
         {
-            if (categoryId == null)
+            if (id == null)
             {
                 this.AddNotification("No category ID provided.", NotificationType.ERROR);
                 return RedirectToAction("Index");
@@ -87,7 +87,7 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
-                var category = db.Categories.FirstOrDefault(c => c.Id == categoryId);
+                var category = db.Categories.FirstOrDefault(c => c.Id == id);
 
                 if (category == null)
                 {
@@ -97,35 +97,21 @@ namespace AstroPhotoGallery.Controllers
 
                 TempData["CategoryName"] = category.Name;
 
-                var pageSize = 8;
+               
 
                 var pictures = db.Pictures
-                    .Where(p => p.CategoryId == categoryId)
+                    .Where(p => p.CategoryId == id)
                     .OrderBy(p => p.Id)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
                     .Include(p => p.PicUploader)
                     .Include(p => p.Tags)
                     .ToList();
 
-                ViewBag.CurrentPage = page;
-                ViewBag.IsLastPage = false;
-
-                var nextPagePics = db.Pictures
-                    .Where(p => p.CategoryId == categoryId)
-                    .OrderByDescending(p => p.Id)
-                    .Skip(page * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-
-                if (nextPagePics.Count == 0)
-                {
-                    ViewBag.IsLastPage = true;
-                }
-
-                return View(pictures);
+                int pageSize = 1;
+                int pageNumber = (page ?? 1);
+                return View(pictures.ToPagedList(pageNumber, pageSize));              
             }
         }
+
 
         public ActionResult Contacts()
         {
