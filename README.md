@@ -17,7 +17,7 @@ More details and features:
 - Download: Pictures can be downloaded to a user's device
 - Categories: Every uploaded picture is put in a category:
 
-<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/categories.jpg" alt="Category menu"/>
+<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/categories.png" alt="Category menu"/>
 
 - Edit: Pictures can be edited (title, description, category) by administrators or by the picture's uploader:
 
