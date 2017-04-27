@@ -420,7 +420,7 @@ namespace AstroPhotoGallery.Controllers
 
                 // Redirect to the page with all pics in the current category
                 this.AddNotification("The picture was deleted.", NotificationType.SUCCESS);
-                return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
+                return RedirectToAction("ListPictures", "Home", new { id = picCategoryId });
             }
         }
       
