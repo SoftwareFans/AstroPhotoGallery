@@ -30,7 +30,7 @@ namespace AstroPhotoGallery.Controllers
                     .ToList();
 
                 //Return the view
-                int pageSize = 3;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 return View(pictures.ToPagedList(pageNumber, pageSize));                
             }
