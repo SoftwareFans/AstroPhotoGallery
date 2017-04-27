@@ -5,73 +5,101 @@
 }
 @Styles.Render("~/Content/profileStyles.css")
 
-<h2>@ViewBag.Title</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-sm-12 col-sm-3">
-                    <figure class="text-center">
-                        <img src="@Url.Content(Model.ImagePath)" alt="Profile picture" class="img-thumbnail img-responsive" />
-                    </figure>     
-                    <br>   
-                    <div class="text-center">@Html.ActionLink("Uploaded pictures", "ShowUserPics", "Picture", new { id = Model.Id }, new { @class = "btn btn-primary" })</div>          
-                </div>
-                <div class="col-sm-12 col-sm-9">
-                    <div>
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-12 col-sm-3">
+                        <figure class="text-center">
+                            <img src="@Url.Content(Model.ImagePath)" alt="Profile picture" class="img-thumbnail img-responsive" />
+                        </figure>
+                        <br>
+                        <div class="text-center">@Html.ActionLink("Uploaded pictures", "ShowUserPics", "Picture", new { id = Model.Id }, new { @class = "btn btn-primary" })</div>
+                        <br />
+                    </div>
+                    <div class="col-sm-12 col-sm-9">
+                        <div>
 
-                        <div class="list-group-item well well-sm text-center" style="font-size: 25px; word-wrap: break-word;">@Model.FullName</div>
+                            <div class="list-group-item well well-sm text-center" style="font-size: 25px; word-wrap: break-word;">@Model.FullName</div>
 
-                        <ul class="list-group">
-                            <li class="list-group-item col-sm-4">
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">Gender:</div>
-                                    @if (Model.Gender == null) // Putting an extra line in case the data is null for better view
-                                    {
-                                        <br />
-                                    }
-                                    <div style="font-weight: bold">@Model.Gender</div>
-                                </div>
-
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">Birthday (M/D/Y):</div>
-                                    <div style="font-weight: bold">@Model.Birthday</div>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item col-sm-4">
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">Country:</div>
-                                    @if (Model.Country == null || Regex.IsMatch(Model.Country, @"^[\s]+$")) // Putting an extra line in case the data is null or only spaces - for better view
-                                    {
-                                        <br />
-                                    }
-                                    <div style="font-weight: bold">@Model.Country</div>
-                                </div>
-
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">City:</div>
-                                    <div style="font-weight: bold">@Model.City</div>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item col-sm-4">
-                                @if (Model.IsEmailPublic)
-                                {
+                            <ul class="list-group">
+                                <li class="list-group-item col-sm-4">
                                     <div style="margin: 22px">
-                                        <div style="opacity: 0.8">Email:</div>
-                                        <div style="word-wrap: break-word; font-weight: bold">@Model.Email</div>
+                                        <div style="opacity: 0.8">Gender:</div>
+                                        @if (Model.Gender == null) // Putting an extra line in case the data is null for better view
+                                        {
+                                            <br />
+                                        }
+                                        <div style="font-weight: bold">@Model.Gender</div>
                                     </div>
-                                }
-                                <div style="margin: 22px">
-                                    <div style="opacity: 0.8">Phone:</div>
-                                    <div style="font-weight: bold">@Model.PhoneNumber</div>
-                                </div>
-                            </li>
-                        </ul>
+
+                                    <div style="margin: 22px">
+                                        <div style="opacity: 0.8">Birthday (M/D/Y):</div>
+                                        <div style="font-weight: bold">@Model.Birthday</div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item col-sm-4">
+                                    <div style="margin: 22px">
+                                        <div style="opacity: 0.8">Country:</div>
+                                        @if (Model.Country == null || Regex.IsMatch(Model.Country, @"^[\s]+$")) // Putting an extra line in case the data is null or only spaces - for better view
+                                        {
+                                            <br />
+                                        }
+                                        <div style="font-weight: bold">@Model.Country</div>
+                                    </div>
+
+                                    <div style="margin: 22px">
+                                        <div style="opacity: 0.8">City:</div>
+                                        <div style="font-weight: bold">@Model.City</div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item col-sm-4">
+                                    @if (Model.IsEmailPublic)
+                                    {
+                                        <div style="margin: 22px">
+                                            <div style="opacity: 0.8">Email:</div>
+                                            <div style="word-wrap: break-word; font-weight: bold">@Model.Email</div>
+                                        </div>
+                                    }
+                                    <div style="margin: 22px">
+                                        <div style="opacity: 0.8">Phone:</div>
+                                        <div style="font-weight: bold">@Model.PhoneNumber</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        @if (Model.SampleUserPics.Count > 0)
+        {
+            <div class="container-fluid">
+                <h2>Some of @Model.FullName's pictures...</h2>
+                <br />
+
+                @foreach (var pic in Model.SampleUserPics)
+                {
+                    <div class="col-sm-4">
+                        <a href="@Url.Action("Details", "Picture", new {id = pic.Id})">
+                            <img src="@Url.Content(pic.ImagePath)" class="thumbnail img-responsive" alt="Picture uploaded by this user" style="width: 360px; height:270px" />
+                        </a>
+                        <div class="pull-left">
+                            <p>
+                                Title: @pic.PicTitle <br />
+                                Category: @Html.ActionLink(pic.CategoryName, "ListPictures", "Home", new { id = pic.CategoryId }, null) <br />
+                                Upload date: @pic.UploadDate.ToString("d-MMM-yyyy")<br />
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
+
