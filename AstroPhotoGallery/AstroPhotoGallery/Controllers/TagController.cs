@@ -11,7 +11,7 @@ namespace AstroPhotoGallery.Controllers
     {
         //
         // GET: Tag/List/id
-        public ActionResult List(int? id ,int? page)
+        public ActionResult List(int? id, int? page)
         {
             if (id == null)
             {
@@ -27,12 +27,13 @@ namespace AstroPhotoGallery.Controllers
                     .Include(t => t.Pictures.Select(p => p.PicUploader))
                     .FirstOrDefault(t => t.Id == id)
                     .Pictures
+                    .OrderByDescending(p => p.Id)
                     .ToList();
 
                 //Return the view
                 int pageSize = 8;
                 int pageNumber = (page ?? 1);
-                return View(pictures.ToPagedList(pageNumber, pageSize));                
+                return View(pictures.ToPagedList(pageNumber, pageSize));
             }
         }
     }
