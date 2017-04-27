@@ -152,6 +152,8 @@ namespace AstroPhotoGallery.Models
         public string ImagePath { get; set; } 
 
         public bool IsEmailPublic { get; set; }
+
+        public List<Picture> SampleUserPics { get; set; }
     }
 
     public class EditViewModel 
