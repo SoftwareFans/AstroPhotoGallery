@@ -2,7 +2,7 @@
 
 ### April 28th 2017:
 
-The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by Emil Ivanov via email and the project will be presented to him too after the defense of the project on April 29th. This project will not be used for any commercial purposes - it is a non-profit student project.
+The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by Emil Ivanov via email and the project will be presented to him too (after the defense of the project on April 29th). This project will not be used for any commercial purposes - it is a non-profit student project.
 
 Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.
 
@@ -10,10 +10,11 @@ The beautiful pictures are separated by categories. They can be searched by tags
 
 More details and features:
 
+- General look: Bootstrap Solar theme is being used for the general look and style of the application(2-3 elements of it have been slightly customized - e.g. color, padding)
 - Authentication: Users can register and log in to the site with email (username) and password
-- Seed at first startup: Default administrator user account "admin@astrogallery.net", roles "Admin" and "User" and category "Other" are being created during the first start of the project 
+- Seed at first startup: Default administrator user account "admin@astrogallery.net", roles "Admin" and "User" and category "Other" are being created in the database during the first start of the project 
 - Upload: Pictures can be uploaded and saved in the project's database and file system (by a logged in user only)
-* Every picture is stored in subdirectory with name the name of its category in ~/Content/images/astroPics/ (e.g. /Content/images/astroPics/Planets)
+- Every picture is stored in subdirectory with name the name of its category in ~/Content/images/astroPics/ (e.g. /Content/images/astroPics/Galaxies)
 - Download: Pictures can be downloaded to a user's device
 - Categories: Every uploaded picture is put in a category:
 
@@ -27,8 +28,8 @@ More details and features:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/category%20edit%20admin.png" alt="Admin panel view" align="middle"/>
 
-* If a whole category is deleted then all of the pictures in that category are deleted too
-- Security: All post methods and their respective views have anti-forgery validation tokens check; the edition and deletion of pictures is allowed to authorized users only
+- If a whole category is deleted then all of the pictures in that category are deleted too
+- Security: All post methods and their respective views have anti-forgery validation tokens check; the edition and deletion of pictures is allowed to authorized users only who are also the uploaders of the pictures
 - Tags: Every uploaded picture is required to have at least one tag for it:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/tags.png" alt="Tags" align="middle"/>
@@ -47,17 +48,17 @@ More details and features:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/rating.png" alt="Rating" align="middle"/>
 
-* A user can rate a picture only once; an uploader can't rate her/his own pictures
+- A user can rate a picture only once; an uploader can't rate her/his own pictures
 - Image validation: Image file extension and content validation - when a picture is being uploaded (valid for profile picture too) its content (the file header) is being checked in order to be determined if it is really an image. That way even if a user change the extension of a .txt file for example to .jpg the application will reject the file and won't store it anywhere.
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/pic%20validation.png" alt="Image validaiton message" align="middle"/>
 
 - Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. Bootstrap notifications are used for that feature.
-* Default redirect when a non-existent URL is entered - custom view for ERROR 404 is showed allowing the user to go back to the home page:
+- Default redirect when a non-existent URL is entered - custom view for ERROR 404 is showed allowing the user to go back to the home page:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/error404%20custom%20view.png" alt="Error 404 custom view" align="middle"/>
 	
-* If an unhandled exception occurres a custom view is showed allowing the user to go back to the home page
+- If an unhandled exception occurres a custom view is showed allowing the user to go back to the home page
 - Search: Search feature for categories is included in the navigation bar 
 - Search: Search feature for categories is included in the administrator panel 
 - Search: Search feature for users is included in the administrator panel
@@ -76,19 +77,19 @@ More details and features:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/profile.png" alt="User profile" width="500" align="middle"/>
 
-* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
+- The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
 
-* The birthday in the user profile is being selected using jquery date picker:
+- The birthday in the user profile is being selected using jquery date picker:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/birthday%20date%20picker.png" alt="jquery datepicker" align="middle"/>
 	
-* Every user can hide/show her/his email address from her/his public user profile:
+- Every user can hide/show her/his email address from her/his public user profile:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/email.png" alt="Email hide option" align="middle"/>
 	
-* Every user can view other users' profiles and the pictures that they have uploaded
+- Every user can view other users' profiles and the pictures that they have uploaded
 - Administrator panel: Users in role "Admin" have access to administrator panel giving them rights to edit/delete user accounts (make them administrators too) and edit/delete categories
-* If a user is deleted all of her/his pictures are deleted too
+- If a user is deleted all of her/his pictures are deleted too
 
 
 
