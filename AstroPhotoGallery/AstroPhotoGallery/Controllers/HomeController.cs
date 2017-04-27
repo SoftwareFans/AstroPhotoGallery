@@ -106,7 +106,7 @@ namespace AstroPhotoGallery.Controllers
                     .Include(p => p.Tags)
                     .ToList();
 
-                int pageSize = 1;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 return View(pictures.ToPagedList(pageNumber, pageSize));              
             }
