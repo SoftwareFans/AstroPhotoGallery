@@ -10,8 +10,8 @@ namespace AstroPhotoGallery.Controllers
     public class TagController : Controller
     {
         //
-        // GET: Tag/List/id
-        public ActionResult List(int? id, int? page)
+        // GET: Tag/ListPicsWithTag/id
+        public ActionResult ListPicsWithTag(int? id, int? page)
         {
             if (id == null)
             {
