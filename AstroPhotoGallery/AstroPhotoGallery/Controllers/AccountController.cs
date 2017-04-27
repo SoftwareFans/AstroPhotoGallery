@@ -694,6 +694,12 @@ namespace AstroPhotoGallery.Controllers
                     ? "~/Content/images/blank-profile-picture.png"
                     : user.ImagePath;
 
+                model.SampleUserPics = db.Pictures.
+                    Where(p => p.PicUploaderId == user.Id)
+                    .OrderByDescending(p => p.Id)
+                    .Take(6)
+                    .ToList();
+
                 db.SaveChanges();
             }
 
