@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace AstroPhotoGallery.Controllers
 {
@@ -569,7 +570,9 @@ namespace AstroPhotoGallery.Controllers
             return RedirectToAction("Details", new { id = pictureId });
         }
 
-        public ActionResult ShowUserPics(string id, int page = 1)
+        //
+        //GET: Picture/ShowUserPics/id
+        public ActionResult ShowUserPics(string id, int ? page )
         {
             if (id == null)
             {
@@ -587,35 +590,18 @@ namespace AstroPhotoGallery.Controllers
                     return RedirectToAction("ListCategories", "Home");
                 }
 
-                var pageSize = 8;
-
                 var picsOfUser = db.Pictures
                     .Where(p => p.PicUploaderId == id)
                     .OrderByDescending(p => p.Id)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
                     .Include(p => p.PicUploader)
                     .Include(p => p.Tags)
                     .ToList();
 
-                ViewBag.CurrentPage = page;
-                ViewBag.IsLastPage = false;
-
                 ViewBag.UserFullname = user.FirstName + " " + user.LastName;
 
-                var nextPagePics = db.Pictures
-                    .Where(p => p.PicUploaderId == id)
-                    .OrderByDescending(p => p.Id)
-                    .Skip(page * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-
-                if (nextPagePics.Count == 0)
-                {
-                    ViewBag.IsLastPage = true;
-                }
-
-                return View(picsOfUser);
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                return View(picsOfUser.ToPagedList(pageNumber, pageSize));
             }
         }
 
