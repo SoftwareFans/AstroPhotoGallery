@@ -75,6 +75,7 @@ More details and features:
 - User profiles: Every user can edit her/his user profile – e.g. gender, city, country, birthday, profile picture:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/profile.JPG" alt="User profile" width="500" align="middle"/>
+
 * The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
 
 * The birthday in the user profile is being selected using jquery date picker:
