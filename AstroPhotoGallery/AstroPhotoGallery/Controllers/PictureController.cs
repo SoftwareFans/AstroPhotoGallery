@@ -319,6 +319,8 @@ namespace AstroPhotoGallery.Controllers
                         var picNewDir = Server.MapPath(picture.ImagePath);
                         System.IO.File.Move(picOldDir, picNewDir);
                     }
+
+                    this.AddNotification("The picture was edited.", NotificationType.SUCCESS);
                     return View("Details", picture);
                 }
             }
