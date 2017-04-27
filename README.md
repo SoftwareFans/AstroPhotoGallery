@@ -1,8 +1,8 @@
 # Astronomy gallery
 
-### April 20th 2017:
+### April 28th 2017:
 
-The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by Emil Ivanov via email and the project will be presented to him too. This project will not be used for any commercial purposes - it is a non-profit student project.
+The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by Emil Ivanov via email and the project will be presented to him too after the defense of the project on April 29th. This project will not be used for any commercial purposes - it is a non-profit student project.
 
 Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.
 
@@ -88,7 +88,7 @@ More details and features:
 	
 * Every user can view other users' profiles and the pictures that they have uploaded
 - Administrator panel: Users in role "Admin" have access to administrator panel giving them rights to edit/delete user accounts (make them administrators too) and edit/delete categories
-	* If a user is deleted all of her/his pictures are deleted too
+* If a user is deleted all of her/his pictures are deleted too
 
 
 
