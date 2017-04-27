@@ -423,6 +423,118 @@ namespace AstroPhotoGallery.Controllers
                 return RedirectToAction("ListPictures", "Home", new { categoryId = picCategoryId });
             }
         }
+      
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult RatePicture(FormCollection form)
+        {
+            var rating = int.Parse(form["Rating"]);
+            var pictureId = int.Parse(form["PictureId"]);
+
+            if (rating != 0)
+            {
+                using (var db = new GalleryDbContext())
+                {
+                    var picture = db.Pictures.FirstOrDefault(p => p.Id == pictureId);
+
+                    if (picture == null)
+                    {
+                        this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
+                        return RedirectToAction("ListCategories", "Home");
+                    }
+
+                    picture.RatingSum += rating;
+                    picture.RatingCount++;
+                    picture.Rating = picture.RatingSum / picture.RatingCount;
+
+                    // Getting the ID of the currently logged in user
+                    var currentUserId = User.Identity.GetUserId();
+
+                    // Adding the ID to the IDs of the users that have already rated this picture
+                    picture.UserIdsRatedPic += " " + currentUserId;
+
+                    db.Entry(picture).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (rating == 1)
+                    {
+                        this.AddNotification("The picture was rated with 1 star.", NotificationType.SUCCESS);
+                    }
+                    else
+                    {
+                        this.AddNotification($"The picture was rated with {rating} stars.", NotificationType.SUCCESS);
+                    }
+                }
+            }
+
+            return RedirectToAction("Details", new { id = pictureId });
+        }
+
+        //
+        //GET: Picture/ShowUserPics/id
+        public ActionResult ShowUserPics(string id, int ? page )
+        {
+            if (id == null)
+            {
+                this.AddNotification("No user ID provided.", NotificationType.ERROR);
+                return RedirectToAction("ListCategories", "Home");
+            }
+
+            using (var db = new GalleryDbContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
+
+                if (user == null)
+                {
+                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
+                    return RedirectToAction("ListCategories", "Home");
+                }
+
+                var picsOfUser = db.Pictures
+                    .Where(p => p.PicUploaderId == id)
+                    .OrderByDescending(p => p.Id)
+                    .Include(p => p.PicUploader)
+                    .Include(p => p.Tags)
+                    .ToList();
+
+                ViewBag.UserFullname = user.FirstName + " " + user.LastName;
+
+                int pageSize = 8;
+                int pageNumber = (page ?? 1);
+                return View(picsOfUser.ToPagedList(pageNumber, pageSize));
+            }
+        }
+
+        //Set tags of a picture
+        private void SetPictureTags(Picture picture, PictureViewModel model, GalleryDbContext db)
+        {
+            //Split tags
+            var tagsStrings = model.Tags
+                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(t => t.ToLower())
+                .Distinct();
+
+            //Clear current picture tags
+            picture.Tags.Clear();
+
+            //Set new picture tags
+            foreach (var tagString in tagsStrings)
+            {
+                //Get tag from db by its name
+                var tag = db.Tags.FirstOrDefault(t => t.Name.Equals(tagString));
+
+                //If the tag is null create new tag
+                if (tag == null)
+                {
+                    tag = new Tag() { Name = tagString };
+                    db.Tags.Add(tag);
+                }
+
+                //Add tag to picture tags
+                picture.Tags.Add(tag);
+            }
+        }
 
         // Method for getting the next picture from a category
         public ActionResult NextPicture(int? categoryId, int? picId)
@@ -523,117 +635,7 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public ActionResult RatePicture(FormCollection form)
-        {
-            var rating = int.Parse(form["Rating"]);
-            var pictureId = int.Parse(form["PictureId"]);
-
-            if (rating != 0)
-            {
-                using (var db = new GalleryDbContext())
-                {
-                    var picture = db.Pictures.FirstOrDefault(p => p.Id == pictureId);
-
-                    if (picture == null)
-                    {
-                        this.AddNotification("Such a picture doesn't exist.", NotificationType.ERROR);
-                        return RedirectToAction("ListCategories", "Home");
-                    }
-
-                    picture.RatingSum += rating;
-                    picture.RatingCount++;
-                    picture.Rating = picture.RatingSum / picture.RatingCount;
-
-                    // Getting the ID of the currently logged in user
-                    var currentUserId = User.Identity.GetUserId();
-
-                    // Adding the ID to the IDs of the users that have already rated this picture
-                    picture.UserIdsRatedPic += " " + currentUserId;
-
-                    db.Entry(picture).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    if (rating == 1)
-                    {
-                        this.AddNotification("The picture was rated with 1 star.", NotificationType.SUCCESS);
-                    }
-                    else
-                    {
-                        this.AddNotification($"The picture was rated with {rating} stars.", NotificationType.SUCCESS);
-                    }
-                }
-            }
-
-            return RedirectToAction("Details", new { id = pictureId });
-        }
-
-        //
-        //GET: Picture/ShowUserPics/id
-        public ActionResult ShowUserPics(string id, int ? page )
-        {
-            if (id == null)
-            {
-                this.AddNotification("No user ID provided.", NotificationType.ERROR);
-                return RedirectToAction("ListCategories", "Home");
-            }
-
-            using (var db = new GalleryDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Id == id);
-
-                if (user == null)
-                {
-                    this.AddNotification("Such a user doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
-                }
-
-                var picsOfUser = db.Pictures
-                    .Where(p => p.PicUploaderId == id)
-                    .OrderByDescending(p => p.Id)
-                    .Include(p => p.PicUploader)
-                    .Include(p => p.Tags)
-                    .ToList();
-
-                ViewBag.UserFullname = user.FirstName + " " + user.LastName;
-
-                int pageSize = 8;
-                int pageNumber = (page ?? 1);
-                return View(picsOfUser.ToPagedList(pageNumber, pageSize));
-            }
-        }
-
-        private void SetPictureTags(Picture picture, PictureViewModel model, GalleryDbContext db)
-        {
-            //Split tags
-            var tagsStrings = model.Tags
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(t => t.ToLower())
-                .Distinct();
-
-            //Clear current picture tags
-            picture.Tags.Clear();
-
-            //Set new picture tags
-            foreach (var tagString in tagsStrings)
-            {
-                //Get tag from db by its name
-                var tag = db.Tags.FirstOrDefault(t => t.Name.Equals(tagString));
-
-                //If the tag is null create new tag
-                if (tag == null)
-                {
-                    tag = new Tag() { Name = tagString };
-                    db.Tags.Add(tag);
-                }
-
-                //Add tag to picture tags
-                picture.Tags.Add(tag);
-            }
-        }
-
+        //Check user is authorized
         public bool IsUserAuthorizedToEditAndDelete(Picture picture)
         {
             bool isAdmin = this.User.IsInRole("Admin");

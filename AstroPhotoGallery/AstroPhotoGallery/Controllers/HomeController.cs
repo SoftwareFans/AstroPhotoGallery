@@ -58,8 +58,9 @@ namespace AstroPhotoGallery.Controllers
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     categories = categories
-                        .Where(c => c.Name.ToLower()
+                        .Where(c => c.Name.ToLower()                        
                         .Contains(searchString.ToLower()))
+                        .OrderByDescending(c => c.Id)
                         .ToList();
 
                     if (categories.Count == 0)
@@ -101,7 +102,7 @@ namespace AstroPhotoGallery.Controllers
 
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == id)
-                    .OrderBy(p => p.Id)
+                    .OrderByDescending(p => p.Id)
                     .Include(p => p.PicUploader)
                     .Include(p => p.Tags)
                     .ToList();
@@ -112,12 +113,15 @@ namespace AstroPhotoGallery.Controllers
             }
         }
 
-
+        //
+        //GET: Home/Contacts
         public ActionResult Contacts()
         {
             return View();
         }
 
+        //
+        //GET: Home/About
         public ActionResult About()
         {
             return View();
