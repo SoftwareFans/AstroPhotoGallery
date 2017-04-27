@@ -599,7 +599,7 @@ namespace AstroPhotoGallery.Controllers
 
                 ViewBag.UserFullname = user.FirstName + " " + user.LastName;
 
-                int pageSize = 4;
+                int pageSize = 8;
                 int pageNumber = (page ?? 1);
                 return View(picsOfUser.ToPagedList(pageNumber, pageSize));
             }
