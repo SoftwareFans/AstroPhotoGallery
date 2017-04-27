@@ -85,14 +85,14 @@
                 <span style="opacity: 0.8; color: #839496" class="pull-left">
                     Uploader: @Html.ActionLink($"{@Model.PicUploader.FirstName}  {@Model.PicUploader.LastName}", "ShowProfile", "Account", new { id = Model.PicUploader.Id }, null)
                     <br />
-                    Category: @Html.ActionLink(Model.CategoryName, "ListPictures", "Home", new { categoryId = Model.CategoryId }, null)
+                    Category: @Html.ActionLink(Model.CategoryName, "ListPictures", "Home", new { id = Model.CategoryId }, null)
                     <br />
                     Upload date: @Model.UploadDate.ToString("d-MMM-yyyy")
                     <br />
                     Tags:&nbsp;
                     @foreach (var tag in Model.Tags)
                     {
-                        <span>@Html.ActionLink(tag.Name, "List", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                        <span>@Html.ActionLink(tag.Name, "ListPicsWithTag", "Tag", new { id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                     }
                 </span>
             </div>
