@@ -36,7 +36,7 @@ More details and features:
 - Display modes: The pictures can be displayed by tags, by categories and individually
 - Browsing: When looking at a picture the user can go to the next/previous picture in that category (if there is such):
 
-<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/browsing%20next%20prev.png alt="Browse buttons" align="middle"/>
+<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/browsing%20next%20prev.png" alt="Browse buttons" align="middle"/>
 
 - Browsing: When looking at a picture the user can go to the category of the picture and see all pictures there
 - Browsing: When looking at a picture the user can see the user profile of the picture's uploader
