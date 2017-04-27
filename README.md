@@ -15,7 +15,9 @@ More details and features:
 - Upload: Pictures can be uploaded and saved in the project's database and file system (by a logged in user only)
 	* Every picture is stored in subdirectory with name the name of its category in ~/Content/images/astroPics/ (e.g. /Content/images/astroPics/Planets)
 - Download: Pictures can be downloaded to a user's device
-- Categories: Every uploaded picture is put in a category
+- Categories: Every uploaded picture is put in a category:
+<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/categories.jpg" alt="Category menu"/>
+
 - Edit: Pictures can be edited (title, description, category) by administrators or by the picture's uploader
 - Security: Categories can be created and edited/deleted only by administrators
 	* If a whole category is deleted then all of the pictures in that category are deleted too
@@ -40,7 +42,7 @@ More details and features:
 	* The profile picture of a user is saved in a subdirectory with name the user's ID in directory ~/Content/images/profilePics/ (e.g. /Content/images/profilePics/f1a6ddc2-156e-4dbe-8f28-3f5a62946562)
 	* The birthday in the user profile is being selected using date picker
 	* Every user can hide/show her/his email address from her/his public user profile
-	* Every user can view other users' profiles
+	* Every user can view other users' profiles and the pictures that they have uploaded
 - Administrator panel: Users in role "Admin" have access to administrator panel giving them rights to edit/delete user accounts (make them administrators too) and edit/delete categories
 	* If a user is deleted all of her/his pictures are deleted too
 
