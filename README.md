@@ -49,11 +49,11 @@ More details and features:
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/rating.png" alt="Rating" align="middle"/>
 
 - A user can rate a picture only once; an uploader can't rate her/his own pictures
+- Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. "Bootstrap Notifications" NuGet package is used for that feature.
 - Image validation: Image file extension and content validation - when a picture is being uploaded (valid for profile picture too) its content (the file header) is being checked in order to be determined if it is really an image. That way even if a user change the extension of a .txt file for example to .jpg the application will reject the file and won't store it anywhere.
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/pic%20validation.png" alt="Image validaiton message" align="middle"/>
 
-- Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. "Bootstrap Notifications" NuGet package is used for that feature.
 - Default redirect when a non-existent URL is entered - custom view for ERROR 404 is showed allowing the user to go back to the home page:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/error404%20custom%20view.png" alt="Error 404 custom view" align="middle"/>
