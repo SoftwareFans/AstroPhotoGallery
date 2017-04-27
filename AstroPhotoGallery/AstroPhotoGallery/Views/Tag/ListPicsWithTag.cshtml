@@ -4,9 +4,6 @@
     ViewBag.Title = "Pictures by tags";
 }
 
-@Styles.Render("~/Content/galleryListStyles.css")
-@Styles.Render("~/fonts/font-awesome/css/font-awesome.min.css")
-
 <div class="container">
     <div class="text-center">
         <h2>@ViewBag.Title</h2>
@@ -37,7 +34,7 @@
                         Tags:&nbsp;
                         @foreach (var tag in Model[i].Tags)
                         {
-                            <span>@Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                            <span>@Html.ActionLink(tag.Name, "ListPicsWithTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                         }
                     </div>
                 </div>
@@ -52,5 +49,5 @@
 <div class="container">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+    @Html.PagedListPager(Model, page => Url.Action("ListPicsWithTag", new { page }))
 </div>

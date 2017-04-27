@@ -470,7 +470,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
-    <Content Include="Views\Tag\List.cshtml" />
+    <Content Include="Views\Tag\ListPicsWithTag.cshtml" />
     <Content Include="Views\Account\ShowProfile.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
