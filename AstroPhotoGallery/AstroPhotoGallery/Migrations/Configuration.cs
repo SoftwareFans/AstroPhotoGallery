@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using AstroPhotoGallery.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AstroPhotoGallery.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using AstroPhotoGallery.Models;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-
     public sealed class Configuration : DbMigrationsConfiguration<AstroPhotoGallery.Models.GalleryDbContext>
     {
         public Configuration()

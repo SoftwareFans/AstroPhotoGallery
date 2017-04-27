@@ -1,5 +1,6 @@
 ﻿using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
+using PagedList;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ namespace AstroPhotoGallery.Controllers
     {
         //
         // GET: Tag/List/id
-        public ActionResult List(int? id)
+        public ActionResult List(int? id ,int? page)
         {
             if (id == null)
             {
@@ -29,7 +30,9 @@ namespace AstroPhotoGallery.Controllers
                     .ToList();
 
                 //Return the view
-                return View(pictures);
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(pictures.ToPagedList(pageNumber, pageSize));                
             }
         }
     }
