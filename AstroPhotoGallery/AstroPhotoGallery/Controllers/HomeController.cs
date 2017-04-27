@@ -100,7 +100,7 @@ namespace AstroPhotoGallery.Controllers
              
                 var pictures = db.Pictures
                     .Where(p => p.CategoryId == id)
-                    .OrderByDescending(p => p.Id)
+                    .OrderBy(p => p.Id)
                     .Include(p => p.PicUploader)
                     .Include(p => p.Tags)
                     .ToList();
