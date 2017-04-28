@@ -4,21 +4,21 @@
     ViewBag.Title = "An undefined error";
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
-
-<div class="row">
-    <div class="col-sm-12">
-        <div>
-            <div class="well well-sm text-center" style="font-size: 35px; color: #e74c3c; word-wrap: break-word;">
-                <p>An undefined error has occurred.</p>
-                <p>Please go back to the home page or any other page from the site.</p>
-                @Html.ActionLink("Back to the home page", "Index", "Home", null, new { @class = "btn btn-default btn-lg" })
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+                <div class="well well-sm text-center" style="font-size: 35px; color: #e74c3c; word-wrap: break-word;">
+                    <p>An undefined error has occurred.</p>
+                    <p>Please go back to the home page or any other page from the site.</p>
+                    @Html.ActionLink("Back to the home page", "Index", "Home", null, new { @class = "btn btn-default btn-lg" })
+                </div>
             </div>
         </div>
     </div>
+    <br />
 </div>
-<br />
-
 
 
