@@ -86,15 +86,15 @@
             @foreach (var pic in Model.SampleUserPics)
             {
                 <div class="col-sm-4">
-                    <a href="@Url.Action("Details", "Picture", new {id = pic.Id})">
-                        <img src="@Url.Content(pic.ImagePath)" class="thumbnail img-responsive" alt="Picture uploaded by this user" style="width: 360px; height:270px" />
-                    </a>
-                    <div class="pull-left">
-                        <p>
+                    <div class="thumbnail">
+                        <a href="@Url.Action("Details", "Picture", new {id = pic.Id})">
+                            <img src="@Url.Content(pic.ImagePath)" class="img-responsive" alt="Picture uploaded by this user" style="width: 360px; height: 270px" />
+                        </a>
+                        <div class="caption">
                             Title: @pic.PicTitle <br />
-                            Category: @pic.CategoryName <br />
+                            Category: @Html.ActionLink(pic.CategoryName, "ListPictures", "Home", new { id = pic.CategoryId }, null) <br />
                             Upload date: @pic.UploadDate.ToString("d-MMM-yyyy") <br />
-                        </p>
+                        </div>
                     </div>
                 </div>
             }
