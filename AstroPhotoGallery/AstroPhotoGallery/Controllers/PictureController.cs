@@ -190,7 +190,8 @@ namespace AstroPhotoGallery.Controllers
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to edit this picture.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
+
+                    return RedirectToAction("Details", new {id = picture.Id});
                 }
 
                 var model = new PictureViewModel
@@ -368,7 +369,8 @@ namespace AstroPhotoGallery.Controllers
                 if (!IsUserAuthorizedToEditAndDelete(picture))
                 {
                     this.AddNotification("You don't have the necessary authority to delete this picture.", NotificationType.ERROR);
-                    return RedirectToAction("ListCategories", "Home");
+
+                    return RedirectToAction("Details", new { id = picture.Id });
                 }
 
                 // Pass picture to the view
