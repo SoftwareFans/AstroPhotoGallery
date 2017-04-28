@@ -2,60 +2,60 @@
 
 ### April 28th 2017:
 
-The project was part of the course "Software technologies" in Software University Bulgaria. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by Emil Ivanov via email and the project will be presented to him too (after the defense of the project on April 29th). This project will not be used for any commercial purposes - it is a non-profit student project.
+The project was part of the course "**Software technologies**" in **Software University Bulgaria**. It has been developed by 2 software development students with less than a year experience. The inspiration came from a website for astronomy pictures: <a href="http://www.emilivanov.com/index2.htm" target="_blank">http://www.emilivanov.com/index2.htm</a>. The rights to use the pictures for this project have been given by **Emil Ivanov** via **email** and the project will be presented to him too (_after the defense of the project on April 29th_). This project will **not be used** for any **commercial purposes** - it is a **non-profit** student **project**.
 
 Due to the small experience of the developers when the project was created, it does not pretend to be perfect from software engineering point of view. However, many hours have been dedicated to it in order to work, look and feel good.
 
-The beautiful pictures are separated by categories. They can be searched by tags or by categories.
+The beautiful **pictures** are separated **by categories**. They can be **searched** by tags or by categories.
 
-More details and features:
+#### More details and features:
 
-- Hosting: The application is temporarily hosted on Microsoft Azure - http://astrogallery.azurewebsites.net/
-- General look: Bootstrap Solar theme is being used for the general look and style of the application(2-3 elements of it have been slightly customized - e.g. color, padding). The site is completely responsive on all types of screens(tested on smartphone, laptop, TV).
-- Authentication: Users can register and log in to the site with email (username) and password
-- Seed at first startup: Default administrator user account "admin@astrogallery.net", roles "Admin" and "User" and category "Other" are being created in the database during the first start of the project 
-- Upload: Pictures can be uploaded and saved in the project's database and file system (by a logged in user only)
-- Every picture is stored in subdirectory with name the name of its category in ~/Content/images/astroPics/ (e.g. /Content/images/astroPics/Galaxies)
-- Download: Pictures can be downloaded to a user's device
-- Categories: Every uploaded picture is put in a category:
+- **Hosting:** The application is temporarily hosted on **Microsoft Azure** - http://astrogallery.azurewebsites.net/
+- **General look:** **Bootstrap Solar** theme is being **used** for the general look and style of the application(_2-3 elements of it have been slightly customized - e.g. color, padding_). The site is completely **responsive** on all types of screens(_tested on smartphone, laptop, TV_).
+- **Authentication:** Users can **register** and **log in** to the site with **email** (username) and **password**
+- **Seed at first startup:** Default administrator user account **"admin@astrogallery.net"**, roles **"Admin"** and **"User"** and category **"Other"** are being created in the database during the first start of the project 
+- **Upload:** Pictures can be **uploaded** and **saved** in the project's **database** and **file system** (by a logged in user only)
+- **Every picture is stored** in subdirectory with name the **name of its category** in ~/Content/images/astroPics/ (_e.g. /Content/images/astroPics/Galaxies_)
+- **Download:** Pictures can be downloaded to a **user's device**
+- **Categories:** Every uploaded picture is **put in a category**:
 
-<img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/categories.png" alt="Category menu"/>
+![Category menu](RepoPics/categories.png)
 
-- Edit: Pictures can be edited (title, description, category) by administrators or by the picture's uploader:
+- **Edit:** Pictures **can be edited** (_title, description, category_) **by administrators** or **by the picture's uploader**:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/edit.png" alt="Edic pic view"/>
 
-- Security: Categories can be created and edited/deleted only by administrators:
+- **Security:** Categories can be **created** and **edited/deleted** only by **administrators**:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/category%20edit%20admin.png" alt="Admin panel view" align="middle"/>
 
-- If a whole category is deleted then all of the pictures in that category are deleted too
-- Security: All post methods and their respective views have anti-forgery validation tokens check; the edition and deletion of pictures is allowed to authorized users only who are also the uploaders of the pictures
-- Tags: Every uploaded picture is required to have at least one tag for it:
+- If a whole **category** is **deleted** then **all** of the **pictures** in that category are **deleted too**
+- **Security:** All **post methods** and their respective **views** have **anti-forgery validation** tokens check; the **edition** and **deletion** of pictures is **allowed to authorized** users only who are **also** the **uploaders** of the pictures
+- **Tags:** Every uploaded picture is required to have at **least one tag for** it:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/tags.png" alt="Tags" align="middle"/>
 
-- Display modes: The pictures can be displayed by tags, by categories and individually
-- Browsing: When looking at a picture the user can go to the next/previous picture in that category (if there is such):
+- **Display modes:** The **pictures** can be displayed **by tags**, **by categories** and **individually**
+- **Browsing:** When looking at a picture the user can go to the **next/previous** picture **in that category** (_if there is such_):
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/browsing%20next%20prev.png" alt="Browse buttons" align="middle"/>
 
-- Browsing: When looking at a picture the user can go to the category of the picture and see all pictures there
-- Browsing: When looking at a picture the user can see the user profile of the picture's uploader
+- **Browsing:** When looking at a picture the user **can go to the category of the picture** and see all pictures there
+- **Browsing:** When looking at a picture the user **can see the user profile** of the picture's uploader
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/browsing%20category%20uploader.png" alt="Browse options" align="middle"/>
 
-- Rating system: Every picture can be rated by a user - 1 to 5 stars:
+- **Rating system:** Every picture **can be rated by a user** - 1 to 5 stars:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/rating.png" alt="Rating" align="middle"/>
 
-- A user can rate a picture only once; an uploader can't rate her/his own pictures
-- Validations and notifications: If an invalid data is entered by a user then a notification is shown saying what the error is. "Bootstrap Notifications" NuGet package is used for that feature.
-- Image validation: Image file extension and content validation - when a picture is being uploaded (valid for profile picture too) its content (the file header) is being checked in order to be determined if it is really an image. That way even if a user change the extension of a .txt file for example to .jpg the application will reject the file and won't store it anywhere.
+- A user **can rate** a picture **only** once; an **uploader can't rate her/his own pictures**
+- **Validations and notifications:** If an invalid data is entered by a user then a notification is shown saying what the error is. **"Bootstrap Notifications" NuGet package** is used for that feature.
+- **Image validation:** Image file extension and content validation - when a **picture is being uploaded** (valid for profile picture too) **its content** (the file header) is being checked in order to be determined if it is really an image. That way even if a user **change the extension** of a **.txt** file for example to **.jpg** the application will reject the file and **won't store** it anywhere.
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/pic%20validation.png" alt="Image validaiton message" align="middle"/>
 
-- Default redirect when a non-existent URL is entered - custom view for ERROR 404 is showed allowing the user to go back to the home page:
+- **Default redirect** when a **non-existent URL** is entered - custom view for **ERROR 404** is showed allowing the user to go back to the home page:
 
 <img src="https://raw.githubusercontent.com/SoftwareFans/AstroPhotoGallery/master/RepoPics/error404%20custom%20view.png" alt="Error 404 custom view" align="middle"/>
 	
