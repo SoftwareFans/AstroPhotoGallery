@@ -21,6 +21,17 @@ namespace AstroPhotoGallery.Controllers
 
             using (var db = new GalleryDbContext())
             {
+                var requestedTag = db.Tags
+                    .Include(t => t.Pictures.Select(p => p.Tags))
+                    .Include(t => t.Pictures.Select(p => p.PicUploader))
+                    .FirstOrDefault(t => t.Id == id);
+
+                if (requestedTag == null)
+                {
+                    this.AddNotification("Such a tag does not exist.", NotificationType.ERROR);
+                    return RedirectToAction("Index", "Home");
+                }
+
                 //Get pictures from db
                 var pictures = db.Tags
                     .Include(t => t.Pictures.Select(p => p.Tags))
