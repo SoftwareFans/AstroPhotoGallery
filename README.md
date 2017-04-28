@@ -8,7 +8,7 @@ Due to the small experience of the developers when the project was created, it d
 
 The beautiful **pictures** are separated **by categories**. They can be **searched** by tags or by categories.
 
-#### More details and features:
+## More details and features:
 
 - **Hosting:** The application is temporarily hosted on **Microsoft Azure** - http://astrogallery.azurewebsites.net/
 - **General look:** **Bootstrap Solar** theme is being **used** for the general look and style of the application(_2-3 elements of it have been slightly customized - e.g. color, padding_). The site is completely **responsive** on all types of screens(_tested on smartphone, laptop, TV_).
