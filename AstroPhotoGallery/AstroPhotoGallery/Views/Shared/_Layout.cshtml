@@ -83,3 +83,8 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+<script>
+    $(".alert").delay(5000).slideUp(400, function () {
+        $(this).alert('close');
+    });
+</script>
