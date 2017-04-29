@@ -63,7 +63,7 @@
 
 @* JS script for checking the currently selected file for upload and generating a message if it is bigger than 4 MB (the default .net framework value). May not work on old browsers.*@
 
-@*<script>
+<script>
     $('#image').bind('change', function () {
 
         if (this.files[0].size > 4194304) {
@@ -73,4 +73,4 @@
             document.getElementById("image").value = "";
         }
     });
-</script>*@
+</script>
