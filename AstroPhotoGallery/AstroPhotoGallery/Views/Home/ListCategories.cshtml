@@ -15,7 +15,7 @@
             <div class="thumbnail">          
                     @if (category.Pictures.Any(p => p.CategoryId == category.Id))
                     {
-                        <a href="@Url.Action("ListPictures", "Home", new {id = category.Id})"><img class="img-responsive" alt="Astro picture" src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px"></a>
+                        <a href="@Url.Action("ListPictures", "Home", new {id = category.Id})"><img class="img-responsive" alt="Astro picture" src="@Url.Content(category.Pictures.Where(p => p.CategoryId == category.Id).FirstOrDefault().ImagePath)" style="width: auto; height:240px"></a>
                     }
                     else
                     {

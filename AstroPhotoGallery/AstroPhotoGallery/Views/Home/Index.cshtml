@@ -65,14 +65,16 @@
                     start = Model.Count / 2;
                     length = Model.Count;
                 }
-                
+
                 @for (int j = start; j < length; j++)
                 {
                     <div class="col-sm-4">
                         <div class="thumbnail">
                             @if (Model[j].Pictures.Any(p => p.CategoryId == Model[j].Id))
                             {
-                                <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" style="width: 360px; height:270px" alt="Category first pic" />
+                                <a href="@Url.Action("ListPictures", "Home", new { id = Model[j].Id })">
+                                    <img src="@Url.Content(Model[j].Pictures.Where(p => p.CategoryId == Model[j].Id).FirstOrDefault().ImagePath)" style="width: auto; height:240px" alt="Category first pic" />
+                                </a>
                             }
                             else
                             {
@@ -80,7 +82,7 @@
                             }
                         </div>
                         <h3>@Model[j].Name</h3>
-                        @Html.ActionLink("All pictures", "ListPictures", new { @id = Model[j].Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("All pictures", "ListPictures", new { id = Model[j].Id }, new { @class = "btn btn-primary" })
                         <br />
 
                         @if (j < length - 1)
@@ -90,10 +92,10 @@
                     </div>
                 }
             </div>
-                    if (i == 0)
-                    {
-                        <br />
-                    }
+            if (i == 0)
+            {
+                <br />
+            }
         }
     </div>
 </div>
