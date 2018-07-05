@@ -4,6 +4,7 @@ using PagedList;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using AstroPhotoGallery.Data;
 
 namespace AstroPhotoGallery.Controllers
 {

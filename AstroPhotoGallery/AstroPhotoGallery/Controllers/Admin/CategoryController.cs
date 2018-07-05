@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;

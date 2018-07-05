@@ -4,13 +4,14 @@ using System.Web;
 using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AstroPhotoGallery.Migrations
 {
-    public sealed class Configuration : DbMigrationsConfiguration<AstroPhotoGallery.Models.GalleryDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<AstroPhotoGallery.Data.GalleryDbContext>
     {
         public Configuration()
         {

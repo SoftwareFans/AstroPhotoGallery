@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
 using System.Data.Entity;
 using System.IO;
+using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Extensions;
 
 namespace AstroPhotoGallery.Controllers

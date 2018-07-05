@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Models;
 using AstroPhotoGallery.Extensions;
 using Microsoft.AspNet.Identity;

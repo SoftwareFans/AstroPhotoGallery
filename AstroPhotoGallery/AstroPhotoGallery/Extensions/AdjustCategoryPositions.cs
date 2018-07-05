@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AstroPhotoGallery.Models;
 using System.Data.Entity;
+using AstroPhotoGallery.Data;
 
 namespace AstroPhotoGallery.Extensions
 {

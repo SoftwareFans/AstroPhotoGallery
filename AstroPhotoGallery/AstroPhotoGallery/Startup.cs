@@ -3,6 +3,7 @@ using AstroPhotoGallery.Models;
 using Microsoft.Owin;
 using Owin;
 using System.Data.Entity;
+using AstroPhotoGallery.Data;
 
 [assembly: OwinStartupAttribute(typeof(AstroPhotoGallery.Startup))]
 namespace AstroPhotoGallery
