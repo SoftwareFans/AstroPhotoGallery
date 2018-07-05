@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9853978-9976-4309-B7E3-C17223A58039}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AstroPhotoGallery</RootNamespace>
+    <AssemblyName>AstroPhotoGallery</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\Admin\CategoryController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PictureController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
+    <Compile Include="Extensions\AdjustCategoryPositions.cs" />
+    <Compile Include="Extensions\ImageValidator.cs" />
+    <Compile Include="Extensions\NotificationExtensions.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EditUserViewModel.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PictureViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\images\astroPics\.gitignore" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2005_01_25_Moon_Halo_b.jpg" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2006_03_29_TSE_1c_b.jpg" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2007_07_02_Noctilucent_Clouds_b.jpg" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2008_01_09_Solar_Halo_b.jpg" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2008_08_05_Cr_rays_b.jpg" />
+    <Content Include="Content\images\astroPics\Atmospheric phenomena\2011_08_29_Crepuscular_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\Garradd_NGC6408_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\IC342_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M101_LRGB_F6.3_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M104_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M106_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M109_LRGB_6.3_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M31_300mm_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M51_LRGB_F6.3_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M61_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M64_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M65_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M66_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M77_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M77_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M81_6.3_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M83_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M94_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M95_m.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\M96_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC2403_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC253_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC3310_RGB_2m_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC5981_2_5_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC6946_LRGB_F6.3_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC7331_Stephan_b.jpg" />
+    <Content Include="Content\images\astroPics\Galaxies\NGC891_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\1997_04_01_Hale-Bopp_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2007_08_07_Milky_Way_Jupiter_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2007_08_08_Meteor_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2007_08_09_Meteor_Orion_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2008_08_03_Moon_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2008_08_05_Cr_rays_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2008_12_01_Venus_Moon_Jupiter_1_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2009_08_17_Moon_Venus_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2010_08_07_M42_Rising_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2010_08_12_Perseids_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2010_09_15_Meteor_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2011_06_15_TLE_4_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2011_07_25_Panorama1_b.jpg" />
+    <Content Include="Content\images\astroPics\Landscapes\2011_08_12_Meteor_Jupiter_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\2011_08_23_Cygnus_Loop_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\B33_M42_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\Gamma-Cygni-region_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC1396_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC1805_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC1805_IC1848_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC1848_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC2177_Ha_RGB_new_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC405_HLRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC443_HSO_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC5067_S2_Ha_O3_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\IC5146_LRGB_2011_Crop_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M01_ASA_RCC_2012_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M08_RGB_Ha_O3_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M16_HORGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M20_6.8_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M27_RGB_Ha_O3_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M42_RGB_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M45_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M57_RGB_2m_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\M76_HaLRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC1333_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC1499_HaLRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC2170_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC2237_HO_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC2264_HaGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC2359_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC281_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6334_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6559_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6589_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6820_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6888_HaSRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6914_LRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6960_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6979_HaLRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC6992_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7000_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7023_LRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7293_HaLRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7380_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7538_HOLRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\NGC7635_HLRGB_2011_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\Sh2-101_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\Sh2-115_HLRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\Sh2_170_SHORGB_V_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\Simeis147_SHO_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\VdB12_13_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\VdB14_VdB15_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Nebulae\VdB16_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\1997_03_26_Hale-Bopp_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\1999_08_11_TSE_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2004_06_08_Venus_Transit_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2007_11_08_Holmes_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2009_07_22_TSE_Canon40D_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2010_08_14_Perseid_Pleiades_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2011_06_15_TLE_1_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2011_08_28_Sun_Ha_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\2011_11_04_ZL_Meteor_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\Garradd_2011_10_27_b.jpg" />
+    <Content Include="Content\images\astroPics\Solar system\Moon_2011.10.31_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M02_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M04_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M09_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M10_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M12_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M13_Crop_2_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M14_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M15_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M22_LRGB_Schmidt_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M36_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M37_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M38_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M44_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M45_2010_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M56_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M67_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M68_LRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\M92_F_63_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\NGC-7635_HaRGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\NGC2264_HaGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\NGC6946_LRGB_wide_b.jpg" />
+    <Content Include="Content\images\astroPics\Star clusters\NGC869_NGC884_RGB_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2007_08_07_Milky-Way_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2009_08_19_Gamma_Cygni_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2009_08_21_NGC869_884_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2009_08_22_M16_M17_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2011_07_25_M8_M20_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2011_07_25_M8_M20_NGC6559_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2011_08_23_Cygnus_Loop_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2011_08_23_Gamma_Cyg_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\2011_09_01_Deneb_b.jpg" />
+    <Content Include="Content\images\astroPics\Wide angle images\M45_LRGB_2011_b.jpg" />
+    <Content Include="Content\images\blank-profile-picture.png" />
+    <Content Include="Content\images\default-gallery-image.jpg" />
+    <Content Include="Content\images\GeorgiProfilePic.jpg" />
+    <Content Include="Content\images\IC2177_Ha_RGB_new_b.jpg" />
+    <Content Include="Content\images\IC443_HSO_com_b.jpg" />
+    <Content Include="Content\images\NGC2237_New_b.jpg" />
+    <Content Include="Content\images\planet.png" />
+    <Content Include="Content\images\profilePics\.gitignore" />
+    <Content Include="Content\images\profilePics\6df697a4-36bd-483a-b5eb-616309f21e7c\profilepic.jpg" />
+    <Content Include="Content\images\sliderImages\atmospheric_phenomena.jpg" />
+    <Content Include="Content\images\sliderImages\galaxy.jpg" />
+    <Content Include="Content\images\sliderImages\landscape.jpg" />
+    <Content Include="Content\images\sliderImages\nebulae.jpg" />
+    <Content Include="Content\images\sliderImages\solar_system.jpg" />
+    <Content Include="Content\images\sliderImages\star_cluster.jpg" />
+    <Content Include="Content\images\sliderImages\wide_angle_image.jpg" />
+    <Content Include="Content\images\star-empty.png" />
+    <Content Include="Content\images\star-full.png" />
+    <Content Include="Content\images\StefkaProfilePic.jpg" />
+    <Content Include="Scripts\browseButton.js" />
+    <Content Include="Content\browseButtonStyles.css" />
+    <Content Include="Content\galleryListStyles.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Content\mainpage.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\astrogallery - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\astrogallery - Web Deploy.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\MyProfile.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Picture\Details.cshtml" />
+    <Content Include="Views\Picture\Upload.cshtml" />
+    <Content Include="Views\Picture\Delete.cshtml" />
+    <Content Include="Views\Picture\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Home\ListCategories.cshtml" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Tag\ListPicsWithTag.cshtml" />
+    <Content Include="Views\Account\ShowProfile.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contacts.cshtml" />
+    <Content Include="Views\Home\ListPictures.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Picture\ShowUserPics.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\images\astroPics\Other\" />
+    <Folder Include="Views\Reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj">
+      <Project>{2C3834CA-E830-47EE-AD61-D9866070C44B}</Project>
+      <Name>AstroPhotoGallery.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AstroPhotoGallery.Models\AstroPhotoGallery.Models.csproj">
+      <Project>{c2ca2d62-298d-493f-98df-6e45d54eb773}</Project>
+      <Name>AstroPhotoGallery.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62250</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62250/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
