@@ -10,7 +10,6 @@ The beautiful **pictures** are separated **by categories**. They can be **search
 
 ## More details and features:
 
-- **Hosting:** The application is temporarily hosted on **Microsoft Azure** - http://astrogallery.azurewebsites.net/
 - **General look:** **Bootstrap Solar** theme is being **used** for the general look and style of the application(_2-3 elements of it have been slightly customized - e.g. color, padding_). The site is completely **responsive** on all types of screens(_tested on smartphone, laptop, TV_).
 - **Authentication:** Users can **register** and **log in** to the site with **email** (username) and **password**
 - **Seed at first startup:** Default administrator user account **"admin@astrogallery.net"**, roles **"Admin"** and **"User"** and category **"Other"** are being created in the database during the first start of the project 
