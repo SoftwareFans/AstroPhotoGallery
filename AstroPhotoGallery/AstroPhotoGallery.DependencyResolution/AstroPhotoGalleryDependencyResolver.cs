@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace AstroPhotoGallery.DependencyResolution
 {
-    public class DependencyResolver
+    public class AstroPhotoGalleryDependencyResolver
     {
         public static IDependencyResolver WebDependencyResolver()
         {

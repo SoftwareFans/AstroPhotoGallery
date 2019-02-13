@@ -3,17 +3,26 @@ using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Web.Extensions;
-using AstroPhotoGallery.Models;
+using AstroPhotoGallery.Services.Interfaces;
 using PagedList;
 
 namespace AstroPhotoGallery.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ITestService _test;
+
+        public HomeController(ITestService test)
+        {
+            this._test = test;
+        }
+
         //
         //GET: Home/Index
         public ActionResult Index()
         {
+            var test = this._test.GetData();
+
             using (var db = new GalleryDbContext())
             {
                 //Get pictures from database

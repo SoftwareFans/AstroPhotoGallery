@@ -5,13 +5,15 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.Web", "AstroPhotoGallery\AstroPhotoGallery.Web.csproj", "{E9853978-9976-4309-B7E3-C17223A58039}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroPhotoGallery.Services", "AstroPhotoGallery.Services\AstroPhotoGallery.Services.csproj", "{20FBC9F6-2B95-4D23-A055-B315180ABAFB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroPhotoGallery.Data", "AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj", "{2C3834CA-E830-47EE-AD61-D9866070C44B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.Models", "AstroPhotoGallery.Models\AstroPhotoGallery.Models.csproj", "{9EFE46BF-0D67-4410-98C5-6AC99FAE0CF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.DependencyResolution", "AstroPhotoGallery.DependencyResolution\AstroPhotoGallery.DependencyResolution.csproj", "{91AD9D13-9894-4E7D-A0C7-BC1B6819C2CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.Services.Interfaces", "AstroPhotoGallery.Services.Interfaces\AstroPhotoGallery.Services.Interfaces.csproj", "{55999D16-AEE2-4858-8EFB-8A76FCB96296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.Services", "AstroPhotoGallery.Services\AstroPhotoGallery.Services.csproj", "{BEDEDBC1-85E8-4800-B0A4-817D21AA96BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroPhotoGallery.Data", "AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj", "{E10EFB0E-B3A0-4D02-B5C1-CA7946EB6E17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +25,6 @@ Global
 		{E9853978-9976-4309-B7E3-C17223A58039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9853978-9976-4309-B7E3-C17223A58039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9853978-9976-4309-B7E3-C17223A58039}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20FBC9F6-2B95-4D23-A055-B315180ABAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20FBC9F6-2B95-4D23-A055-B315180ABAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20FBC9F6-2B95-4D23-A055-B315180ABAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20FBC9F6-2B95-4D23-A055-B315180ABAFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C3834CA-E830-47EE-AD61-D9866070C44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C3834CA-E830-47EE-AD61-D9866070C44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C3834CA-E830-47EE-AD61-D9866070C44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C3834CA-E830-47EE-AD61-D9866070C44B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9EFE46BF-0D67-4410-98C5-6AC99FAE0CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9EFE46BF-0D67-4410-98C5-6AC99FAE0CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EFE46BF-0D67-4410-98C5-6AC99FAE0CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +33,18 @@ Global
 		{91AD9D13-9894-4E7D-A0C7-BC1B6819C2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91AD9D13-9894-4E7D-A0C7-BC1B6819C2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91AD9D13-9894-4E7D-A0C7-BC1B6819C2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55999D16-AEE2-4858-8EFB-8A76FCB96296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55999D16-AEE2-4858-8EFB-8A76FCB96296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55999D16-AEE2-4858-8EFB-8A76FCB96296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55999D16-AEE2-4858-8EFB-8A76FCB96296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEDEDBC1-85E8-4800-B0A4-817D21AA96BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEDEDBC1-85E8-4800-B0A4-817D21AA96BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEDEDBC1-85E8-4800-B0A4-817D21AA96BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEDEDBC1-85E8-4800-B0A4-817D21AA96BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E10EFB0E-B3A0-4D02-B5C1-CA7946EB6E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E10EFB0E-B3A0-4D02-B5C1-CA7946EB6E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E10EFB0E-B3A0-4D02-B5C1-CA7946EB6E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E10EFB0E-B3A0-4D02-B5C1-CA7946EB6E17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

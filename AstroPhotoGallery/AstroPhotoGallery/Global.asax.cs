@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using AstroPhotoGallery.DependencyResolution;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -12,6 +13,8 @@ namespace AstroPhotoGallery.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            DependencyResolver.SetResolver(AstroPhotoGalleryDependencyResolver.WebDependencyResolver());
         }
     }
 }

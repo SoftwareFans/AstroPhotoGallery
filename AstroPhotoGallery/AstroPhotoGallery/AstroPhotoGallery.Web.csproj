@@ -488,12 +488,20 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj">
-      <Project>{2C3834CA-E830-47EE-AD61-D9866070C44B}</Project>
+      <Project>{e10efb0e-b3a0-4d02-b5c1-ca7946eb6e17}</Project>
       <Name>AstroPhotoGallery.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AstroPhotoGallery.DependencyResolution\AstroPhotoGallery.DependencyResolution.csproj">
+      <Project>{91ad9d13-9894-4e7d-a0c7-bc1b6819c2ca}</Project>
+      <Name>AstroPhotoGallery.DependencyResolution</Name>
     </ProjectReference>
     <ProjectReference Include="..\AstroPhotoGallery.Models\AstroPhotoGallery.Models.csproj">
       <Project>{9efe46bf-0d67-4410-98c5-6ac99fae0cf7}</Project>
       <Name>AstroPhotoGallery.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AstroPhotoGallery.Services.Interfaces\AstroPhotoGallery.Services.Interfaces.csproj">
+      <Project>{55999d16-aee2-4858-8efb-8a76fcb96296}</Project>
+      <Name>AstroPhotoGallery.Services.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

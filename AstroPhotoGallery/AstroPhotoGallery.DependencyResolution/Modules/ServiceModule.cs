@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AstroPhotoGallery.Services;
 using Autofac;
 
 namespace AstroPhotoGallery.DependencyResolution.Modules
@@ -7,7 +8,7 @@ namespace AstroPhotoGallery.DependencyResolution.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-           // TestService obj = null; TODO: make service
+            TestService obj = null;// requred => loading services assembly !!! 
 
             //Resolve Services
             var executingServicesAssembly = System.Reflection.Assembly.Load("AstroPhotoGallery.Services");

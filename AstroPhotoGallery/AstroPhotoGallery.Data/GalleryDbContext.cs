@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
-using AstroPhotoGallery.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using AstroPhotoGallery.Models;
 
 namespace AstroPhotoGallery.Data
 {
