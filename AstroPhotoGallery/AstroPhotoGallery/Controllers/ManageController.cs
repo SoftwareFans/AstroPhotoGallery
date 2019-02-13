@@ -5,10 +5,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using AstroPhotoGallery.Models;
-using AstroPhotoGallery.Extensions;
+using AstroPhotoGallery.Web.Models;
+using AstroPhotoGallery.Web.Extensions;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller

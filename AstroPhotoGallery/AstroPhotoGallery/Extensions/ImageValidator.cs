@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace AstroPhotoGallery.Extensions
+namespace AstroPhotoGallery.Web.Extensions
 {
     // Class for image validation based on the headers of the files themselves. Even if a user change the extension of a file to .jpg for example, the file won't be accepted - its file header won't be corresponding to the headers of image types JPG, JPEG, PNG, BMP, ICO (others can be easily added in method IsStreamValid).
 

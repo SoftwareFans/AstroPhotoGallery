@@ -7,7 +7,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using AstroPhotoGallery.Models;
 
-namespace AstroPhotoGallery
+namespace AstroPhotoGallery.Web
 {
     public partial class Startup
     {

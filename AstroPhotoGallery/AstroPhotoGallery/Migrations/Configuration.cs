@@ -9,7 +9,7 @@ using AstroPhotoGallery.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace AstroPhotoGallery.Migrations
+namespace AstroPhotoGallery.Web.Migrations
 {
     public sealed class Configuration : DbMigrationsConfiguration<AstroPhotoGallery.Data.GalleryDbContext>
     {

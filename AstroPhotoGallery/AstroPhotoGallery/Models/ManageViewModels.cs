@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace AstroPhotoGallery.Models
+namespace AstroPhotoGallery.Web.Models
 {
 
     public class IndexViewModel

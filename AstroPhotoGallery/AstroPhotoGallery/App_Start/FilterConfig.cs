@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace AstroPhotoGallery
+namespace AstroPhotoGallery.Web
 {
     public class FilterConfig
     {

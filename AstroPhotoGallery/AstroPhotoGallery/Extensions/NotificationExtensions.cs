@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace AstroPhotoGallery.Extensions
+namespace AstroPhotoGallery.Web.Extensions
 {
     /*                                                                      *
      *      This extension was derive from Brad Christie's answer           *

@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace AstroPhotoGallery
+namespace AstroPhotoGallery.Web
 {
     public class RouteConfig
     {

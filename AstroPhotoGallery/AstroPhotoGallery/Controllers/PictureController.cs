@@ -6,11 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Models;
-using AstroPhotoGallery.Extensions;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using AstroPhotoGallery.Web.Models;
+using AstroPhotoGallery.Web.Extensions;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     public class PictureController : Controller
     {

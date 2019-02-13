@@ -6,14 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
-using AstroPhotoGallery.Extensions;
+using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using PagedList;
+using AstroPhotoGallery.Web.Models;
 
-namespace AstroPhotoGallery.Controllers.Admin
+namespace AstroPhotoGallery.Web.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     public class UserController : Controller

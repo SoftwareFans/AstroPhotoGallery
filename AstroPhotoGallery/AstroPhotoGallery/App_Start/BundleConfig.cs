@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace AstroPhotoGallery
+namespace AstroPhotoGallery.Web
 {
     public class BundleConfig
     {

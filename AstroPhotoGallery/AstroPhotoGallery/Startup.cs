@@ -1,12 +1,11 @@
-﻿using AstroPhotoGallery.Migrations;
-using AstroPhotoGallery.Models;
+﻿using AstroPhotoGallery.Web.Migrations;
 using Microsoft.Owin;
 using Owin;
 using System.Data.Entity;
 using AstroPhotoGallery.Data;
 
-[assembly: OwinStartupAttribute(typeof(AstroPhotoGallery.Startup))]
-namespace AstroPhotoGallery
+[assembly: OwinStartupAttribute(typeof(AstroPhotoGallery.Web.Startup))]
+namespace AstroPhotoGallery.Web
 {
     public partial class Startup
     {

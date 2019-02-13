@@ -9,7 +9,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using AstroPhotoGallery.Models;
 
-namespace AstroPhotoGallery
+namespace AstroPhotoGallery.Web
 {
     public class EmailService : IIdentityMessageService
     {

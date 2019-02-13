@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
-using AstroPhotoGallery.Extensions;
+using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     public class ErrorController : Controller
     {

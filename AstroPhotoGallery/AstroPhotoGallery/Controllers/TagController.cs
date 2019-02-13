@@ -1,4 +1,4 @@
-﻿using AstroPhotoGallery.Extensions;
+﻿using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
 using System.Data.Entity;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     public class TagController : Controller
     {

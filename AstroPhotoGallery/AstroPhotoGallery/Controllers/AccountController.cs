@@ -9,9 +9,10 @@ using AstroPhotoGallery.Models;
 using System.Data.Entity;
 using System.IO;
 using AstroPhotoGallery.Data;
-using AstroPhotoGallery.Extensions;
+using AstroPhotoGallery.Web.Extensions;
+using AstroPhotoGallery.Web.Models;
 
-namespace AstroPhotoGallery.Controllers
+namespace AstroPhotoGallery.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller

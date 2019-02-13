@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using AstroPhotoGallery.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AstroPhotoGallery.Models
+namespace AstroPhotoGallery.Web.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

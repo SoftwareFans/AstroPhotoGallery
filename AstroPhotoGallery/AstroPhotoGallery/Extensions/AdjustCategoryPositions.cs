@@ -3,7 +3,7 @@ using AstroPhotoGallery.Models;
 using System.Data.Entity;
 using AstroPhotoGallery.Data;
 
-namespace AstroPhotoGallery.Extensions
+namespace AstroPhotoGallery.Web.Extensions
 {
     // Class for adjusting the positional boolean variables of a pic required for the "Next" and "Previous" buttons and methods
 

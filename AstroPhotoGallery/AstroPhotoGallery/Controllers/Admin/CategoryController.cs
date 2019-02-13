@@ -3,11 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Data;
-using AstroPhotoGallery.Extensions;
+using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
 
-namespace AstroPhotoGallery.Controllers.Admin
+namespace AstroPhotoGallery.Web.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
