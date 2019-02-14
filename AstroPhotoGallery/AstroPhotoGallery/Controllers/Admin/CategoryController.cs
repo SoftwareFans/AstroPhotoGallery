@@ -6,18 +6,31 @@ using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
+using static AstroPhotoGallery.Common.Globals;
+using AstroPhotoGallery.Services.Interfaces.Admin;
+using System.Threading.Tasks;
 
 namespace AstroPhotoGallery.Web.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = UserRoleDef.Admin)]
     public class CategoryController : Controller
     {
-        //
-        //GET: Category
-        public ActionResult Index(string sortOrder, string searchedCategory, string currentFilter, int? page)
+        private readonly ICategoryService _categoryService;
+
+        private const string OrderNameDesc = "Name_desc";
+        private const int PageSize = 10;
+        private const int DefaultPageStartNumber = 1;
+
+        public CategoryController(ICategoryService categoryService)
+        {
+            this._categoryService = categoryService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Index(string sortOrder, string searchedCategory, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.Name = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : string.Empty;
+            ViewBag.Name = string.IsNullOrEmpty(sortOrder) ? OrderNameDesc : string.Empty;
 
             if (searchedCategory != null)
             {
@@ -30,33 +43,33 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
             ViewBag.CurrentFilter = searchedCategory;
 
-            using (var db = new GalleryDbContext())
+            var categories = await this._categoryService.GetGategoriesAsync();
+
+            if (!string.IsNullOrEmpty(searchedCategory))
             {
+                var searchedCategoryToLower = searchedCategory.ToLower();
+                categories = categories.Where(c => c.Name.ToLower().Contains(searchedCategoryToLower));
 
-                var categories = db.Categories.ToList();
-
-                if (!string.IsNullOrEmpty(searchedCategory))
+                if (categories.Count() == 0)
                 {
-                    categories = categories.Where(c => c.Name.ToLower().Contains(searchedCategory.ToLower())).ToList();
-
-                    if (categories.Count == 0)
-                    {
-                        this.AddNotification("No categories containing this string were found..", NotificationType.INFO);
-                    }
+                    //TODO: resources
+                    this.AddNotification("No categories containing this string were found..", NotificationType.INFO);
                 }
-
-                switch (sortOrder)
-                {
-                    case "Name_desc":
-                        categories = categories.OrderByDescending(s => s.Name).ToList();
-                        break;
-                }
-
-                int pageSize = 10;
-                int pageNumber = (page ?? 1);
-
-                return View(categories.ToPagedList(pageNumber, pageSize));
             }
+
+            if (sortOrder == OrderNameDesc)
+            {
+                categories = categories.OrderByDescending(s => s.Name);
+            }
+            else
+            {
+                categories = categories.OrderBy(s => s.Id); //  Default order
+            }
+
+            int pageSize = PageSize;
+            int pageNumber = (page ?? DefaultPageStartNumber);
+
+            return View(categories.ToPagedList(pageNumber, pageSize));
         }
 
         //

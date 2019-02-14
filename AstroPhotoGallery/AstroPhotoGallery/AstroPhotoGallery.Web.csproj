@@ -493,6 +493,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AstroPhotoGallery.Common\AstroPhotoGallery.Common.csproj">
+      <Project>{b87eb0a1-845a-48ec-8644-a09919bb816e}</Project>
+      <Name>AstroPhotoGallery.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj">
       <Project>{e10efb0e-b3a0-4d02-b5c1-ca7946eb6e17}</Project>
       <Name>AstroPhotoGallery.Data</Name>

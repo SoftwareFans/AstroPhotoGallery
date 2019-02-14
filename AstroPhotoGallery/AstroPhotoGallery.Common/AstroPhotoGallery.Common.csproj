@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{55999D16-AEE2-4858-8EFB-8A76FCB96296}</ProjectGuid>
+    <ProjectGuid>{B87EB0A1-845A-48EC-8644-A09919BB816E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AstroPhotoGallery.Services.Interfaces</RootNamespace>
-    <AssemblyName>AstroPhotoGallery.Services.Interfaces</AssemblyName>
+    <RootNamespace>AstroPhotoGallery.Common</RootNamespace>
+    <AssemblyName>AstroPhotoGallery.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -36,23 +36,13 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\ICategoryService.cs" />
-    <Compile Include="ITestService.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AstroPhotoGallery.Data\AstroPhotoGallery.Data.csproj">
-      <Project>{e10efb0e-b3a0-4d02-b5c1-ca7946eb6e17}</Project>
-      <Name>AstroPhotoGallery.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AstroPhotoGallery.Models\AstroPhotoGallery.Models.csproj">
-      <Project>{9EFE46BF-0D67-4410-98C5-6AC99FAE0CF7}</Project>
-      <Name>AstroPhotoGallery.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
