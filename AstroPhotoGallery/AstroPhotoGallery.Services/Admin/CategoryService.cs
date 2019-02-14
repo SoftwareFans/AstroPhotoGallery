@@ -15,11 +15,35 @@ namespace AstroPhotoGallery.Services.Admin
             this._dbContext = dbContext;
         }
 
+        public async Task<bool> CategoryAlreadyExists(string categoryName)
+        {
+            var allCategories = await this.GetGategoriesAsync();
+
+            var exists = allCategories.Any(x => x.Name == categoryName);
+
+            return exists;
+        }
+
+        public async Task<Category> GetCategoryByIdAsync(int id)
+        {
+            var categories = await this.GetGategoriesAsync();
+
+            var result = categories.FirstOrDefault(x => x.Id == id);
+
+            return result;
+        }
+
         public async Task<IQueryable<Category>> GetGategoriesAsync()
         {
-            var categories = _dbContext.Categories.Select(x=>x); //Make IQueryable
+            var categories = _dbContext.Categories.Select(x=>x); 
 
             return await Task.FromResult(categories);
+        }
+
+        public async Task SaveCategory(Category category)
+        {
+            this._dbContext.Categories.Add(category);
+            await this._dbContext.SaveChangesAsync();
         }
     }
 }

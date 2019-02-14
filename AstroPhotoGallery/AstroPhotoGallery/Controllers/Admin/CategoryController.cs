@@ -9,6 +9,9 @@ using PagedList;
 using static AstroPhotoGallery.Common.Globals;
 using AstroPhotoGallery.Services.Interfaces.Admin;
 using System.Threading.Tasks;
+using AstroPhotoGallery.Models.Category;
+using System;
+using AutoMapper;
 
 namespace AstroPhotoGallery.Web.Controllers.Admin
 {
@@ -57,14 +60,10 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
                 }
             }
 
-            if (sortOrder == OrderNameDesc)
-            {
-                categories = categories.OrderByDescending(s => s.Name);
-            }
-            else
-            {
-                categories = categories.OrderBy(s => s.Id); //  Default order
-            }
+            //Sorting categories by name prop
+            categories = sortOrder == OrderNameDesc ?
+                categories.OrderByDescending(s => s.Name) :
+                categories.OrderBy(s => s.Name);
 
             int pageSize = PageSize;
             int pageNumber = (page ?? DefaultPageStartNumber);
@@ -72,129 +71,118 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
             return View(categories.ToPagedList(pageNumber, pageSize));
         }
 
-        //
-        //GET: Category/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Add()
         {
-            return View();
+            var viewModel = new AddEditCategoryViewModel();
+            viewModel.RequestType = RequestType.Add;
+
+            return View(nameof(Edit), viewModel);
         }
 
-        //
-        //POST: Category/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public async Task<ActionResult> Create(AddEditCategoryViewModel viewModel)
         {
+            await this.CustomModelValidateAddEditCategory(viewModel);
+
             if (ModelState.IsValid)
             {
-                using (var db = new GalleryDbContext())
-                {
-                    if (db.Categories.Any(c => c.Name == category.Name))
-                    {
-                        this.AddNotification("Category with this name already exists.", NotificationType.ERROR);
+                //TODO: set automapper configuration
+                var category = Mapper.Map<AddEditCategoryViewModel, Category>(viewModel);
 
-                        return RedirectToAction("Index");
-                    }
+                await this._categoryService.SaveCategory(category);
 
-                    db.Categories.Add(category);
-                    db.SaveChanges();
+                // Creating the folder of the category on the server
+                var categoryDir = Server.MapPath($"~/Content/images/astroPics/{category.Name}");
+                Directory.CreateDirectory(categoryDir);
 
-                    // Creating the folder of the category on the server
-                    var categoryDir = Server.MapPath($"~/Content/images/astroPics/{category.Name}");
-                    Directory.CreateDirectory(categoryDir);
+                this.AddNotification("Category created.", NotificationType.SUCCESS);
 
-                    this.AddNotification("Category created.", NotificationType.SUCCESS);
-
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return View(category);
-        }
-
-        //
-        //GET: Category/Edit/id
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                this.AddNotification("No category ID provided.", NotificationType.ERROR);
                 return RedirectToAction("Index");
+
             }
 
-            using (var db = new GalleryDbContext())
+            return View(viewModel);
+        }
+       
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var category = await this._categoryService.GetCategoryByIdAsync(id);
+   
+            if (category == null)
             {
-                var category = db.Categories.FirstOrDefault(c => c.Id == id);
-
-                if (category == null)
-                {
-                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("Index");
-                }
-
-                return View(category);
+                //TODO: resources
+                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                return RedirectToAction(nameof(Index));
             }
+
+            var viewModel = Mapper.Map<Category, AddEditCategoryViewModel>(category);
+            viewModel.RequestType = RequestType.Edit;
+            return View(viewModel);
+
         }
 
         //
         //POST: Category/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category category)
+        public async  Task<ActionResult> Edit(AddEditCategoryViewModel viewModel)
         {
+            await this.CustomModelValidateAddEditCategory(viewModel);
             if (ModelState.IsValid)
             {
                 using (var db = new GalleryDbContext())
                 {
-                    if (db.Categories.Any(c => c.Name == category.Name))
-                    {
-                        this.AddNotification("Category with this name already exists.", NotificationType.ERROR);
-                        return RedirectToAction("Index");
-                    }
+                    //TODO
+                    var isAdded = viewModel.RequestType == RequestType.Add;
 
+                    //==================================================
                     // Getting the old name of the category
-                    var categoryFromDb = db.Categories.FirstOrDefault(c => c.Id == category.Id);
-                    if (categoryFromDb == null)
-                    {
-                        this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
-                        return RedirectToAction("Index");
-                    }
+                    //var categoryFromDb = db.Categories.FirstOrDefault(c => c.Id == category.Id);
+                    //if (categoryFromDb == null)
+                    //{
+                    //    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                    //    return RedirectToAction("Index");
+                    //}
 
-                    var categoryOldName = categoryFromDb.Name;
-                    db.Dispose(); // Dispose required in order to use "category" again
+                    //var categoryOldName = categoryFromDb.Name;
+                    //db.Dispose(); // Dispose required in order to use "category" again
 
-                    using (var database = new GalleryDbContext())
-                    {
-                        database.Entry(category).State = EntityState.Modified;
+                    //using (var database = new GalleryDbContext())
+                    //{
+                    //    database.Entry(category).State = EntityState.Modified;
 
-                        var catOldDir = Server.MapPath($"/Content/images/astroPics/{categoryOldName}/");
-                        var catNewDir = Server.MapPath($"/Content/images/astroPics/{category.Name}/");
-                        // Rename(move) the category's directory + all pics in it
-                        Directory.Move(catOldDir, catNewDir);
+                    //    var catOldDir = Server.MapPath($"/Content/images/astroPics/{categoryOldName}/");
+                    //    var catNewDir = Server.MapPath($"/Content/images/astroPics/{category.Name}/");
+                    //    // Rename(move) the category's directory + all pics in it
+                    //    Directory.Move(catOldDir, catNewDir);
 
-                        // When the name of a category is being changed all the pictures in that category in DB must be changed:
-                        var picsToBeChanged = database.Pictures
-                            .Where(p => p.CategoryId == category.Id)
-                            .ToList();
+                    //    // When the name of a category is being changed all the pictures in that category in DB must be changed:
+                    //    var picsToBeChanged = database.Pictures
+                    //        .Where(p => p.CategoryId == category.Id)
+                    //        .ToList();
 
-                        foreach (var pic in picsToBeChanged)
-                        {
-                            pic.CategoryName = category.Name;
-                            var picFileName = pic.ImagePath.Substring(pic.ImagePath.LastIndexOf('/') + 1);
-                            pic.ImagePath = $"~/Content/images/astroPics/{category.Name}/{picFileName}";
+                    //    foreach (var pic in picsToBeChanged)
+                    //    {
+                    //        pic.CategoryName = category.Name;
+                    //        var picFileName = pic.ImagePath.Substring(pic.ImagePath.LastIndexOf('/') + 1);
+                    //        pic.ImagePath = $"~/Content/images/astroPics/{category.Name}/{picFileName}";
 
-                            database.Entry(pic).State = EntityState.Modified;
-                        }
+                    //        database.Entry(pic).State = EntityState.Modified;
+                    //    }
 
-                        database.SaveChanges();
+                    //    database.SaveChanges();
 
-                        this.AddNotification("Category edited.", NotificationType.SUCCESS);
+                    //    this.AddNotification("Category edited.", NotificationType.SUCCESS);
 
-                        return RedirectToAction("Index");
-                    }
+                    //    return RedirectToAction("Index");
+                    //}
                 }
             }
-            return View(category);
+            return null;
+            //return View(category);
         }
 
         //
@@ -262,6 +250,17 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
                 this.AddNotification("Category deleted.", NotificationType.SUCCESS);
 
                 return RedirectToAction("Index");
+            }
+        }
+
+        private async Task CustomModelValidateAddEditCategory(AddEditCategoryViewModel viewModel)
+        {
+            var categoryName = viewModel.Name;
+            bool categoryExist = await this._categoryService.CategoryAlreadyExists(categoryName);
+
+            if (categoryExist)
+            {
+                ModelState.AddModelError(nameof(viewModel.Name), "Category with this name already exists");
             }
         }
     }

@@ -7,5 +7,11 @@ namespace AstroPhotoGallery.Services.Interfaces.Admin
     public interface ICategoryService
     {
         Task<IQueryable<Category>> GetGategoriesAsync();
+
+        Task<Category> GetCategoryByIdAsync(int id);
+
+        Task<bool> CategoryAlreadyExists(string categoryName);
+
+        Task SaveCategory(Category category);
     }
 }
