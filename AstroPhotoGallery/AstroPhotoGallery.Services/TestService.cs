@@ -15,9 +15,9 @@ namespace AstroPhotoGallery.Services
 
         public string GetData()
         {
-            var test = this._dbContext.Pictures.FirstOrDefault();
+            var test = this._dbContext.Categories.FirstOrDefault();
 
-            var name = test?.CategoryName;
+            var name = test?.Name;
 
             return name;
         }

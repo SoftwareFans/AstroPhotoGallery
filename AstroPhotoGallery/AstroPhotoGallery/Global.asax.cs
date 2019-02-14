@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AstroPhotoGallery.Web.Utility.MapperConfiguration;
 
 namespace AstroPhotoGallery.Web
 {
@@ -15,6 +16,7 @@ namespace AstroPhotoGallery.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             DependencyResolver.SetResolver(AstroPhotoGalleryDependencyResolver.WebDependencyResolver());
+            AutoMapperConfiguration.Configure();
         }
     }
 }

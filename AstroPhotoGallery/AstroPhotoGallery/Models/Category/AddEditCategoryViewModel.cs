@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AstroPhotoGallery.Models.Category
+namespace AstroPhotoGallery.Web.Models.Category
 {
     public class AddEditCategoryViewModel
     {

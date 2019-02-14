@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AstroPhotoGallery.Models
@@ -15,6 +13,7 @@ namespace AstroPhotoGallery.Models
             this.tags = new HashSet<Tag>();
         }
 
+        //TODO: remove this shit
         public Picture(string uploaderId, string title, string description, int categoryId)
         {
             this.PicUploaderId = uploaderId;
@@ -25,20 +24,13 @@ namespace AstroPhotoGallery.Models
             this.tags = new HashSet<Tag>();
         }
 
-        [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [DisplayName("Title")]
         public string PicTitle { get; set; }
 
-        [Required]
-        [StringLength(1300)]
-        [DisplayName("Description")]
         public string PicDescription { get; set; }
 
-        [ForeignKey("PicUploader")]
+        [ForeignKey(nameof(PicUploader))]
         public string PicUploaderId { get; set; }
 
         public virtual ApplicationUser PicUploader { get; set; }
@@ -47,19 +39,17 @@ namespace AstroPhotoGallery.Models
 
         public string ImagePath { get; set; }
 
-        [ForeignKey("Category")]
+        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
+        //TODO: remove we have this in virtual porperty
         public string CategoryName { get; set; }
 
-        public virtual ICollection<Tag> Tags
-        {
-            get { return this.tags; }
-            set { this.tags = value; }
-        }
+        public virtual ICollection<Tag> Tags { get; set; }
 
+        //Remove this... 
         public bool IsUploader(string name)
         {
             return this.PicUploader.UserName.Equals(name);

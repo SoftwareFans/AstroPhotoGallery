@@ -24,7 +24,7 @@ namespace AstroPhotoGallery.Web.Models
         [DisplayName("Category")]
         public int CategoryId { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public ICollection<AstroPhotoGallery.Models.Category> Categories { get; set; }
 
         public string ImagePath { get; set; }
 

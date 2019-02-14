@@ -12,6 +12,10 @@ namespace AstroPhotoGallery.Services.Interfaces.Admin
 
         Task<bool> CategoryAlreadyExists(string categoryName);
 
-        Task SaveCategory(Category category);
+        Task SaveCategory(Category category, bool isAdded);
+
+        Task<string> GetCategoryNameAsync(int categoryId);
+
+        Task UpdateAndSavePicturesFromCategoryAsync(int categoryId, string categoryName);
     }
 }
