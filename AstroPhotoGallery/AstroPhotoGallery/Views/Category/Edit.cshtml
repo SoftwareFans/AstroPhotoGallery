@@ -27,11 +27,11 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x=>x.RequestType)
-            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(m => m.Name, new { @class = "control-label col-sm-4" })
                 <div class="col-sm-4">
                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, null, new { @class = "field-validation-error text-danger"})
                 </div>
             </div>
 

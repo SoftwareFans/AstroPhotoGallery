@@ -226,6 +226,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DirectoryHelper.cs" />
     <Compile Include="Migrations\201902131918577_InitialCreate.cs" />
     <Compile Include="Migrations\201902131918577_InitialCreate.Designer.cs">
       <DependentUpon>201902131918577_InitialCreate.cs</DependentUpon>

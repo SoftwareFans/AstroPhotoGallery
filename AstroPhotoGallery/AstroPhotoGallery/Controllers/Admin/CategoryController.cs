@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using AstroPhotoGallery.Web.Models.Category;
 using System;
 using AutoMapper;
+using AstroPhotoGallery.Common.Resources;
+using AstroPhotoGallery.Web.Helpers;
 
 namespace AstroPhotoGallery.Web.Controllers.Admin
 {
@@ -19,6 +21,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         private readonly ICategoryService _categoryService;
 
         private const string OrderNameDesc = "Name_desc";
+        private static string MainDirectoryPath = "~/Content/images/astroPics/"; //todo: in common if necessary
         private const int PageSize = 10;
         private const int DefaultPageStartNumber = 1;
 
@@ -53,8 +56,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
                 if (!categories.Any())
                 {
-                    //TODO: resources
-                    this.AddNotification("No categories containing this string were found..", NotificationType.INFO);
+                    this.AddNotification(NotificationMessagesRecources.msgNoSearchingCategoryExist, NotificationType.INFO);
                 }
             }
 
@@ -85,8 +87,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
             if (category == null)
             {
-                //TODO: resources
-                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                this.SetNotificationForUnExistingCategory();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -107,26 +108,19 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
                 if (isAdded)
                 {
-                    this.CreateCategoryDirectory(category.Name);
-                    this.AddNotification("Category created.", NotificationType.SUCCESS);
+                    await this.AddCategory(category);
                 }
                 else
                 {
-                    await UpdateCategoryDirecory(category.Id, category.Name);
-
-                    // When the name of a category is being changed 
-                    //all the pictures in that category in DB must be changed
-                    await this._categoryService.UpdateAndSavePicturesFromCategoryAsync(category.Id, category.Name);
-                    this.AddNotification("Category edited.", NotificationType.SUCCESS);
+                    await this.EditCategory(category);
                 }
 
                 await this._categoryService.SaveCategory(category, isAdded);
-
                 return RedirectToAction(nameof(Index));
             }
 
             return View(viewModel);
-        }
+        }          
 
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
@@ -135,7 +129,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
             if (category == null)
             {
-                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                this.SetNotificationForUnExistingCategory();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -152,18 +146,38 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
             if (category == null)
             {
-                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                this.SetNotificationForUnExistingCategory();
                 return RedirectToAction(nameof(Index));
             }
 
             await this._categoryService.RemoveCategoryWithPicsAsync(category);
-
             DeleteCategoryAndPicsFromServer(category.Name);
 
-            this.AddNotification("Category deleted.", NotificationType.SUCCESS);
+            this.AddNotification(NotificationMessagesRecources.msgDeleteCategory, NotificationType.SUCCESS);
 
             return RedirectToAction(nameof(Index));
+        }
 
+        /// <summary>
+        /// Add new category
+        /// </summary>
+        private async Task AddCategory(Category category)
+        {
+            await Task.Run(() => this.CreateCategoryDirectory(category.Name));
+            this.AddNotification(NotificationMessagesRecources.msgCreatedCategory, NotificationType.SUCCESS);
+        }
+
+        /// <summary>
+        /// Edit existing category
+        /// </summary>
+        private async Task EditCategory(Category category)
+        {
+            await UpdateCategoryDirecory(category.Id, category.Name);
+
+            // When the name of a category is being changed 
+            //all the pictures in that category in DB must be changed
+            await this._categoryService.UpdateAndSavePicturesFromCategoryAsync(category.Id, category.Name);
+            this.AddNotification(NotificationMessagesRecources.msgEditedCategory, NotificationType.SUCCESS);
         }
 
         /// <summary>
@@ -173,11 +187,11 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         private async Task CustomModelValidateAddEditCategory(AddEditCategoryViewModel viewModel)
         {
             var categoryName = viewModel.Name;
-            bool categoryExist = await this._categoryService.CategoryAlreadyExists(categoryName);
+            var categoryExist = await this._categoryService.CategoryAlreadyExists(categoryName);
 
             if (categoryExist)
             {
-                ModelState.AddModelError(nameof(viewModel.Name), "Category with this name already exists");
+                ModelState.AddModelError(nameof(viewModel.Name), ValidationModelMessageRecources.msgCategorAlreadyExist);
             }
         }
 
@@ -186,8 +200,8 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         /// </summary>
         private void CreateCategoryDirectory(string categoryName)
         {
-            var categoryDir = Server.MapPath($"~/Content/images/astroPics/{categoryName}");
-            Directory.CreateDirectory(categoryDir);
+            var categoryDir = Server.MapPath($"{MainDirectoryPath}{categoryName}");
+            DirectoryHelper.CreateDirectory(categoryDir);
         }
 
         /// <summary>
@@ -197,10 +211,10 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         {
             var categoryOldName = await this._categoryService.GetCategoryNameAsync(categoryId);
 
-            var catOldDir = Server.MapPath($"/Content/images/astroPics/{categoryOldName}/");
-            var catNewDir = Server.MapPath($"/Content/images/astroPics/{categoryName}/");
+            var catOldDir = Server.MapPath($"{MainDirectoryPath}{categoryOldName}/");
+            var catNewDir = Server.MapPath($"{MainDirectoryPath}{categoryName}/");
 
-            Directory.Move(catOldDir, catNewDir);
+            DirectoryHelper.RenameDirectory(catOldDir, catNewDir);
         }
 
         /// <summary>
@@ -208,7 +222,16 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         /// </summary>
         private void DeleteCategoryAndPicsFromServer(string categoryName)
         {
-            Directory.Delete(Server.MapPath($"~/Content/images/astroPics/{categoryName}"), true);
+            var directoryTyDelete = Server.MapPath($"{MainDirectoryPath}{categoryName}");
+            DirectoryHelper.RemoveDirectory(directoryTyDelete);
+        }
+
+        /// <summary>
+        /// Add notification message for un existing category
+        /// </summary>
+        private void SetNotificationForUnExistingCategory()
+        {
+            this.AddNotification(NotificationMessagesRecources.msgUnExistingCategory, NotificationType.ERROR);
         }
     }
 }

@@ -62,6 +62,5 @@ namespace AstroPhotoGallery.Web.Extensions
         public const string WARNING = "Warning";
         public const string SUCCESS = "Success";
         public const string INFO = "Info";
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Web.Optimization;
+using System.Web.UI;
 
 namespace AstroPhotoGallery.Web
 {
@@ -25,6 +26,10 @@ namespace AstroPhotoGallery.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                "~/Scripts/jquery.validate.js",
+                "~/Scripts/jquery.validate.unobtrusive.js"));
         }
     }
 }
