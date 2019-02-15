@@ -1,17 +1,20 @@
-﻿@model AstroPhotoGallery.Web.Models.Category.DeleteCategoryViewModel
+﻿@using AstroPhotoGallery.Common.Resources
+@using AstroPhotoGallery.Common.Resources.Admin
+@model AstroPhotoGallery.Web.Models.Category.DeleteCategoryViewModel
 @{
-    ViewBag.Title = "Admin - delete category";
+    var heading = CategoryResources.titleDelete;
+    ViewBag.Title = heading;
 }
 
 <div class="container">
     <div class="well">
-        <h2>@ViewBag.Title</h2>
+        <h2>@heading</h2>
         <br/>
         <h3 style="color: #e74c3c; text-align: center">
-            Are you sure you want to delete the below category?
-            <br />
-            <br />
-            All pictures in that category will be deleted too. This can take much time and resources, depending on their count.
+            @CategoryResources.warningDeleteQuestion
+            <br/>
+            <br/>
+            @CategoryResources.warningDeleteMessage
         </h3>
         <br />
         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -26,7 +29,7 @@
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "Index", "Category", new { @class = "btn btn-default" })
+                    @Html.ActionLink(CommonResources.btnCancel, "Index", "Category", new { @class = "btn btn-default" })
                     <input type="submit" value="Delete" class="btn btn-danger" />
                 </div>
             </div>

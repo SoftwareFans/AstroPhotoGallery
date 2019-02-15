@@ -117,49 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnCreateNewCategory" xml:space="preserve">
-    <value>Create a new category</value>
+  <data name="btnCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="lblFindCategoryByName" xml:space="preserve">
-    <value>Find category by name:</value>
+  <data name="btnCreate" xml:space="preserve">
+    <value>Create</value>
   </data>
-  <data name="lblName" xml:space="preserve">
-    <value>Name</value>
+  <data name="btnDelete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="phCategoryName" xml:space="preserve">
-    <value>Category's name</value>
-  </data>
-  <data name="titleActions" xml:space="preserve">
-    <value>Actions</value>
-  </data>
-  <data name="titleAdd" xml:space="preserve">
-    <value>Admin - create a category</value>
-  </data>
-  <data name="titleCategories" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="titleDelete" xml:space="preserve">
-    <value>Admin - delete category</value>
-  </data>
-  <data name="titleEdit" xml:space="preserve">
-    <value>Admin - edit category</value>
-  </data>
-  <data name="titleIndex" xml:space="preserve">
-    <value>Admin - categories</value>
-  </data>
-  <data name="valueSearch" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="warningDeleteMessage" xml:space="preserve">
-    <value>All pictures in that category will be deleted too. This can take much time and resources, depending on their count.</value>
-  </data>
-  <data name="warningDeleteQuestion" xml:space="preserve">
-    <value>Are you sure you want to delete the below category?</value>
-  </data>
-  <data name="warningEditMessage" xml:space="preserve">
-    <value>All pictures in that category will be edited too. This can take much time and resources, depending on their count.</value>
-  </data>
-  <data name="warningEditQuestion" xml:space="preserve">
-    <value>Are you sure you want to edit the below category's name?</value>
+  <data name="btnEdit" xml:space="preserve">
+    <value>Edit</value>
   </data>
 </root>

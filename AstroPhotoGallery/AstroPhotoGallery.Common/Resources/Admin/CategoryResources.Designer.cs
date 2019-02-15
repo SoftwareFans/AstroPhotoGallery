@@ -61,11 +61,137 @@ namespace AstroPhotoGallery.Common.Resources.Admin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create a new category.
+        /// </summary>
+        public static string btnCreateNewCategory {
+            get {
+                return ResourceManager.GetString("btnCreateNewCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find category by name:.
+        /// </summary>
+        public static string lblFindCategoryByName {
+            get {
+                return ResourceManager.GetString("lblFindCategoryByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string lblName {
             get {
                 return ResourceManager.GetString("lblName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category&apos;s name.
+        /// </summary>
+        public static string phCategoryName {
+            get {
+                return ResourceManager.GetString("phCategoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string titleActions {
+            get {
+                return ResourceManager.GetString("titleActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin - create a category.
+        /// </summary>
+        public static string titleAdd {
+            get {
+                return ResourceManager.GetString("titleAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string titleCategories {
+            get {
+                return ResourceManager.GetString("titleCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin - delete category.
+        /// </summary>
+        public static string titleDelete {
+            get {
+                return ResourceManager.GetString("titleDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin - edit category.
+        /// </summary>
+        public static string titleEdit {
+            get {
+                return ResourceManager.GetString("titleEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin - categories.
+        /// </summary>
+        public static string titleIndex {
+            get {
+                return ResourceManager.GetString("titleIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string valueSearch {
+            get {
+                return ResourceManager.GetString("valueSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All pictures in that category will be deleted too. This can take much time and resources, depending on their count..
+        /// </summary>
+        public static string warningDeleteMessage {
+            get {
+                return ResourceManager.GetString("warningDeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the below category?.
+        /// </summary>
+        public static string warningDeleteQuestion {
+            get {
+                return ResourceManager.GetString("warningDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All pictures in that category will be edited too. This can take much time and resources, depending on their count..
+        /// </summary>
+        public static string warningEditMessage {
+            get {
+                return ResourceManager.GetString("warningEditMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to edit the below category&apos;s name?.
+        /// </summary>
+        public static string warningEditQuestion {
+            get {
+                return ResourceManager.GetString("warningEditQuestion", resourceCulture);
             }
         }
     }

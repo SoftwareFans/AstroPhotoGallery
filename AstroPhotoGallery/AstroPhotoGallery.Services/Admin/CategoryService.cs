@@ -16,7 +16,7 @@ namespace AstroPhotoGallery.Services.Admin
             this._dbContext = dbContext;
         }
 
-        public async Task<bool> CategoryAlreadyExists(string categoryName)
+        public async Task<bool> CategoryAlreadyExistsAsync(string categoryName)
         {
             var allCategories = await this.GetGategoriesAsync();
 
@@ -47,7 +47,7 @@ namespace AstroPhotoGallery.Services.Admin
         /// <param name="category">entity</param>
         /// <param name="isAdded">we have add or edit entity</param>
         /// <returns></returns>
-        public async Task SaveCategory(Category category, bool isAdded)
+        public async Task SaveCategoryAsync(Category category, bool isAdded)
         {     
             this._dbContext.Entry(category).State = isAdded ? EntityState.Added : EntityState.Modified;
 

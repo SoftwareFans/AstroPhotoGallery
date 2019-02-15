@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CategoryResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CommonResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\NotificationMessagesRecources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,6 +68,10 @@
     <EmbeddedResource Include="Resources\Admin\CategoryResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CategoryResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CommonResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\NotificationMessagesRecources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

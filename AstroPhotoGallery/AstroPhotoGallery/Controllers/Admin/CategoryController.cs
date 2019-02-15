@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
@@ -115,7 +114,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
                     await this.EditCategory(category);
                 }
 
-                await this._categoryService.SaveCategory(category, isAdded);
+                await this._categoryService.SaveCategoryAsync(category, isAdded);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -169,13 +168,13 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
         /// <summary>
         /// Edit existing category
+        // When the name of a category is being changed 
+        // all the pictures in that category in DB must be changed
         /// </summary>
         private async Task EditCategory(Category category)
         {
-            await UpdateCategoryDirecory(category.Id, category.Name);
+            await UpdateCategoryDirecoryAsync(category.Id, category.Name);
 
-            // When the name of a category is being changed 
-            //all the pictures in that category in DB must be changed
             await this._categoryService.UpdateAndSavePicturesFromCategoryAsync(category.Id, category.Name);
             this.AddNotification(NotificationMessagesRecources.msgEditedCategory, NotificationType.SUCCESS);
         }
@@ -187,7 +186,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
         private async Task CustomModelValidateAddEditCategory(AddEditCategoryViewModel viewModel)
         {
             var categoryName = viewModel.Name;
-            var categoryExist = await this._categoryService.CategoryAlreadyExists(categoryName);
+            var categoryExist = await this._categoryService.CategoryAlreadyExistsAsync(categoryName);
 
             if (categoryExist)
             {
@@ -206,13 +205,17 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
         /// <summary>
         /// Rename(move) the category's directory + all pics in it
+        /// Trim name because if has blank space string throw exception
         /// </summary>
-        private async Task UpdateCategoryDirecory(int categoryId, string categoryName)
+        private async Task UpdateCategoryDirecoryAsync(int categoryId, string categoryName)
         {
             var categoryOldName = await this._categoryService.GetCategoryNameAsync(categoryId);
 
+            var trimEnd = categoryName.TrimEnd();
+            var trimStart = trimEnd.TrimStart();
+
             var catOldDir = Server.MapPath($"{MainDirectoryPath}{categoryOldName}/");
-            var catNewDir = Server.MapPath($"{MainDirectoryPath}{categoryName}/");
+            var catNewDir = Server.MapPath($"{MainDirectoryPath}{trimStart}/");
 
             DirectoryHelper.RenameDirectory(catOldDir, catNewDir);
         }

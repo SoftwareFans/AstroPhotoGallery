@@ -1,12 +1,13 @@
 ﻿@using AstroPhotoGallery.Common
+@using AstroPhotoGallery.Common.Resources
+@using AstroPhotoGallery.Common.Resources.Admin
 @model AstroPhotoGallery.Web.Models.Category.AddEditCategoryViewModel
 
 @{
     var isAdded = Model.RequestType == Globals.RequestType.Add;
 
-    //TODO: resources
-    var heading = isAdded ? "Admin - create a category" : "Admin - edit category";
-    var buttonActionName = isAdded ? "Create" : "Edit";
+    var heading = isAdded ? CategoryResources.titleAdd : CategoryResources.titleEdit;
+    var buttonActionName = isAdded ? CommonResources.btnCreate : CommonResources.btnEdit;
 }
 
 <div class="container">
@@ -15,10 +16,10 @@
         <br />
         <div class="on-edit-category" hidden>
             <h3 style="color: #e74c3c; text-align: center">
-                Are you sure you want to edit the below category's name?
+                @CategoryResources.warningEditQuestion
                 <br />
                 <br />
-                All pictures in that category will be edited too. This can take much time and resources, depending on their count.
+                @CategoryResources.warningEditMessage
             </h3>
         </div>
 

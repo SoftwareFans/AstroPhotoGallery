@@ -1,54 +1,55 @@
 ﻿@model PagedList.IPagedList<AstroPhotoGallery.Models.Category>
+@using AstroPhotoGallery.Common.Resources
+@using AstroPhotoGallery.Common.Resources.Admin
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Admin - categories";
+    var heading = CategoryResources.titleIndex;
+    ViewBag.Title = heading;
 }
 
 <div class="container">
     <div class="well">
         @using (Html.BeginForm("Index", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-            {
+        {
             <div class="container-fluid">
-                <h2>Categories</h2>
+                <h2>@CategoryResources.titleCategories</h2>
             </div>
             <hr />
-                <div class="form-group">
-                    @Html.Label("Find category by name:", new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-3">
-                        @Html.TextBox("searchedCategory", null, new { @class = "form-control", placeholder = "Category's name" })
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="submit" value="Search" class="btn btn-default" />
-                    </div>
+            <div class="form-group">
+                @Html.Label(CategoryResources.lblFindCategoryByName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-3">
+                    @Html.TextBox("searchedCategory", null, new { @class = "form-control", placeholder = CategoryResources.phCategoryName })
                 </div>
+                <div class="col-sm-2">
+                    <input type="submit" value="@CategoryResources.valueSearch" class="btn btn-default" />
+                </div>
+            </div>
         }
         <div class="row container-fluid">
-            <span class="pull-right">@Html.ActionLink("Create a new category", "Add", "Category", new { @class = "btn btn-primary" })</span>
+            <span class="pull-right">@Html.ActionLink(CategoryResources.btnCreateNewCategory, "Add", "Category", new { @class = "btn btn-primary" })</span>
         </div>
 
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>
-                            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.Name })
-                        </th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.Name})
+                    </th>
+                    <th>@CategoryResources.titleActions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var category in Model)
-                    {
-                        <tr>
-                            <td>@category.Id</td>
-                            <td>@category.Name</td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", "Category", new { @id = category.Id }, new { @class = "btn btn-success btn-md" })
-                                @Html.ActionLink("Delete", "Delete", "Category", new { @id = category.Id }, new { @class = "btn btn-danger btn-md" })
-                            </td>
-                        </tr>
-                    }
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td>
+                            @Html.ActionLink(CommonResources.btnEdit, "Edit", "Category", new {id = category.Id}, new {@class = "btn btn-success"})
+                            @Html.ActionLink(CommonResources.btnDelete, "Delete", "Category", new {id = category.Id}, new {@class = "btn btn-danger"})
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

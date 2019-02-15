@@ -10,9 +10,9 @@ namespace AstroPhotoGallery.Services.Interfaces.Admin
 
         Task<Category> GetCategoryByIdAsync(int id);
 
-        Task<bool> CategoryAlreadyExists(string categoryName);
+        Task<bool> CategoryAlreadyExistsAsync(string categoryName);
 
-        Task SaveCategory(Category category, bool isAdded);
+        Task SaveCategoryAsync(Category category, bool isAdded);
 
         Task<string> GetCategoryNameAsync(int categoryId);
 

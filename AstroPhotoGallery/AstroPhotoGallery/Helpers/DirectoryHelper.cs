@@ -21,7 +21,7 @@ namespace AstroPhotoGallery.Web.Helpers
         }
 
         /// <summary>
-        /// Create new directory
+        /// Create new directory, before this trim directory name
         /// </summary>
         /// <param name="directoryName">directory name</param>
         public static void CreateDirectory(string directoryName)
@@ -31,7 +31,9 @@ namespace AstroPhotoGallery.Web.Helpers
                 throw new ArgumentException(nameof(directoryName));
             }
 
-            Directory.CreateDirectory(directoryName);
+            var trimEnd = directoryName.TrimEnd();
+            var trimStart = trimEnd.TrimStart();
+            Directory.CreateDirectory(trimStart);
         }
 
         /// <summary>
