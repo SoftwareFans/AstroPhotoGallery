@@ -1,8 +1,6 @@
-﻿using System.Data.Entity;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using AstroPhotoGallery.Data;
 using AstroPhotoGallery.Web.Extensions;
 using AstroPhotoGallery.Models;
 using PagedList;
@@ -118,7 +116,7 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
                     // When the name of a category is being changed 
                     //all the pictures in that category in DB must be changed
-                    await this._categoryService.UpdateAndSavePicturesFromCategoryAsync(category.Id, category.Name);               
+                    await this._categoryService.UpdateAndSavePicturesFromCategoryAsync(category.Id, category.Name);
                     this.AddNotification("Category edited.", NotificationType.SUCCESS);
                 }
 
@@ -129,75 +127,49 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
 
             return View(viewModel);
         }
-      
-        //
-        //GET: Category/Delete/id
-        public ActionResult Delete(int? id)
+
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
+            var category = await this._categoryService.GetCategoryByIdAsync(id);
+
+            if (category == null)
             {
-                this.AddNotification("No category ID provided.", NotificationType.ERROR);
-                return RedirectToAction("Index");
+                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                return RedirectToAction(nameof(Index));
             }
 
-            using (var db = new GalleryDbContext())
-            {
-                var category = db.Categories.FirstOrDefault(c => c.Id == id);
+            var viewModel = Mapper.Map<Category, DeleteCategoryViewModel>(category);
 
-                if (category == null)
-                {
-                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("Index");
-                }
-
-                return View(category);
-            }
+            return View(viewModel);
         }
 
-        //
-        //POST: Category/Delete/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int? id)
+        public async Task<ActionResult> Delete(DeleteCategoryViewModel viewModel)
         {
-            if (id == null)
+            var category = await this._categoryService.GetCategoryByIdAsync(viewModel.Id);
+
+            if (category == null)
             {
-                this.AddNotification("No category ID provided.", NotificationType.ERROR);
-                return RedirectToAction("Index");
+                this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
+                return RedirectToAction(nameof(Index));
             }
 
-            using (var db = new GalleryDbContext())
-            {
-                var category = db.Categories.FirstOrDefault(c => c.Id == id);
+            await this._categoryService.RemoveCategoryWithPicsAsync(category);
 
-                if (category == null)
-                {
-                    this.AddNotification("Such a category doesn't exist.", NotificationType.ERROR);
-                    return RedirectToAction("Index");
-                }
+            DeleteCategoryAndPicsFromServer(category.Name);
 
-                // When a category is being deleted all the pictures in that category in DB must be deleted:
-                var picsToBeDeleted = category.Pictures.ToList();
+            this.AddNotification("Category deleted.", NotificationType.SUCCESS);
 
-                foreach (var pic in picsToBeDeleted)
-                {
-                    // Delete the pic from DB
-                    db.Pictures.Remove(pic);
-                }
+            return RedirectToAction(nameof(Index));
 
-                // Delete the category's directory + all files in it(recursive true)
-                Directory.Delete(Server.MapPath($"~/Content/images/astroPics/{category.Name}"), true);
-
-                db.Categories.Remove(category);
-                db.SaveChanges();
-
-                this.AddNotification("Category deleted.", NotificationType.SUCCESS);
-
-                return RedirectToAction("Index");
-            }
         }
 
+        /// <summary>
+        /// Custom validation of model, check if category exist in db
+        /// </summary>
+        /// <param name="viewModel">model to be validate</param>
         private async Task CustomModelValidateAddEditCategory(AddEditCategoryViewModel viewModel)
         {
             var categoryName = viewModel.Name;
@@ -209,21 +181,34 @@ namespace AstroPhotoGallery.Web.Controllers.Admin
             }
         }
 
+        /// <summary>
+        /// Creating the folder of the category on the server
+        /// </summary>
         private void CreateCategoryDirectory(string categoryName)
         {
-            // Creating the folder of the category on the server
             var categoryDir = Server.MapPath($"~/Content/images/astroPics/{categoryName}");
             Directory.CreateDirectory(categoryDir);
         }
 
+        /// <summary>
+        /// Rename(move) the category's directory + all pics in it
+        /// </summary>
         private async Task UpdateCategoryDirecory(int categoryId, string categoryName)
         {
             var categoryOldName = await this._categoryService.GetCategoryNameAsync(categoryId);
 
             var catOldDir = Server.MapPath($"/Content/images/astroPics/{categoryOldName}/");
             var catNewDir = Server.MapPath($"/Content/images/astroPics/{categoryName}/");
-            // Rename(move) the category's directory + all pics in it
+
             Directory.Move(catOldDir, catNewDir);
+        }
+
+        /// <summary>
+        /// Delete the category's directory + all files in it(recursive true)
+        /// </summary>
+        private void DeleteCategoryAndPicsFromServer(string categoryName)
+        {
+            Directory.Delete(Server.MapPath($"~/Content/images/astroPics/{categoryName}"), true);
         }
     }
 }

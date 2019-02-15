@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using AstroPhotoGallery.Data;
+using Autofac;
 using Autofac.Integration.Mvc;
 using System.Reflection;
 using System.Web.Mvc;
@@ -20,6 +21,9 @@ namespace AstroPhotoGallery.DependencyResolution
 
             builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
 
+            //TODO:
+            //builder.RegisterType<GalleryDbContext>().AsSelf();
+            //builder.RegisterType<GalleryDbContext>().As<DbContext>().InstancePerRequest();
             var container = builder.Build();
 
             return new AutofacDependencyResolver(container);

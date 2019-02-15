@@ -41,12 +41,16 @@ namespace AstroPhotoGallery.Services.Admin
             return await Task.FromResult(categories);
         }
 
+        /// <summary>
+        /// Add new or modify old entity
+        /// </summary>
+        /// <param name="category">entity</param>
+        /// <param name="isAdded">we have add or edit entity</param>
+        /// <returns></returns>
         public async Task SaveCategory(Category category, bool isAdded)
-        {
-            this._dbContext.Entry(category).State = EntityState.Detached;
+        {     
             this._dbContext.Entry(category).State = isAdded ? EntityState.Added : EntityState.Modified;
 
-            //only save modified props if entity is not added
             await this._dbContext.SaveChangesAsync();
         }
 
@@ -76,6 +80,23 @@ namespace AstroPhotoGallery.Services.Admin
             }
 
           await  this._dbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// When a category is being deleted all the pictures in that category in DB must be deleted:
+        /// </summary>
+        public async Task RemoveCategoryWithPicsAsync(Category category)
+        {         
+            var picsToBeDeleted = category.Pictures;
+
+            foreach (var pic in picsToBeDeleted)
+            {
+                this._dbContext.Pictures.Remove(pic);
+            }
+
+            this._dbContext.Categories.Remove(category);
+
+           await  this._dbContext.SaveChangesAsync();
         }
     }
 }

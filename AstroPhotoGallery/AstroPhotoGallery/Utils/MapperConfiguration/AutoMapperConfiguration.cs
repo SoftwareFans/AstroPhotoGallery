@@ -1,7 +1,7 @@
-﻿using AstroPhotoGallery.Web.Utility.MapperConfiguration.Maps;
+﻿using AstroPhotoGallery.Web.Utils.MapperConfiguration.Maps;
 using AutoMapper;
 
-namespace AstroPhotoGallery.Web.Utility.MapperConfiguration
+namespace AstroPhotoGallery.Web.Utils.MapperConfiguration
 {
     public class AutoMapperConfiguration
     {

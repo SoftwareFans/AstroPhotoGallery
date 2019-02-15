@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using AstroPhotoGallery.Web.Utility.MapperConfiguration;
+using AstroPhotoGallery.Web.Utils.MapperConfiguration;
 
 namespace AstroPhotoGallery.Web
 {

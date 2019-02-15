@@ -17,5 +17,7 @@ namespace AstroPhotoGallery.Services.Interfaces.Admin
         Task<string> GetCategoryNameAsync(int categoryId);
 
         Task UpdateAndSavePicturesFromCategoryAsync(int categoryId, string categoryName);
+
+        Task RemoveCategoryWithPicsAsync(Category category);
     }
 }
